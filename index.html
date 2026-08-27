@@ -68,13 +68,14 @@
             --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             --font-serif: 'Fraunces', 'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', Georgia, serif;
             --font-sans: 'Fraunces', 'Noto Serif JP', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --app-height: 100dvh;
         }
         body {
             font-family: var(--font-sans);
             background: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.6;
-            min-height: 100vh;
+            min-height: var(--app-height);
             -webkit-font-smoothing: antialiased;
             letter-spacing: 0.01em;
             -webkit-tap-highlight-color: transparent;
@@ -112,7 +113,7 @@
             top: 0;
             left: 0;
             width: 220px;
-            height: 100vh;
+            height: var(--app-height);
             background: var(--bg-card);
             border-right: 1px solid var(--border);
             display: flex;
@@ -265,7 +266,7 @@
             backdrop-filter: blur(2px);
         }
         .app-overlay.active { display: block; }
-        body { display: flex; min-height: 100vh; }
+        body { display: flex; min-height: var(--app-height); }
 
         section { display: none; animation: fadeIn 0.3s ease; }
         section.active { display: block; }
@@ -621,6 +622,33 @@
         }
         .modal-close:hover { background: var(--danger-soft); color: var(--danger); }
 
+        .modal-drag-handle {
+            display: none;
+            width: 40px;
+            height: 4px;
+            border-radius: 2px;
+            background: var(--text-tertiary);
+            margin: 0 auto 12px;
+        }
+        @media (max-width: 768px) {
+            .modal-overlay {
+                align-items: flex-end;
+                padding: 0;
+            }
+            .modal-overlay .modal {
+                max-height: 85vh;
+                max-width: 100%;
+                width: 100%;
+                border-radius: 16px 16px 0 0;
+                animation: sheetSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .modal-drag-handle { display: block; }
+        }
+        @keyframes sheetSlideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
         .flashcard-area {
             display: flex;
             flex-direction: column;
@@ -703,6 +731,30 @@
             background: transparent;
             padding: 0;
             border-radius: 0;
+        }
+        .fc-swipe-hint {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 12px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+        .fc-swipe-hint.visible { opacity: 0.5; }
+        .fc-swipe-text {
+            font-size: 0.7rem;
+            color: var(--text-tertiary);
+        }
+        .fc-swipe-left, .fc-swipe-right {
+            font-size: 0.85rem;
+            color: var(--text-tertiary);
+            animation: swipeHintPulse 1.5s ease-in-out infinite;
+        }
+        .fc-swipe-right { animation-direction: reverse; }
+        @keyframes swipeHintPulse {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(3px); }
         }
         .flashcard-back .fc-meaning {
             font-family: var(--font-serif);
@@ -1962,7 +2014,7 @@
         .reel-level-btn:hover { color: var(--text-primary); }
 
         .reel-viewport {
-            position: relative; height: calc(100vh - 220px); min-height: 480px;
+            position: relative; height: calc(var(--app-height) - 220px); min-height: 480px;
             max-width: 520px; margin: 0 auto; overflow: hidden;
             border-radius: var(--radius-lg); border: 1px solid var(--border);
             background: var(--bg-secondary);
@@ -2059,7 +2111,7 @@
         }
 
         @media (max-width: 768px) {
-            .reel-viewport { height: calc(100vh - 180px); min-height: 420px; border-radius: var(--radius); }
+            .reel-viewport { height: calc(var(--app-height) - 180px); min-height: 420px; border-radius: var(--radius); }
             .reel-word { font-size: 2rem; }
             .reel-meaning { font-size: 1.1rem; }
             .reel-example { font-size: 0.85rem; }
@@ -2180,6 +2232,12 @@
 
             .bottom-nav { display: flex; }
             .container { padding-bottom: 70px; }
+
+            .tts-btn { min-width: 44px; min-height: 44px; }
+            .flashcard-btns .btn { min-height: 44px; }
+            .word-actions .btn { min-height: 44px; }
+            .mic-btn { min-width: 44px; min-height: 44px; }
+            .bottom-nav-btn { min-height: 44px; padding: 8px 8px; }
         }
 
         @media (max-width: 480px) {
@@ -2245,6 +2303,59 @@
         }
         .bottom-nav-icon { font-size: 1.2rem; }
         .bottom-nav-label { letter-spacing: 0.03em; }
+        body.keyboard-open .bottom-nav { display: none !important; }
+        body.keyboard-open .container { padding-bottom: 20px; }
+        @keyframes navBounce {
+            0% { transform: scale(1); }
+            40% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        .bottom-nav-btn.animating .bottom-nav-icon {
+            animation: navBounce 0.25s ease;
+        }
+
+        .dict-source-tabs-scroll {
+            position: relative;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .dict-source-tabs-scroll::-webkit-scrollbar { display: none; }
+        @media (max-width: 480px) {
+            .dict-source-tabs-scroll {
+                margin-left: -16px;
+                margin-right: -16px;
+                padding: 0 16px;
+            }
+            .dict-source-tabs-scroll::before,
+            .dict-source-tabs-scroll::after {
+                content: '';
+                position: sticky;
+                top: 0;
+                width: 20px;
+                height: 100%;
+                flex-shrink: 0;
+                pointer-events: none;
+                z-index: 1;
+            }
+            .dict-source-tabs-scroll::before {
+                left: 0;
+                background: linear-gradient(to right, var(--bg-primary), transparent);
+            }
+            .dict-source-tabs-scroll::after {
+                right: 0;
+                background: linear-gradient(to left, var(--bg-primary), transparent);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
 
         .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
         .sr-only-focusable:focus { position: static; width: auto; height: auto; padding: 8px 16px; margin: 0; overflow: visible; clip: auto; background: var(--accent); color: #fff; z-index: 10000; }
@@ -4338,6 +4449,11 @@
                                 <div class="fc-word" id="fc-word"></div>
                                 <div class="fc-phonetic" id="fc-phonetic"></div>
                                 <div class="fc-hint">點擊或按空白鍵翻轉</div>
+                                <div class="fc-swipe-hint" id="fc-swipe-hint">
+                                    <span class="fc-swipe-left">←</span>
+                                    <span class="fc-swipe-text">滑動</span>
+                                    <span class="fc-swipe-right">→</span>
+                                </div>
                             </div>
                             <div class="flashcard-back">
                                 <div class="fc-meaning" id="fc-meaning"></div>
@@ -4630,8 +4746,9 @@
     var CONFETTI_DURATION = 5000;
     var SEARCH_DEBOUNCE_MS = 200;
 
+    var _prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     function haptic(ms) {
-        if (navigator.vibrate) navigator.vibrate(ms || 10);
+        if (!_prefersReducedMotion && navigator.vibrate) navigator.vibrate(ms || 10);
     }
 
     function fetchWithTimeout(url, options, timeoutMs) {
@@ -5680,6 +5797,25 @@
     }
 
     function init() {
+        function updateAppHeight() {
+            document.documentElement.style.setProperty('--app-height', window.visualViewport ? window.visualViewport.height + 'px' : '100dvh');
+        }
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener('resize', updateAppHeight);
+            updateAppHeight();
+        }
+        function isMobileDevice() {
+            return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || (window.visualViewport && window.visualViewport.width < 768);
+        }
+        document.addEventListener('focusin', function(e) {
+            if (isMobileDevice() && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT')) {
+                document.body.classList.add('keyboard-open');
+                setTimeout(function() { e.target.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 300);
+            }
+        });
+        document.addEventListener('focusout', function() {
+            document.body.classList.remove('keyboard-open');
+        });
         db.load();
         $('setting-daily-goal').value = db.data.settings.dailyGoal;
         $('setting-quiz-count').value = db.data.settings.quizCount;
@@ -6180,6 +6316,12 @@ var data = {
         s.flipped = false;
         $('flash-btns').style.display = 'none';
         updateFlashProgress();
+        var swipeHint = $('fc-swipe-hint');
+        if (swipeHint) {
+            swipeHint.classList.remove('visible');
+            setTimeout(function() { swipeHint.classList.add('visible'); }, 500);
+        }
+        setTimeout(function() { if (swipeHint) swipeHint.classList.remove('visible'); }, 3500);
     }
 
     function updateFlashProgress() {
@@ -6193,6 +6335,8 @@ var data = {
         if (flashState.flipped) return;
         flashState.flipped = true;
         $('flashcard-inner').classList.add('flipped');
+        var hint = $('fc-swipe-hint');
+        if (hint) hint.classList.remove('visible');
         $('flash-btns').style.display = 'flex';
     }
 
@@ -7549,10 +7693,10 @@ function searchDictionary() {
         window._dictLatestResults = entries;
         window._dictSourceState = { active: 'ecdict' };
 
-        $('dict-results').innerHTML = '<div class="dict-source-tabs" style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;">' +
+        $('dict-results').innerHTML = '<div class="dict-source-tabs-scroll"><div class="dict-source-tabs" style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:nowrap;">' +
             '<button class="btn btn-primary dict-source-tab active" data-dict-source="ecdict">主來源：ECDICT</button>' +
             '<button class="btn btn-secondary dict-source-tab" data-dict-source="reference">參考來源</button>' +
-            '</div>' +
+            '</div></div>' +
             '<div class="dict-primary-source">' +
             entries.map(function(entry, ei) {
             var phonetic = entry.phonetic || '';
@@ -7864,6 +8008,13 @@ var meaningsHtml = (entry.meanings || []).map(function(m, mi) {
         document.querySelectorAll('.bottom-nav-btn').forEach(function(b) {
             b.classList.toggle('active', b.dataset.tab === tab);
         });
+        document.querySelectorAll('.bottom-nav-btn').forEach(function(b) {
+            if (b.dataset.tab === tab) {
+                b.classList.add('animating');
+                setTimeout(function() { b.classList.remove('animating'); }, 250);
+            }
+        });
+        if (typeof haptic === 'function') haptic(10);
     }
 
     var aiState = { llm: null, loading: false, loaded: false, currentWord: null, lastSentence: null };
@@ -8332,6 +8483,28 @@ document.querySelectorAll('.sidebar-nav-btn').forEach(function(btn) {
                 if (e.target === overlay) overlay.classList.remove('show');
             });
         });
+
+        (function() {
+            var isMobile = function() {
+                return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || (window.visualViewport && window.visualViewport.width < 768);
+            };
+            var observer = new MutationObserver(function(mutations) {
+                if (!isMobile()) return;
+                mutations.forEach(function(m) {
+                    m.addedNodes.forEach(function(node) {
+                        if (node.classList && node.classList.contains('modal-overlay') && node.classList.contains('show')) {
+                            var modal = node.querySelector('.modal');
+                            if (modal && !modal.querySelector('.modal-drag-handle')) {
+                                var handle = document.createElement('div');
+                                handle.className = 'modal-drag-handle';
+                                modal.insertBefore(handle, modal.firstChild);
+                            }
+                        }
+                    });
+                });
+            });
+            observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+        })();
 
         $('btn-dd-close').addEventListener('click', function() {
             $('dict-detail-modal').classList.remove('show');
