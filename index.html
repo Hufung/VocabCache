@@ -2,12 +2,12 @@
 <html lang="zh-Hant" data-theme="dark" class=""><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5.0">
-    <meta name="theme-color" content="#1a1a1a">
+    <meta name="theme-color" content="#060201">
     <meta name="description" content="離線英文生字學習工具 — 閃卡、測驗、SRS、進度追蹤">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="生字本">
-    <link rel="icon" href="data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'&gt;&lt;rect width='100' height='100' rx='8' fill='%231a1a1a'/&gt;&lt;text x='50' y='70' font-size='60' text-anchor='middle' fill='%23c8a96a' font-family='serif'&gt;書&lt;/text&gt;&lt;/svg&gt;">
+    <link rel="icon" href="data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'&gt;&lt;rect width='100' height='100' rx='8' fill='%23060201'/&gt;&lt;text x='50' y='70' font-size='60' text-anchor='middle' fill='%23e3dfd6' font-family='serif'&gt;書&lt;/text&gt;&lt;/svg&gt;">
     <title>生字本 Vocab Book</title>
     <script>
         window.__pwaManifest = {
@@ -16,11 +16,11 @@
             "description": "離線英文生字學習工具",
             "start_url": "./",
             "display": "standalone",
-            "background_color": "#1a1a1a",
-            "theme_color": "#1a1a1a",
+            "background_color": "#060201",
+            "theme_color": "#060201",
             "lang": "zh-Hant",
             "icons": [{
-                "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='6' fill='%231a1a1a'/><text x='96' y='130' font-size='110' text-anchor='middle' fill='%23c8a96a' font-family='serif'>書</text></svg>",
+                "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='6' fill='%23060201'/><text x='96' y='130' font-size='110' text-anchor='middle' fill='%23e3dfd6' font-family='serif'>書</text></svg>",
                 "sizes": "192x192",
                 "type": "image/svg+xml"
             }]
@@ -30,41 +30,44 @@
         _manifestLink.rel = 'manifest';
         _manifestLink.href = URL.createObjectURL(_manifestBlob);
         document.head.appendChild(_manifestLink);
-    </script><link rel="manifest" href="blob:file:///799fd321-6faf-431e-badb-343c71c7eb50">
+    </script><link rel="manifest" href="blob:file:///2b2e04ca-3691-46a4-ae72-7a869adefa75">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&amp;family=Noto+Serif+JP:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&display=swap');
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { -webkit-text-size-adjust: 100%; }
         :root {
-            --bg-primary: #1a1a1a;
-            --bg-secondary: #1f1f1f;
-            --bg-card: #232323;
-            --bg-elevated: #2a2a2a;
-            --text-primary: #e8e6e1;
-            --text-secondary: #8c8780;
-            --text-tertiary: #5c5953;
-            --accent: #c8a96a;
-            --accent-hover: #b8995a;
-            --accent-soft: rgba(200, 169, 106, 0.10);
-            --success: #7a9b6e;
-            --success-soft: rgba(122, 155, 110, 0.10);
-            --warning: #c8a96a;
-            --warning-soft: rgba(200, 169, 106, 0.10);
-            --danger: #a8554f;
-            --danger-soft: rgba(168, 85, 79, 0.10);
-            --border: #333333;
-            --border-light: #2a2a2a;
-            --shadow-sm: 0 1px 2px rgba(0,0,0,0.12);
-            --shadow-md: 0 2px 8px rgba(0,0,0,0.15);
-            --shadow-lg: 0 4px 20px rgba(0,0,0,0.20);
-            --radius-sm: 4px;
-            --radius: 6px;
-            --radius-lg: 8px;
-            --radius-xl: 10px;
+            --bg-primary: hsl(12 71.4% 1.4%);
+            --bg-secondary: hsl(35 15% 20%);
+            --bg-card: hsl(12 71.4% 1.4%);
+            --bg-elevated: hsl(35 25% 30%);
+            --bg-alt: hsl(35 25% 30% / 0.3);
+            --text-primary: hsl(41.5 18.8% 86.5%);
+            --text-secondary: hsl(35 15% 60%);
+            --text-tertiary: hsl(35 15% 45%);
+            --accent: hsl(41.5 18.8% 86.5%);
+            --accent-hover: hsl(35 25% 40%);
+            --accent-soft: hsl(35 25% 40% / 0.22);
+            --success: hsl(55 25% 60%);
+            --success-soft: hsl(55 25% 60% / 0.15);
+            --warning: hsl(35 25% 40%);
+            --warning-soft: hsl(35 25% 40% / 0.15);
+            --danger: hsl(0 84.2% 60.2%);
+            --danger-soft: hsl(0 84.2% 60.2% / 0.15);
+            --border: hsl(42.9 8.4% 16.3%);
+            --border-light: hsl(42.9 8.4% 20%);
+            --shadow-sm: 0 1px 2px hsl(35 15% 5% / 0.04);
+            --shadow-md: 0 2px 8px hsl(35 15% 5% / 0.06);
+            --shadow-lg: 0 4px 20px hsl(35 15% 5% / 0.08);
+            --radius-sm: 1rem;
+            --radius: 2rem;
+            --radius-lg: 2.5rem;
+            --radius-xl: 3rem;
+            --bg-main: #1a1714;
             --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            --font-serif: 'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', Georgia, serif;
-            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --font-serif: 'Fraunces', 'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', Georgia, serif;
+            --font-sans: 'Fraunces', 'Noto Serif JP', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
         body {
             font-family: var(--font-sans);
@@ -77,29 +80,25 @@
             -webkit-tap-highlight-color: transparent;
             padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
         }
-        button, .btn, .tab-btn, .quiz-option, .match-card, .word-title { -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; }
+        button, .btn, .sidebar-nav-btn, .quiz-option, .match-card, .word-title { -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; }
         input, textarea, select { font-size: 16px; }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--text-tertiary); }
-        .container { max-width: 960px; margin: 0 auto; padding: 24px 20px; }
+        .container {
+            flex: 1;
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 24px 20px;
+            margin-left: 220px;
+        }
 
         header {
-            text-align: center;
-            padding: 40px 20px 20px;
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 32px;
-            position: relative;
+            display: none;
         }
         header h1 {
-            font-family: var(--font-serif);
-            font-size: 1.8rem;
-            margin-bottom: 6px;
-            font-weight: 400;
-            letter-spacing: 0.15em;
-            color: var(--text-primary);
-            position: relative;
+            display: none;
         }
         header p {
             color: var(--text-tertiary);
@@ -108,40 +107,165 @@
             position: relative;
         }
 
-.tab-nav-wrap { display: flex; justify-content: center; margin-top: 20px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        .tab-nav-wrap::-webkit-scrollbar { display: none; }
-        .tab-nav {
-            display: inline-flex;
-            justify-content: center;
-            gap: 0;
-            border-bottom: 1px solid var(--border);
-            flex-wrap: wrap;
+.sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 220px;
+            height: 100vh;
+            background: var(--bg-card);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+            overflow-y: auto;
+            overflow-x: hidden;
+            scrollbar-width: thin;
+            scrollbar-color: var(--border) transparent;
         }
-        .tab-btn {
-            background: transparent;
-            border: none;
-            border-bottom: 2px solid transparent;
-            border-radius: 0;
-            padding: 10px 18px;
+        .sidebar::-webkit-scrollbar { width: 4px; }
+        .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+        .sidebar-top { flex: 1; display: flex; flex-direction: column; padding: 0; }
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 24px 20px 20px;
+            border-bottom: 1px solid var(--border);
+        }
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius);
+            background: var(--accent);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            letter-spacing: 0.02em;
+        }
+        .sidebar-logo-text h1 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            line-height: 1.2;
+        }
+        .sidebar-logo-text p {
+            font-size: 0.68rem;
             color: var(--text-secondary);
+            margin-top: 2px;
+            letter-spacing: 0.04em;
+        }
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            padding: 12px 10px;
+            flex: 1;
+        }
+        .sidebar-nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border: none;
+            background: transparent;
+            border-radius: var(--radius);
             cursor: pointer;
             transition: var(--transition);
+            color: var(--text-secondary);
             font-size: 0.85rem;
             font-weight: 400;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.03em;
+            text-align: left;
+            width: 100%;
+        }
+        .sidebar-nav-btn:hover {
+            background: var(--bg-main);
+            color: var(--text-primary);
+        }
+        .sidebar-nav-btn.active {
+            background: var(--accent-soft);
+            color: var(--accent);
+            font-weight: 600;
+        }
+        .sidebar-nav-icon { font-size: 1.1rem; width: 22px; text-align: center; flex-shrink: 0; }
+        .sidebar-nav-label { white-space: nowrap; }
+        .sidebar-bottom {
+            padding: 14px 16px 18px;
+            border-top: 1px solid var(--border);
+        }
+        .sidebar-badges {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+        .sidebar-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 10px;
+            border-radius: var(--radius-sm);
+            font-size: 0.75rem;
+            border: 1px solid var(--border);
+            background: var(--bg-main);
+            color: var(--text-secondary);
+            letter-spacing: 0.04em;
             white-space: nowrap;
-            margin-bottom: -1px;
         }
-        .tab-btn.active {
-            color: var(--text-primary);
-            border-bottom-color: var(--accent);
+        .sidebar-badge-icon { font-size: 0.9rem; }
+        .sidebar-badge-label { font-size: 0.7rem; color: var(--accent); font-weight: 600; }
+        .sidebar-badge-val { font-weight: 600; color: var(--text-primary); }
+        .sidebar-badge-suffix { font-size: 0.65rem; opacity: 0.7; }
+        .sidebar-badge.active { border-color: var(--accent); color: var(--accent); }
+        .sidebar-theme-btn {
+            width: 100%;
+            padding: 8px;
             background: transparent;
-            box-shadow: none;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .tab-btn:hover:not(.active) {
+        .sidebar-theme-btn:hover { border-color: var(--accent); color: var(--accent); }
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            top: 12px;
+            left: 12px;
+            z-index: 200;
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            font-size: 1.2rem;
+            cursor: pointer;
             color: var(--text-primary);
-            background: transparent;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
         }
+        .app-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 90;
+            backdrop-filter: blur(2px);
+        }
+        .app-overlay.active { display: block; }
+        body { display: flex; min-height: 100vh; }
 
         section { display: none; animation: fadeIn 0.3s ease; }
         section.active { display: block; }
@@ -371,6 +495,33 @@
             font-size: 0.8rem;
             letter-spacing: 1px;
         }
+        .badge-level {
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            border: 1px solid currentColor;
+            opacity: 0.9;
+        }
+        .badge-level-en {
+            font-size: 0.65rem;
+            opacity: 0.7;
+            font-weight: 400;
+        }
+        .auto-level-display {
+            padding: 8px 12px;
+            background: var(--bg-card-hover, hsl(35 15% 50% / 0.06));
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            min-height: 38px;
+            display: flex;
+            align-items: center;
+        }
         .badge-reviews {
             background: transparent;
             color: var(--text-tertiary);
@@ -409,12 +560,12 @@
 
 .empty-state {
             text-align: center;
-            padding: 48px 24px;
-            background: transparent;
-            border-radius: var(--radius);
-            border: 1px dashed var(--border);
+            padding: 40px 20px;
         }
-        .empty-state .empty-icon { font-size: 2rem; margin-bottom: 12px; opacity: 0.3; }
+        .empty-icon { font-size: 3rem; margin-bottom: 12px; }
+        .empty-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 6px; color: var(--text-primary); }
+        .empty-desc { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 16px; }
+        .empty-cta { margin-top: 8px; }
         .empty-state h3 { margin-bottom: 8px; color: var(--text-secondary); font-size: 1rem; font-weight: 400; }
         .empty-state p { color: var(--text-tertiary); font-size: 0.85rem; }
 
@@ -430,6 +581,7 @@
         }
         .modal-overlay.show { display: flex; animation: fadeIn 0.3s ease; }
         .modal {
+            position: relative;
             background: var(--bg-card);
             border-radius: var(--radius);
             padding: 28px;
@@ -449,6 +601,25 @@
             font-weight: 400;
             letter-spacing: 0.05em;
         }
+        .modal-close {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: var(--transition);
+            z-index: 10;
+        }
+        .modal-close:hover { background: var(--danger-soft); color: var(--danger); }
 
         .flashcard-area {
             display: flex;
@@ -485,6 +656,8 @@
             min-height: 300px;
             perspective: 1200px;
             cursor: pointer;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            touch-action: pan-y;
         }
         .flashcard-inner {
             position: relative;
@@ -1047,6 +1220,32 @@
             font-size: 0.85rem;
             white-space: nowrap;
         }
+        .af-status-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6px;
+            margin-top: 10px;
+            width: 100%;
+        }
+        .af-status-item {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .af-dot {
+            font-size: 0.7rem;
+        }
+        .af-detail {
+            font-size: 0.7rem;
+            color: var(--text-tertiary);
+            margin-left: 2px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 100px;
+        }
         .auto-fill-loading {
             display: inline-block;
             width: 14px;
@@ -1060,89 +1259,32 @@
         }
 
         [data-theme="light"] {
-            --bg-primary: #f5f3ee;
-            --bg-secondary: #efede7;
-            --bg-card: #ffffff;
-            --bg-elevated: #f0eee8;
-            --text-primary: #2a2826;
-            --text-secondary: #6b6862;
-            --text-tertiary: #9a968f;
-            --accent: #8b7355;
-            --accent-hover: #7a6345;
-            --accent-soft: rgba(139, 115, 85, 0.08);
-            --success: #6b8e5e;
-            --success-soft: rgba(107, 142, 94, 0.08);
-            --warning: #8b7355;
-            --warning-soft: rgba(139, 115, 85, 0.08);
-            --danger: #a0524d;
-            --danger-soft: rgba(160, 82, 77, 0.08);
-            --border: #d8d5cf;
-            --border-light: #e5e3dd;
-            --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
-            --shadow-md: 0 2px 8px rgba(0,0,0,0.06);
-            --shadow-lg: 0 4px 20px rgba(0,0,0,0.08);
+            --bg-primary: hsl(40 16% 98%);
+            --bg-secondary: hsl(44 26.3% 88.8%);
+            --bg-card: hsl(40 16% 98%);
+            --bg-elevated: hsl(40 24.1% 73.1%);
+            --bg-alt: hsl(40 24.1% 73.1% / 0.22);
+            --text-primary: hsl(37.5 15.7% 20%);
+            --text-secondary: hsl(36 19.8% 49.4%);
+            --text-tertiary: hsl(37.5 15.7% 20% / 0.5);
+            --accent: hsl(37.5 15.7% 20%);
+            --accent-hover: hsl(30 14% 30%);
+            --accent-soft: hsl(40 24.1% 73.1% / 0.22);
+            --success: hsl(55 24% 49%);
+            --success-soft: hsl(55 24% 49% / 0.12);
+            --warning: hsl(55 24% 49%);
+            --warning-soft: hsl(55 24% 49% / 0.12);
+            --danger: hsl(0 84.2% 60.2%);
+            --danger-soft: hsl(0 84.2% 60.2% / 0.12);
+            --border: hsl(43.3 23.1% 84.7%);
+            --border-light: hsl(43.3 23.1% 84.7% / 0.6);
+            --shadow-sm: 0 1px 2px hsl(35 15% 50% / 0.04);
+            --shadow-md: 0 2px 8px hsl(35 15% 50% / 0.06);
+            --shadow-lg: 0 4px 20px hsl(35 15% 50% / 0.08);
         }
 
-        .header-controls {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-        .theme-toggle {
-            background: transparent;
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            width: 32px;
-            height: 32px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-            color: var(--text-secondary);
-        }
-        .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
-        .streak-badge {
-            background: transparent;
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            padding: 5px 10px;
-            font-size: 0.75rem;
-            font-weight: 400;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            white-space: nowrap;
-            color: var(--text-secondary);
-            letter-spacing: 0.05em;
-        }
-        .streak-badge.active { border-color: var(--accent); color: var(--accent); }
-        
-        .ranking-badge {
-            background: transparent;
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            padding: 5px 10px;
-            font-size: 0.75rem;
-            font-weight: 400;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            white-space: nowrap;
-            color: var(--text-secondary);
-            letter-spacing: 0.05em;
-        }
-        .ranking-badge .ranking-level {
-            color: var(--accent);
-            font-weight: 600;
-        }
-        #ranking-level-num {
-            color: var(--accent);
-            font-weight: 600;
+        header {
+            display: none;
         }
 
         .tts-btn {
@@ -1252,7 +1394,7 @@
             width: 64px;
             height: 64px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent), #c77d4a);
+            background: linear-gradient(135deg, var(--accent), hsl(35 25% 30%));
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1286,7 +1428,7 @@
         }
         .rank-progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--accent), #c77d4a);
+            background: linear-gradient(90deg, var(--accent), hsl(35 25% 30%));
             border-radius: 4px;
             transition: width 0.5s ease;
         }
@@ -1323,7 +1465,7 @@
         }
         .rank-level-item.current .rank-level-num {
             background: var(--accent);
-            color: #fff;
+            color: hsl(12 71.4% 1.4%);
         }
         .rank-level-item.locked .rank-level-num {
             background: var(--bg-alt);
@@ -1337,24 +1479,12 @@
             font-size: 0.8rem;
         }
 
-        .tier-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.75rem;
+        #ranking-level-num {
+            color: var(--accent);
             font-weight: 600;
-            border: 1px solid var(--border);
-            background: var(--bg-card);
-            cursor: default;
-            position: relative;
         }
-        .tier-badge .tier-icon { font-size: 0.85rem; }
-        .tier-badge .tier-division {
-            font-size: 0.65rem;
-            opacity: 0.7;
-            margin-left: 2px;
+        .tier-badge {
+            display: none;
         }
 
         .tier-card {
@@ -1401,7 +1531,7 @@
         .tier-progress-bar {
             width: 100%;
             height: 8px;
-            background: rgba(255,255,255,0.2);
+            background: hsl(35 15% 60% / 0.2);
             border-radius: 4px;
             overflow: hidden;
             margin-top: 12px;
@@ -1432,7 +1562,7 @@
             transition: background 0.2s;
         }
         .tier-ladder-item.current {
-            background: var(--bg-card-hover, rgba(0,0,0,0.05));
+            background: var(--bg-card-hover, hsl(35 15% 50% / 0.08));
             font-weight: 600;
         }
         .tier-ladder-item.locked {
@@ -1533,7 +1663,7 @@
             width: 100%;
             height: 220px;
             margin-bottom: 16px;
-            background: var(--bg-card-hover, rgba(0,0,0,0.03));
+            background: var(--bg-card-hover, hsl(35 15% 50% / 0.06));
             border-radius: 12px;
             overflow: hidden;
         }
@@ -1550,7 +1680,7 @@
         .ebbinghaus-stat {
             text-align: center;
             padding: 12px 8px;
-            background: var(--bg-card-hover, rgba(0,0,0,0.03));
+            background: var(--bg-card-hover, hsl(35 15% 50% / 0.06));
             border-radius: 10px;
         }
         .ebbinghaus-stat-value {
@@ -1580,7 +1710,7 @@
         .retention-bar-track {
             width: 100%;
             height: 6px;
-            background: var(--bg-card-hover, rgba(0,0,0,0.06));
+            background: var(--bg-card-hover, hsl(35 15% 50% / 0.08));
             border-radius: 3px;
             overflow: hidden;
         }
@@ -1600,7 +1730,7 @@
             padding: 8px 12px;
             border-radius: 8px;
             margin-bottom: 4px;
-            background: var(--bg-card-hover, rgba(0,0,0,0.03));
+            background: var(--bg-card-hover, hsl(35 15% 50% / 0.06));
             font-size: 0.85rem;
         }
         .needs-review-word {
@@ -1623,11 +1753,18 @@
             margin-left: 8px;
             white-space: nowrap;
         }
-        .needs-review-retention.critical { background: rgba(239,68,68,0.15); color: #EF4444; }
-        .needs-review-retention.warning { background: rgba(245,158,11,0.15); color: #F59E0B; }
+        .needs-review-retention.critical { background: hsl(0 84.2% 60.2% / 0.15); color: hsl(0 84.2% 60.2%); }
+        .needs-review-retention.warning { background: hsl(55 24% 49% / 0.15); color: hsl(55 24% 49%); }
 
-        .search-with-mic { display: flex; gap: 8px; align-items: center; flex: 1; min-width: 200px; }
-        .search-with-mic input { flex: 1; }
+        .search-with-mic { display: flex; gap: 8px; align-items: center; flex: 1; min-width: 200px; position: relative; }
+        .search-with-mic input { flex: 1; padding-right: 28px; }
+        .dict-input-clear {
+            position: absolute; right: 44px; top: 50%; transform: translateY(-50%);
+            background: none; border: none; color: var(--text-tertiary); font-size: 0.85rem;
+            cursor: pointer; padding: 2px 4px; line-height: 1; border-radius: 4px;
+            transition: var(--transition);
+        }
+        .dict-input-clear:hover { color: var(--text-primary); background: var(--bg-alt); }
 
         .srs-badge {
             background: transparent;
@@ -1935,19 +2072,19 @@
         }
 
 @media (max-width: 768px) {
-            .container { padding: 12px; }
-            header { padding: 20px 12px 12px; margin-bottom: 16px; }
-            header h1 { font-size: 1.4rem; letter-spacing: 0.1em; }
-            header p { font-size: 0.72rem; }
-
-            .header-controls { top: 10px; right: 10px; gap: 6px; }
-            .streak-badge { padding: 3px 8px; font-size: 0.7rem; }
-            .theme-toggle { width: 30px; height: 30px; font-size: 0.8rem; }
-
-            .tab-nav-wrap { margin-top: 14px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-            .tab-nav-wrap::-webkit-scrollbar { display: none; }
-            .tab-nav { flex-wrap: nowrap; justify-content: flex-start; gap: 0; }
-            .tab-btn { padding: 8px 12px; font-size: 0.78rem; white-space: nowrap; flex-shrink: 0; }
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .sidebar-toggle { display: flex; }
+            .container {
+                margin-left: 0;
+                padding: 12px;
+                padding-top: 60px;
+            }
 
             .filter-row { flex-direction: column; gap: 8px; align-items: stretch !important; }
             .filter-row input, .filter-row select { width: 100%; min-width: auto; }
@@ -2040,15 +2177,20 @@
 
             .progress-bar-outer { height: 3px; }
             .progress-text { font-size: 0.82rem; }
+
+            .bottom-nav { display: flex; }
+            .container { padding-bottom: 70px; }
         }
 
         @media (max-width: 480px) {
-            header h1 { font-size: 1.2rem; }
-            header p { display: none; }
-            .header-controls .streak-badge { display: none; }
-            .header-controls .tier-badge { display: none; }
+            .sidebar { width: 260px; }
+            .sidebar-logo { padding: 20px 16px 16px; }
+            .sidebar-nav { padding: 8px 6px; }
+            .sidebar-nav-btn { padding: 9px 12px; font-size: 0.82rem; }
+            .sidebar-bottom { padding: 12px 12px 16px; }
 
-            .tab-btn { padding: 7px 10px; font-size: 0.72rem; }
+            .af-status-grid { grid-template-columns: 1fr 1fr; gap: 4px; }
+            .af-detail { max-width: 80px; }
 
             .dashboard-grid { grid-template-columns: 1fr; }
             .stat-card { display: flex; flex-direction: row; align-items: center; justify-content: space-between; padding: 12px 16px; }
@@ -2069,12 +2211,88 @@
             .quiz-result .score-big { font-size: 2rem; }
         }
 
+        .bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--bg-card);
+            border-top: 1px solid var(--border);
+            padding: 6px 0 calc(6px + env(safe-area-inset-bottom));
+            z-index: 100;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .bottom-nav-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 4px 8px;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 0.65rem;
+            cursor: pointer;
+            transition: var(--transition);
+            min-width: 50px;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .bottom-nav-btn.active {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        .bottom-nav-icon { font-size: 1.2rem; }
+        .bottom-nav-label { letter-spacing: 0.03em; }
+
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+        .sr-only-focusable:focus { position: static; width: auto; height: auto; padding: 8px 16px; margin: 0; overflow: visible; clip: auto; background: var(--accent); color: #fff; z-index: 10000; }
+@keyframes cardSlideIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.word-card.animate-in {
+    animation: cardSlideIn 0.3s ease forwards;
+    opacity: 0;
+}
+.heatmap-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+.heatmap-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.heatmap-header h3 { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); }
+.heatmap-subtitle { font-size: 0.72rem; color: var(--text-secondary); }
+.heatmap-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+}
+.heatmap-cell {
+    aspect-ratio: 1;
+    border-radius: 4px;
+    background: var(--bg-main);
+    min-height: 16px;
+    transition: var(--transition);
+}
+.heatmap-cell.level-1 { background: hsl(35 15% 30%); }
+.heatmap-cell.level-2 { background: hsl(35 20% 40%); }
+.heatmap-cell.level-3 { background: hsl(35 25% 50%); }
+.heatmap-cell.level-4 { background: hsl(35 30% 60%); }
+[data-theme="light"] .heatmap-cell.level-1 { background: hsl(35 15% 85%); }
+[data-theme="light"] .heatmap-cell.level-2 { background: hsl(35 20% 75%); }
+[data-theme="light"] .heatmap-cell.level-3 { background: hsl(35 25% 65%); }
+[data-theme="light"] .heatmap-cell.level-4 { background: hsl(35 30% 55%); }
+.heatmap-cell[title] { cursor: default; }
     </style>
 <style>.trae-browser-inspect-overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:999997;pointer-events:auto;background:rgba(0,0,0,0)}.trae-browser-inspect-highlight-box{position:absolute;top:0;left:0;z-index:999998;display:none}.trae-browser-inspect-highlight-tag{position:absolute;left:0px;top:0px;height:18px;padding:0 6px;box-sizing:border-box;border-radius:4px;background-color:var(--vscode-icube-colorSuccessHover, "#2FB287");color:var(--vscode-icube-colorSnow, "#fff");font-size:12px;font-weight:400;display:none;align-items:center;z-index:999999}.trae-browser-inspect-highlight-box-show{display:flex}.trae-browser-inspect-select-button.trae-browser-inspect-highlight-box-show{display:flex !important}.trae-browser-inspect-select-button{position:absolute;top:0;left:0;background-color:var(--vscode-icube--bg-bg-base-secondary, "#222427");color:var(--vscode-icube--text-text-default-active, "#F5F9FE");font-size:11px;font-weight:500;border:1px solid var(--vscode-icube--border-neutral-l1, "#E0E2F217");border-radius:6px;padding:0 8px;height:32px;display:none;align-items:center;cursor:pointer;z-index:999999;gap:4px}.trae-browser-inspect-select-button svg,.trae-browser-inspect-select-button span{z-index:1}.trae-browser-inspect-select-highlight-box{background:rgba(0,0,0,0) !important}.trae-browser-inspect-select-highlight-box .trae-browser-inspect-highlight-tag{background-color:var(--vscode-icube--status-success-active, "#1E8B56")}.trae-browser-inspect-comment-card-container{position:fixed;top:0;left:0;z-index:9999999;pointer-events:auto}.trae-browser-inspect-comment-card-container .trae-browser-inspect-comment-card{display:flex;padding-top:0px !important;align-items:center;z-index:9999999 !important;background-color:var(--vscode-icube--bg-bg-menu)}*[contenteditable]{outline:none}.trae-browser-inspect-click-effect{position:fixed;width:40px;height:40px;margin-left:-20px;margin-top:-20px;border-radius:50%;background-color:var(--vscode-icube-colorSuccessHover, #2FB287);pointer-events:none;animation:trae-browser-inspect-ripple 500ms ease-out forwards;z-index:999999}@keyframes trae-browser-inspect-ripple{0%{transform:scale(0.3);opacity:.8}100%{transform:scale(2);opacity:0}}.trae-browser-inspect-ref-box{position:absolute;border:2px solid var(--vscode-icube-colorSuccessHover, "#2FB287");pointer-events:none;z-index:999998;animation:trae-browser-inspect-fadeInOut 2s ease-in-out forwards}.trae-browser-inspect-ref-label{position:absolute;top:-14px;left:0;height:14px;padding:0 4px;box-sizing:border-box;border-radius:2px;background-color:var(--vscode-icube-colorSuccessHover, "#2FB287");color:var(--vscode-icube-colorSnow, "#fff");font-size:9px;font-weight:500;display:flex;align-items:center;white-space:nowrap;z-index:999999}@keyframes trae-browser-inspect-fadeInOut{0%{opacity:0}10%{opacity:1}90%{opacity:1}100%{opacity:0}}.trae-browser-inspect-input-highlight{position:absolute;border:2px solid var(--vscode-icube-colorSuccessHover, "#2FB287");border-radius:4px;pointer-events:none;z-index:999998;box-shadow:0 0 8px var(--vscode-icube-colorSuccessHover, "#2FB287");animation:trae-browser-inspect-input-pulse 600ms ease-out forwards}@keyframes trae-browser-inspect-input-pulse{0%{opacity:0;box-shadow:0 0 0 var(--vscode-icube-colorSuccessHover, "#2FB287")}30%{opacity:1;box-shadow:0 0 12px var(--vscode-icube-colorSuccessHover, "#2FB287")}100%{opacity:0;box-shadow:0 0 0 var(--vscode-icube-colorSuccessHover, "#2FB287")}}.trae-browser-inspect-virtual-cursor{position:fixed;width:20px;height:20px;pointer-events:none;z-index:9999999;opacity:0;transition:opacity .2s ease}.trae-browser-inspect-virtual-cursor.trae-browser-inspect-cursor-visible{opacity:1}.trae-browser-inspect-virtual-cursor.trae-browser-inspect-cursor-idle{animation:trae-browser-inspect-cursor-breathe 2s ease-in-out infinite}.trae-browser-inspect-virtual-cursor svg{width:20px;height:20px;filter:drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3))}@keyframes trae-browser-inspect-cursor-breathe{0%,100%{opacity:.7}50%{opacity:1}}.trae-browser-inspect-scroll-indicator{position:fixed;display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 16px;border-radius:8px;background-color:rgba(0,0,0,.7);color:#fff;font-size:13px;font-weight:500;pointer-events:none;z-index:999999;animation:trae-browser-inspect-indicator-fade 800ms ease-out forwards;backdrop-filter:blur(4px)}.trae-browser-inspect-scroll-indicator svg{width:16px;height:16px;fill:#fff}.trae-browser-inspect-scroll-indicator.trae-scroll-up{top:12px;left:50%;transform:translateX(-50%)}.trae-browser-inspect-scroll-indicator.trae-scroll-down{bottom:12px;left:50%;transform:translateX(-50%)}.trae-browser-inspect-scroll-indicator.trae-scroll-left{left:12px;top:50%;transform:translateY(-50%)}.trae-browser-inspect-scroll-indicator.trae-scroll-right{right:12px;top:50%;transform:translateY(-50%)}@keyframes trae-browser-inspect-indicator-fade{0%{opacity:0;transform:translateX(-50%) scale(0.9)}15%{opacity:1;transform:translateX(-50%) scale(1)}85%{opacity:1}100%{opacity:0}}.trae-browser-inspect-scroll-indicator.trae-scroll-left,.trae-browser-inspect-scroll-indicator.trae-scroll-right{animation-name:trae-browser-inspect-indicator-fade-y}@keyframes trae-browser-inspect-indicator-fade-y{0%{opacity:0;transform:translateY(-50%) scale(0.9)}15%{opacity:1;transform:translateY(-50%) scale(1)}85%{opacity:1}100%{opacity:0}}.trae-browser-inspect-key-badge{position:fixed;bottom:60px;left:50%;transform:translateX(-50%);padding:8px 20px;border-radius:8px;background-color:rgba(0,0,0,.8);color:#fff;font-size:18px;font-weight:600;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,monospace;pointer-events:none;z-index:999999;animation:trae-browser-inspect-key-pop 500ms ease-out forwards;backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.15);box-shadow:0 4px 12px rgba(0,0,0,.3);letter-spacing:1px}@keyframes trae-browser-inspect-key-pop{0%{opacity:0;transform:translateX(-50%) translateY(10px) scale(0.9)}20%{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}80%{opacity:1}100%{opacity:0;transform:translateX(-50%) translateY(-10px)}}.trae-browser-inspect-step-badge{position:fixed;top:12px;left:12px;padding:6px 12px;border-radius:6px;background-color:var(--vscode-icube-colorSuccessHover, #2FB287);color:#fff;font-size:12px;font-weight:600;pointer-events:none;z-index:999999;animation:trae-browser-inspect-step-slide 600ms ease-out forwards;box-shadow:0 2px 8px rgba(47,178,135,.3);max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.trae-browser-inspect-step-badge.trae-step-old{opacity:.4;transform:translateY(0)}@keyframes trae-browser-inspect-step-slide{0%{opacity:0;transform:translateX(-20px)}20%{opacity:1;transform:translateX(0)}100%{opacity:1;transform:translateX(0)}}.trae-browser-inspect-drag-trail{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999998}.trae-browser-inspect-drag-trail svg{width:100%;height:100%}.trae-browser-inspect-drag-trail .trae-drag-path{fill:none;stroke:var(--vscode-icube-colorSuccessHover, #2FB287);stroke-width:2;stroke-dasharray:8 4;opacity:.6;animation:trae-browser-inspect-dash 600ms linear forwards}.trae-browser-inspect-drag-trail .trae-drag-dot{fill:var(--vscode-icube-colorSuccessHover, #2FB287);filter:drop-shadow(0 0 4px rgba(47, 178, 135, 0.6))}.trae-browser-inspect-drag-trail .trae-drag-endpoint{fill:none;stroke:var(--vscode-icube-colorSuccessHover, #2FB287);stroke-width:2;opacity:.5}@keyframes trae-browser-inspect-dash{0%{stroke-dashoffset:200}100%{stroke-dashoffset:0}}.trae-browser-inspect-drag-trail.trae-drag-fade{animation:trae-browser-inspect-trail-fade 400ms ease-out forwards}@keyframes trae-browser-inspect-trail-fade{0%{opacity:1}100%{opacity:0}}</style><script type="module">(async () => {
   try {
     const client = await import('/@vite/client');
     const hmr = client.createHotContext('hmr-handler/fake.js');
-    hmr.on('vite:afterUpdate', window['__ICUBE_WEBVIEW_HMR_CALLBACK_1787069998562']);
+    hmr.on('vite:afterUpdate', window['__ICUBE_WEBVIEW_HMR_CALLBACK_1787207817268']);
   } catch {}
 })();</script><style>.buttonsCard-bTXa5j {
   padding: var(--spacer-4);
@@ -2431,7 +2649,7 @@
   try {
     const client = await import('/@vite/client');
     const hmr = client.createHotContext('hmr-handler/fake.js');
-    hmr.on('vite:afterUpdate', window['__ICUBE_WEBVIEW_HMR_CALLBACK_1787069998577']);
+    hmr.on('vite:afterUpdate', window['__ICUBE_WEBVIEW_HMR_CALLBACK_1787207817287']);
   } catch {}
 })();</script><style>.buttonsCard-bTXa5j {
   padding: var(--spacer-4);
@@ -3977,43 +4195,79 @@
       </style></head>
 <body>
 <canvas id="confetti-canvas"></canvas>
-    <header>
-        <div class="header-controls">
-            <div class="streak-badge" id="streak-badge" title="連續學習天數">
-                <span id="streak-count">0</span>
-                <span style="font-size:0.7rem;letter-spacing:0.05em;">日</span>
+    <aside class="sidebar" id="sidebar" role="navigation" aria-label="主選單">
+        <div class="sidebar-top">
+            <div class="sidebar-logo">
+                <div class="logo-icon">V</div>
+                <div class="sidebar-logo-text">
+                    <h1>VocabMaster</h1>
+                    <p>DSE English 詞彙</p>
+                </div>
             </div>
-            <div class="ranking-badge" id="ranking-badge" title="等級排名">
-                <span class="ranking-level">Lv.</span>
-                <span id="ranking-level-num">1</span>
-            </div>
-            <div class="tier-badge" id="tier-badge" title="段位" style="border-color: rgb(205, 127, 50); color: rgb(205, 127, 50);">
-                <span class="tier-icon" id="tier-badge-icon">🛡️</span>
-                <span id="tier-badge-name">Bronze</span>
-                <span class="tier-division" id="tier-badge-div">D4</span>
-            </div>
-            <button class="theme-toggle" id="theme-toggle" title="切換主題">月</button>
+            <nav class="sidebar-nav" id="sidebar-nav" role="tablist" aria-label="功能選項">
+                <button class="sidebar-nav-btn" id="tab-list" data-tab="list" role="tab" aria-selected="false" aria-controls="view-list">
+                    <span class="sidebar-nav-icon">📖</span>
+                    <span class="sidebar-nav-label">生字列表</span>
+                </button>
+                <button class="sidebar-nav-btn" id="tab-discover" data-tab="discover" role="tab" aria-selected="false" aria-controls="view-discover">
+                    <span class="sidebar-nav-icon">🔍</span>
+                    <span class="sidebar-nav-label">探索生字</span>
+                </button>
+                <button class="sidebar-nav-btn active" id="tab-dict" data-tab="dict" role="tab" aria-selected="true" aria-controls="view-dict">
+                    <span class="sidebar-nav-icon">📚</span>
+                    <span class="sidebar-nav-label">字典查詢</span>
+                </button>
+                <button class="sidebar-nav-btn" id="tab-flash" data-tab="flash" role="tab" aria-selected="false" aria-controls="view-flash">
+                    <span class="sidebar-nav-icon">🎴</span>
+                    <span class="sidebar-nav-label">閃卡模式</span>
+                </button>
+                <button class="sidebar-nav-btn" id="tab-quiz" data-tab="quiz" role="tab" aria-selected="false" aria-controls="view-quiz">
+                    <span class="sidebar-nav-icon">✍️</span>
+                    <span class="sidebar-nav-label">測驗模式</span>
+                </button>
+                <button class="sidebar-nav-btn" id="tab-typing" data-tab="typing" role="tab" aria-selected="false" aria-controls="view-typing">
+                    <span class="sidebar-nav-icon">⌨️</span>
+                    <span class="sidebar-nav-label">打字練習</span>
+                </button>
+                <button class="sidebar-nav-btn" id="tab-match" data-tab="match" role="tab" aria-selected="false" aria-controls="view-match">
+                    <span class="sidebar-nav-icon">🧩</span>
+                    <span class="sidebar-nav-label">配對遊戲</span>
+                </button>
+                <button class="sidebar-nav-btn" id="tab-progress" data-tab="progress" role="tab" aria-selected="false" aria-controls="view-progress">
+                    <span class="sidebar-nav-icon">📊</span>
+                    <span class="sidebar-nav-label">學習進度</span>
+                </button>
+            </nav>
         </div>
-        <h1>生字本 Vocab Book</h1>
-        <p>離線英文生字學習工具 — 閃卡、測驗、進度追蹤</p>
-        <nav class="tab-nav-wrap"><div class="tab-nav">
-            <button class="tab-btn active" data-tab="list">生字列表</button>
-            <button class="tab-btn" data-tab="discover">探索生字</button>
-            <button class="tab-btn" data-tab="dict">字典查詢</button>
-            <button class="tab-btn" data-tab="flash">閃卡模式</button>
-            <button class="tab-btn" data-tab="quiz">測驗模式</button>
-            <button class="tab-btn" data-tab="typing">打字練習</button>
-            <button class="tab-btn" data-tab="match">配對遊戲</button>
-            <button class="tab-btn" data-tab="progress">學習進度</button>
-        </div></nav>
-    </header>
+        <div class="sidebar-bottom">
+            <div class="sidebar-badges">
+                <div class="sidebar-badge sidebar-streak" id="streak-badge" title="連續學習天數">
+                    <span class="sidebar-badge-icon">🔥</span>
+                    <span class="sidebar-badge-val" id="streak-count">0</span>
+                    <span class="sidebar-badge-suffix">日</span>
+                </div>
+                <div class="sidebar-badge sidebar-rank" id="ranking-badge" title="等級排名">
+                    <span class="sidebar-badge-label">Lv.</span>
+                    <span class="sidebar-badge-val" id="ranking-level-num">1</span>
+                </div>
+                <div class="sidebar-badge sidebar-tier" id="tier-badge" title="段位" style="border-color: rgb(205, 127, 50); color: rgb(205, 127, 50);">
+                    <span class="sidebar-badge-icon" id="tier-badge-icon">🛡️</span>
+                    <span class="sidebar-badge-val" id="tier-badge-name">Bronze</span>
+                    <span class="sidebar-badge-suffix" id="tier-badge-div">D4</span>
+                </div>
+            </div>
+            <button class="sidebar-theme-btn" id="theme-toggle" title="切換主題" aria-label="切換主題" style="position: relative;">月</button>
+        </div>
+    </aside>
+    <button class="sidebar-toggle" id="sidebar-toggle" title="選單" aria-label="開啟選單">☰</button>
+    <div class="app-overlay" id="app-overlay"></div>
 
-    <div class="container">
-        <section id="view-list" class="active">
+    <div class="container" id="main-content">
+        <section id="view-list" class="" role="tabpanel" aria-labelledby="tab-list">
             <div class="filter-row">
                 <div class="search-with-mic">
                     <input type="text" id="search-input" placeholder="搜尋英文或中文...">
-                    <button class="mic-btn" id="mic-search" title="語音搜尋" onclick="startSpeechSearch('search-input', this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg></button>
+                    <button class="mic-btn" id="mic-search" title="語音搜尋" aria-label="語音搜尋" onclick="startSpeechSearch('search-input', this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg></button>
                 </div>
                 <select id="filter-category"><option value="">所有分類</option><option value="DSE 5**">DSE 5**</option><option value="日常">日常</option><option value="旅遊">旅遊</option></select>
                 <select id="filter-sort">
@@ -4025,10 +4279,10 @@
                 <button class="btn btn-primary" id="btn-add-word">新增生字</button>
             </div>
             <div class="result-count" id="result-count">共 5 個生字</div>
-            <div id="word-list"><div class="word-card" data-id="seed5"><div class="word-header"><div><span class="word-title" onclick="showWordDetail('seed5')">resilient</span> <span class="word-phonetic">/rɪˈzɪliənt/</span> <span class="word-pos">adj.</span><button class="tts-btn" onclick="speakWord('resilient')" title="播放發音">▶</button></div><div><span class="srs-badge due">待複習</span></div></div><div class="word-meaning">有韌性的；適應力強的</div><div class="word-example">Children are often more resilient than adults think.</div><div class="word-example-zh">孩子往往比大人想的更有韌性。</div><div class="word-footer"><div class="word-meta"><span class="badge badge-category">日常</span><span class="badge badge-difficulty">★★★☆☆</span><span class="badge badge-reviews">複習 2 次</span></div><div class="word-actions"><button class="btn btn-secondary" onclick="editWord('seed5')">編輯</button><button class="btn btn-secondary" onclick="toggleMastered('seed5')">標記掌握</button><button class="btn btn-danger" onclick="confirmDelete('seed5')">刪除</button></div></div></div><div class="word-card" data-id="seed4"><div class="word-header"><div><span class="word-title" onclick="showWordDetail('seed4')">inevitable</span> <span class="word-phonetic">/ɪnˈevɪtəbl/</span> <span class="word-pos">adj.</span><button class="tts-btn" onclick="speakWord('inevitable')" title="播放發音">▶</button></div><div><span class="srs-badge due">待複習</span></div></div><div class="word-meaning">不可避免的</div><div class="word-example">Change is inevitable in a growing organisation.</div><div class="word-example-zh">在發展中的組織裡，改變是不可避免的。</div><div class="word-footer"><div class="word-meta"><span class="badge badge-category">日常</span><span class="badge badge-difficulty">★★★★☆</span><span class="badge badge-reviews">複習 0 次</span></div><div class="word-actions"><button class="btn btn-secondary" onclick="editWord('seed4')">編輯</button><button class="btn btn-secondary" onclick="toggleMastered('seed4')">標記掌握</button><button class="btn btn-danger" onclick="confirmDelete('seed4')">刪除</button></div></div></div><div class="word-card mastered" data-id="seed3"><div class="word-header"><div><span class="word-title" onclick="showWordDetail('seed3')">compromise</span> <span class="word-phonetic">/ˈkɒmprəmaɪz/</span> <span class="word-pos">n.</span><button class="tts-btn" onclick="speakWord('compromise')" title="播放發音">▶</button></div><div><span class="srs-badge">間隔 30 天</span></div><span class="badge badge-mastered">已掌握</span></div><div class="word-meaning">妥協；折衷</div><div class="word-example">Both sides reached a compromise after long negotiations.</div><div class="word-example-zh">經過長時間談判，雙方達成了妥協。</div><div class="word-footer"><div class="word-meta"><span class="badge badge-category">DSE 5**</span><span class="badge badge-difficulty">★★★☆☆</span><span class="badge badge-reviews">複習 5 次</span></div><div class="word-actions"><button class="btn btn-secondary" onclick="editWord('seed3')">編輯</button><button class="btn btn-secondary" onclick="toggleMastered('seed3')">取消掌握</button><button class="btn btn-danger" onclick="confirmDelete('seed3')">刪除</button></div></div></div><div class="word-card" data-id="seed2"><div class="word-header"><div><span class="word-title" onclick="showWordDetail('seed2')">elaborate</span> <span class="word-phonetic">/ɪˈlæbərət/</span> <span class="word-pos">adj.</span><button class="tts-btn" onclick="speakWord('elaborate')" title="播放發音">▶</button></div><div><span class="srs-badge due">待複習</span></div></div><div class="word-meaning">精心設計的；詳盡的</div><div class="word-example">She made elaborate preparations for the party.</div><div class="word-example-zh">她為派對做了精心的準備。</div><div class="word-footer"><div class="word-meta"><span class="badge badge-category">DSE 5**</span><span class="badge badge-difficulty">★★★★☆</span><span class="badge badge-reviews">複習 1 次</span></div><div class="word-actions"><button class="btn btn-secondary" onclick="editWord('seed2')">編輯</button><button class="btn btn-secondary" onclick="toggleMastered('seed2')">標記掌握</button><button class="btn btn-danger" onclick="confirmDelete('seed2')">刪除</button></div></div></div><div class="word-card" data-id="seed1"><div class="word-header"><div><span class="word-title" onclick="showWordDetail('seed1')">abandon</span> <span class="word-phonetic">/əˈbændən/</span> <span class="word-pos">v.</span><button class="tts-btn" onclick="speakWord('abandon')" title="播放發音">▶</button></div><div><span class="srs-badge">間隔 3 天</span></div></div><div class="word-meaning">放棄；遺棄</div><div class="word-example">He abandoned the plan due to lack of funding.</div><div class="word-example-zh">他因缺乏資金而放棄了那個計劃。</div><div class="word-footer"><div class="word-meta"><span class="badge badge-category">DSE 5**</span><span class="badge badge-difficulty">★★★☆☆</span><span class="badge badge-reviews">複習 3 次</span></div><div class="word-actions"><button class="btn btn-secondary" onclick="editWord('seed1')">編輯</button><button class="btn btn-secondary" onclick="toggleMastered('seed1')">標記掌握</button><button class="btn btn-danger" onclick="confirmDelete('seed1')">刪除</button></div></div></div></div>
+            <div id="word-list" aria-live="polite"><div class="word-card animate-in" data-id="seed5" style="animation-delay: 0ms;"><div class="word-header"><div><span class="word-title" onclick="showWordDetail('seed5')">resilient</span> <span class="word-phonetic">/rɪˈzɪliənt/</span> <span class="word-pos">adj.</span><button class="tts-btn" onclick="speakWord('resilient')" title="播放發音">▶</button></div><div><span class="srs-badge due">待複習</span></div></div><div class="word-meaning">有韌性的；適應力強的</div><div class="word-example">Children are often more resilient than adults think.</div><div class="word-example-zh">孩子往往比大人想的更有韌性。</div><div class="word-footer"><div class="word-meta"><span class="badge badge-category">日常</span><span class="badge badge-level" style="background:rgba(245,158,11,0.12);color:#F59E0B;">進階<span class="badge-level-en">Advanced</span></span><span class="badge badge-reviews">複習 2 次</span></div><div class="word-actions"><button class="btn btn-secondary" onclick="editWord('seed5')">編輯</button><button class="btn btn-secondary" onclick="toggleMastered('seed5')">標記掌握</button><button class="btn btn-danger" onclick="confirmDelete('seed5')">刪除</button></div></div></div><div class="word-card animate-in" data-id="seed4" style="animation-delay: 40ms;"><div class="word-header"><div><span class="word-title" onclick="showWordDetail('seed4')">inevitable</span> <span class="word-phonetic">/ɪnˈevɪtəbl/</span> <span class="word-pos">adj.</span><button class="tts-btn" onclick="speakWord('inevitable')" title="播放發音">▶</button></div><div><span class="srs-badge due">待複習</span></div></div><div class="word-meaning">不可避免的</div><div class="word-example">Change is inevitable in a growing organisation.</div><div class="word-example-zh">在發展中的組織裡，改變是不可避免的。</div><div class="word-footer"><div class="word-meta"><span class="badge badge-category">日常</span><span class="badge badge-level" style="background:rgba(249,115,22,0.12);color:#F97316;">高級<span class="badge-level-en">Expert</span></span><span class="badge badge-reviews">複習 0 次</span></div><div class="word-actions"><button class="btn btn-secondary" onclick="editWord('seed4')">編輯</button><button class="btn btn-secondary" onclick="toggleMastered('seed4')">標記掌握</button><button class="btn btn-danger" onclick="confirmDelete('seed4')">刪除</button></div></div></div><div class="word-card mastered animate-in" data-id="seed3" style="animation-delay: 80ms;"><div class="word-header"><div><span class="word-title" onclick="showWordDetail('seed3')">compromise</span> <span class="word-phonetic">/ˈkɒmprəmaɪz/</span> <span class="word-pos">n.</span><button class="tts-btn" onclick="speakWord('compromise')" title="播放發音">▶</button></div><div><span class="srs-badge">間隔 30 天</span></div><span class="badge badge-mastered">已掌握</span></div><div class="word-meaning">妥協；折衷</div><div class="word-example">Both sides reached a compromise after long negotiations.</div><div class="word-example-zh">經過長時間談判，雙方達成了妥協。</div><div class="word-footer"><div class="word-meta"><span class="badge badge-category">DSE 5**</span><span class="badge badge-level" style="background:rgba(249,115,22,0.12);color:#F97316;">高級<span class="badge-level-en">Expert</span></span><span class="badge badge-reviews">複習 5 次</span></div><div class="word-actions"><button class="btn btn-secondary" onclick="editWord('seed3')">編輯</button><button class="btn btn-secondary" onclick="toggleMastered('seed3')">取消掌握</button><button class="btn btn-danger" onclick="confirmDelete('seed3')">刪除</button></div></div></div><div class="word-card animate-in" data-id="seed2" style="animation-delay: 120ms;"><div class="word-header"><div><span class="word-title" onclick="showWordDetail('seed2')">elaborate</span> <span class="word-phonetic">/ɪˈlæbərət/</span> <span class="word-pos">adj.</span><button class="tts-btn" onclick="speakWord('elaborate')" title="播放發音">▶</button></div><div><span class="srs-badge due">待複習</span></div></div><div class="word-meaning">精心設計的；詳盡的</div><div class="word-example">She made elaborate preparations for the party.</div><div class="word-example-zh">她為派對做了精心的準備。</div><div class="word-footer"><div class="word-meta"><span class="badge badge-category">DSE 5**</span><span class="badge badge-level" style="background:rgba(249,115,22,0.12);color:#F97316;">高級<span class="badge-level-en">Expert</span></span><span class="badge badge-reviews">複習 1 次</span></div><div class="word-actions"><button class="btn btn-secondary" onclick="editWord('seed2')">編輯</button><button class="btn btn-secondary" onclick="toggleMastered('seed2')">標記掌握</button><button class="btn btn-danger" onclick="confirmDelete('seed2')">刪除</button></div></div></div><div class="word-card animate-in" data-id="seed1" style="animation-delay: 160ms;"><div class="word-header"><div><span class="word-title" onclick="showWordDetail('seed1')">abandon</span> <span class="word-phonetic">/əˈbændən/</span> <span class="word-pos">v.</span><button class="tts-btn" onclick="speakWord('abandon')" title="播放發音">▶</button></div><div><span class="srs-badge due">待複習</span></div></div><div class="word-meaning">放棄；遺棄</div><div class="word-example">He abandoned the plan due to lack of funding.</div><div class="word-example-zh">他因缺乏資金而放棄了那個計劃。</div><div class="word-footer"><div class="word-meta"><span class="badge badge-category">DSE 5**</span><span class="badge badge-level" style="background:rgba(245,158,11,0.12);color:#F59E0B;">進階<span class="badge-level-en">Advanced</span></span><span class="badge badge-reviews">複習 3 次</span></div><div class="word-actions"><button class="btn btn-secondary" onclick="editWord('seed1')">編輯</button><button class="btn btn-secondary" onclick="toggleMastered('seed1')">標記掌握</button><button class="btn btn-danger" onclick="confirmDelete('seed1')">刪除</button></div></div></div></div>
         </section>
 
-        <section id="view-discover">
+        <section id="view-discover" role="tabpanel" aria-labelledby="tab-discover">
             <div class="reel-topbar" id="reel-topbar">
                 <button class="reel-level-btn active" data-level="all">全部</button>
                 <button class="reel-level-btn" data-level="dse">DSE</button>
@@ -4039,7 +4293,7 @@
                 <button class="reel-level-btn" data-level="daily">日常</button>
             </div>
             <div class="reel-viewport" id="reel-viewport">
-                <div class="reel-track" id="reel-track" style="transform: translateY(0px);"><div class="reel-slide"><div class="reel-slide-num">01 / 10</div><div class="reel-level-tag">TOEFL</div><div class="reel-word">catalyst</div><div class="reel-phonetic">/ˈkætəlɪst/</div><div class="reel-pos">n.</div><div class="reel-meaning">催化劑；促使變化的因素</div><div class="reel-example">「The event was a catalyst for social change.」</div><div class="reel-example-zh">這事件是社會變革的催化劑。</div><div class="reel-slide-actions"><button class="reel-tts-btn" onclick="speakWord('catalyst')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button><button class="reel-add-btn" onclick="reelAddWord(0, this)">加入生字本</button></div></div><div class="reel-slide"><div class="reel-slide-num">02 / 10</div><div class="reel-level-tag">BUSINESS</div><div class="reel-word">benchmark</div><div class="reel-phonetic">/ˈbentʃmɑːk/</div><div class="reel-pos">n.</div><div class="reel-meaning">基準；標準</div><div class="reel-example">「Our product sets the benchmark for quality.」</div><div class="reel-example-zh">我們的產品為品質設定了基準。</div><div class="reel-slide-actions"><button class="reel-tts-btn" onclick="speakWord('benchmark')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button><button class="reel-add-btn" onclick="reelAddWord(1, this)">加入生字本</button></div></div><div class="reel-slide"><div class="reel-slide-num">03 / 10</div><div class="reel-level-tag">TOEFL</div><div class="reel-word">adamant</div><div class="reel-phonetic">/ˈædəmənt/</div><div class="reel-pos">adj.</div><div class="reel-meaning">堅定的；固執的</div><div class="reel-example">「She was adamant that she wouldn't change her mind.」</div><div class="reel-example-zh">她堅決不改變主意。</div><div class="reel-slide-actions"><button class="reel-tts-btn" onclick="speakWord('adamant')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button><button class="reel-add-btn" onclick="reelAddWord(2, this)">加入生字本</button></div></div><div class="reel-slide"><div class="reel-slide-num">04 / 10</div><div class="reel-level-tag">IELTS</div><div class="reel-word">spontaneous</div><div class="reel-phonetic">/spɒnˈteɪniəs/</div><div class="reel-pos">adj.</div><div class="reel-meaning">自發的；自然的</div><div class="reel-example">「They made a spontaneous decision to travel.」</div><div class="reel-example-zh">他們自發地決定去旅行。</div><div class="reel-slide-actions"><button class="reel-tts-btn" onclick="speakWord('spontaneous')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button><button class="reel-add-btn" onclick="reelAddWord(3, this)">加入生字本</button></div></div><div class="reel-slide"><div class="reel-slide-num">05 / 10</div><div class="reel-level-tag">ACADEMIC</div><div class="reel-word">encompass</div><div class="reel-phonetic">/ɪnˈkʌmpəs/</div><div class="reel-pos">v.</div><div class="reel-meaning">包含；涵蓋</div><div class="reel-example">「The role encompasses a wide range of responsibilities.」</div><div class="reel-example-zh">這個職位涵蓋廣泛的職責。</div><div class="reel-slide-actions"><button class="reel-tts-btn" onclick="speakWord('encompass')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button><button class="reel-add-btn" onclick="reelAddWord(4, this)">加入生字本</button></div></div><div class="reel-slide"><div class="reel-slide-num">06 / 10</div><div class="reel-level-tag">TOEFL</div><div class="reel-word">obsolete</div><div class="reel-phonetic">/ˌɒbsəˈliːt/</div><div class="reel-pos">adj.</div><div class="reel-meaning">過時的；廢棄的</div><div class="reel-example">「This technology will soon become obsolete.」</div><div class="reel-example-zh">這項技術很快就會過時。</div><div class="reel-slide-actions"><button class="reel-tts-btn" onclick="speakWord('obsolete')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button><button class="reel-add-btn" onclick="reelAddWord(5, this)">加入生字本</button></div></div><div class="reel-slide"><div class="reel-slide-num">07 / 10</div><div class="reel-level-tag">TOEFL</div><div class="reel-word">paradigm</div><div class="reel-phonetic">/ˈpærədaɪm/</div><div class="reel-pos">n.</div><div class="reel-meaning">範例；典範</div><div class="reel-example">「AI represents a new paradigm in computing.」</div><div class="reel-example-zh">人工智能代表了計算的新範式。</div><div class="reel-slide-actions"><button class="reel-tts-btn" onclick="speakWord('paradigm')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button><button class="reel-add-btn" onclick="reelAddWord(6, this)">加入生字本</button></div></div><div class="reel-slide"><div class="reel-slide-num">08 / 10</div><div class="reel-level-tag">TOEFL</div><div class="reel-word">mitigate</div><div class="reel-phonetic">/ˈmɪtɪɡeɪt/</div><div class="reel-pos">v.</div><div class="reel-meaning">減輕；緩和</div><div class="reel-example">「We must take steps to mitigate climate change.」</div><div class="reel-example-zh">我們必須採取措施減輕氣候變化的影響。</div><div class="reel-slide-actions"><button class="reel-tts-btn" onclick="speakWord('mitigate')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button><button class="reel-add-btn" onclick="reelAddWord(7, this)">加入生字本</button></div></div><div class="reel-slide"><div class="reel-slide-num">09 / 10</div><div class="reel-level-tag">ACADEMIC</div><div class="reel-word">scrutinize</div><div class="reel-phonetic">/ˈskruːtənaɪz/</div><div class="reel-pos">v.</div><div class="reel-meaning">仔細檢查；詳審</div><div class="reel-example">「The committee will scrutinize every detail of the budget.」</div><div class="reel-example-zh">委員會將仔細審查預算的每個細節。</div><div class="reel-slide-actions"><button class="reel-tts-btn" onclick="speakWord('scrutinize')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button><button class="reel-add-btn" onclick="reelAddWord(8, this)">加入生字本</button></div></div><div class="reel-slide"><div class="reel-slide-num">10 / 10</div><div class="reel-level-tag">IELTS</div><div class="reel-word">perceive</div><div class="reel-phonetic">/pəˈsiːv/</div><div class="reel-pos">v.</div><div class="reel-meaning">察覺；感知；理解</div><div class="reel-example">「How others perceive you matters in job interviews.」</div><div class="reel-example-zh">別人如何看待你在求職面試中很重要。</div><div class="reel-slide-actions"><button class="reel-tts-btn" onclick="speakWord('perceive')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button><button class="reel-add-btn" onclick="reelAddWord(9, this)">加入生字本</button></div></div></div>
+                <div class="reel-track" id="reel-track" style="transform: translateY(0px);"><div class="reel-slide"><div class="reel-slide-num">01 / 10</div><div class="reel-level-tag">BUSINESS</div><div class="reel-word">fluctuate</div><div class="reel-phonetic">/ˈflʌktʃueɪt/</div><div class="reel-pos">v.</div><div class="reel-meaning">波動；起伏</div><div class="reel-example">「Stock prices fluctuate throughout the trading day.」</div><div class="reel-example-zh">股價在交易日內波動。</div><div class="reel-slide-actions"><button class="reel-tts-btn" onclick="speakWord('fluctuate')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button><button class="reel-add-btn" onclick="reelAddWord(0, this)">加入生字本</button></div></div><div class="reel-slide"><div class="reel-slide-num">02 / 10</div><div class="reel-level-tag">IELTS</div><div class="reel-word">spontaneous</div><div class="reel-phonetic">/spɒnˈteɪniəs/</div><div class="reel-pos">adj.</div><div class="reel-meaning">自發的；自然的</div><div class="reel-example">「They made a spontaneous decision to travel.」</div><div class="reel-example-zh">他們自發地決定去旅行。</div><div class="reel-slide-actions"><button class="reel-tts-btn" onclick="speakWord('spontaneous')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button><button class="reel-add-btn" onclick="reelAddWord(1, this)">加入生字本</button></div></div><div class="reel-slide"><div class="reel-slide-num">03 / 10</div><div class="reel-level-tag">IELTS</div><div class="reel-word">diminish</div><div class="reel-phonetic">/dɪˈmɪnɪʃ/</div><div class="reel-pos">v.</div><div class="reel-meaning">減少；縮小</div><div class="reel-example">「The pain will gradually diminish over time.」</div><div class="reel-example-zh">疼痛會隨時間逐漸減輕。</div><div class="reel-slide-actions"><button class="reel-tts-btn" onclick="speakWord('diminish')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button><button class="reel-add-btn" onclick="reelAddWord(2, this)">加入生字本</button></div></div><div class="reel-slide"><div class="reel-slide-num">04 / 10</div><div class="reel-level-tag">ACADEMIC</div><div class="reel-word">fundamentally</div><div class="reel-phonetic">/ˌfʌndəˈmentəli/</div><div class="reel-pos">adv.</div><div class="reel-meaning">根本上；基本上</div><div class="reel-example">「The two approaches are fundamentally different.」</div><div class="reel-example-zh">這兩種方法根本上是不同的。</div><div class="reel-slide-actions"><button class="reel-tts-btn" onclick="speakWord('fundamentally')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button><button class="reel-add-btn" onclick="reelAddWord(3, this)">加入生字本</button></div></div><div class="reel-slide"><div class="reel-slide-num">05 / 10</div><div class="reel-level-tag">BUSINESS</div><div class="reel-word">endorse</div><div class="reel-phonetic">/ɪnˈdɔːs/</div><div class="reel-pos">v.</div><div class="reel-meaning">認可；贊同；代言</div><div class="reel-example">「Several celebrities endorsed the new brand.」</div><div class="reel-example-zh">幾位名人為新品牌代言。</div><div class="reel-slide-actions"><button class="reel-tts-btn" onclick="speakWord('endorse')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button><button class="reel-add-btn" onclick="reelAddWord(4, this)">加入生字本</button></div></div><div class="reel-slide"><div class="reel-slide-num">06 / 10</div><div class="reel-level-tag">TOEFL</div><div class="reel-word">catalyst</div><div class="reel-phonetic">/ˈkætəlɪst/</div><div class="reel-pos">n.</div><div class="reel-meaning">催化劑；促使變化的因素</div><div class="reel-example">「The event was a catalyst for social change.」</div><div class="reel-example-zh">這事件是社會變革的催化劑。</div><div class="reel-slide-actions"><button class="reel-tts-btn" onclick="speakWord('catalyst')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button><button class="reel-add-btn" onclick="reelAddWord(5, this)">加入生字本</button></div></div><div class="reel-slide"><div class="reel-slide-num">07 / 10</div><div class="reel-level-tag">TOEFL</div><div class="reel-word">eloquent</div><div class="reel-phonetic">/ˈeləkwənt/</div><div class="reel-pos">adj.</div><div class="reel-meaning">雄辯的；有說服力的</div><div class="reel-example">「He gave an eloquent speech at the graduation ceremony.」</div><div class="reel-example-zh">他在畢業典禮上發表了雄辯的演講。</div><div class="reel-slide-actions"><button class="reel-tts-btn" onclick="speakWord('eloquent')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button><button class="reel-add-btn" onclick="reelAddWord(6, this)">加入生字本</button></div></div><div class="reel-slide"><div class="reel-slide-num">08 / 10</div><div class="reel-level-tag">ACADEMIC</div><div class="reel-word">advocate</div><div class="reel-phonetic">/ˈædvəkət/</div><div class="reel-pos">v.</div><div class="reel-meaning">提倡；主張</div><div class="reel-example">「She advocates for equal rights in the workplace.」</div><div class="reel-example-zh">她倡導職場中的平權。</div><div class="reel-slide-actions"><button class="reel-tts-btn" onclick="speakWord('advocate')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button><button class="reel-add-btn" onclick="reelAddWord(7, this)">加入生字本</button></div></div><div class="reel-slide"><div class="reel-slide-num">09 / 10</div><div class="reel-level-tag">IELTS</div><div class="reel-word">resilient</div><div class="reel-phonetic">/rɪˈzɪliənt/</div><div class="reel-pos">adj.</div><div class="reel-meaning">有韌性的；適應力強的</div><div class="reel-example">「The economy has proven to be remarkably resilient.」</div><div class="reel-example-zh">經濟已證明具有非凡的韌性。</div><div class="reel-slide-actions"><button class="reel-tts-btn" onclick="speakWord('resilient')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button><button class="reel-add-btn added" onclick="reelAddWord(8, this)" disabled="">已加入</button></div></div><div class="reel-slide"><div class="reel-slide-num">10 / 10</div><div class="reel-level-tag">TOEFL</div><div class="reel-word">mitigate</div><div class="reel-phonetic">/ˈmɪtɪɡeɪt/</div><div class="reel-pos">v.</div><div class="reel-meaning">減輕；緩和</div><div class="reel-example">「We must take steps to mitigate climate change.」</div><div class="reel-example-zh">我們必須採取措施減輕氣候變化的影響。</div><div class="reel-slide-actions"><button class="reel-tts-btn" onclick="speakWord('mitigate')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button><button class="reel-add-btn" onclick="reelAddWord(9, this)">加入生字本</button></div></div></div>
                 <div class="reel-nav">
                     <button class="reel-nav-btn" id="reel-prev" onclick="reelPrev()" disabled="">▲</button>
                     <span class="reel-counter" id="reel-counter">1 / 10</span>
@@ -4049,19 +4303,20 @@
             <div class="reel-dots" id="reel-dots"><div class="reel-dot active" onclick="reelGoTo(0)"></div><div class="reel-dot" onclick="reelGoTo(1)"></div><div class="reel-dot" onclick="reelGoTo(2)"></div><div class="reel-dot" onclick="reelGoTo(3)"></div><div class="reel-dot" onclick="reelGoTo(4)"></div><div class="reel-dot" onclick="reelGoTo(5)"></div><div class="reel-dot" onclick="reelGoTo(6)"></div><div class="reel-dot" onclick="reelGoTo(7)"></div><div class="reel-dot" onclick="reelGoTo(8)"></div><div class="reel-dot" onclick="reelGoTo(9)"></div></div>
         </section>
 
-        <section id="view-dict">
+        <section id="view-dict" role="tabpanel" aria-labelledby="tab-dict" class="active">
             <div class="dict-search-row">
                 <div class="search-with-mic" style="flex:1;">
-                    <input type="text" id="dict-input" placeholder="輸入英文單字查詢字典..." autocomplete="off">
-                    <button class="mic-btn" id="mic-dict" title="語音查詢" onclick="startSpeechSearch('dict-input', this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg></button>
+                    <input type="text" id="dict-input" placeholder="輸入英文單字查詢字典..." autocomplete="off" style="position: relative;">
+                    <button class="dict-input-clear" id="dict-input-clear" title="清除輸入" aria-label="清除輸入" style="display:none;">✕</button>
+                    <button class="mic-btn" id="mic-dict" title="語音查詢" aria-label="語音搜尋" onclick="startSpeechSearch('dict-input', this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg></button>
                 </div>
                 <button class="btn btn-primary" id="btn-dict-search">查詢</button>
             </div>
-            <p class="dict-hint">資料來源：Free Dictionary API（dictionaryapi.dev）— 需要網路連線</p>
-            <div id="dict-results"></div>
+            <p class="dict-hint">資料來源：ECDICT Traditional Chinese（GitHub）— 需要網路連線</p>
+            <div id="dict-results"><div class="search-history"><span style="color:var(--text-secondary);font-size:0.85rem;">最近搜尋：</span><span class="history-chip" onclick="quickSearch('standup')">standup</span></div></div>
         </section>
 
-        <section id="view-flash">
+        <section id="view-flash" role="tabpanel" aria-labelledby="tab-flash">
             <div class="flashcard-area">
                 <div class="filter-row" style="justify-content:center; margin-bottom:20px;">
                     <select id="flash-category"><option value="">所有分類</option><option value="DSE 5**">DSE 5**</option><option value="日常">日常</option><option value="旅遊">旅遊</option></select>
@@ -4104,7 +4359,7 @@
             </div>
         </section>
 
-        <section id="view-quiz">
+        <section id="view-quiz" role="tabpanel" aria-labelledby="tab-quiz">
             <div class="quiz-area">
                 <div id="quiz-setup" class="filter-row" style="justify-content:center; margin-bottom:20px;">
                     <select id="quiz-category"><option value="">所有分類</option><option value="DSE 5**">DSE 5**</option><option value="日常">日常</option><option value="旅遊">旅遊</option></select>
@@ -4131,7 +4386,7 @@
             </div>
 </section>
 
-        <section id="view-typing">
+        <section id="view-typing" role="tabpanel" aria-labelledby="tab-typing">
             <div class="typing-area">
                 <div class="filter-row" style="justify-content:center; margin-bottom:20px;">
                     <select id="typing-category"><option value="">所有分類</option><option value="DSE 5**">DSE 5**</option><option value="日常">日常</option><option value="旅遊">旅遊</option></select>
@@ -4157,7 +4412,7 @@
             </div>
         </section>
 
-        <section id="view-match">
+        <section id="view-match" role="tabpanel" aria-labelledby="tab-match">
             <div class="matching-area">
                 <div class="filter-row" style="justify-content:center; margin-bottom:20px;">
                     <select id="match-category"><option value="">所有分類</option><option value="DSE 5**">DSE 5**</option><option value="日常">日常</option><option value="旅遊">旅遊</option></select>
@@ -4174,11 +4429,18 @@
             </div>
         </section>
 
-<section id="view-progress">
+<section id="view-progress" role="tabpanel" aria-labelledby="tab-progress">
             <div id="wotd-container"><div class="wotd-card"><div class="wotd-word" onclick="showWordDetail('seed4')">inevitable<button class="tts-btn" onclick="speakWord('inevitable')">▶</button></div><div class="wotd-meaning">不可避免的</div><div class="wotd-example">「Change is inevitable in a growing organisation.」</div><div style="margin-top:12px;"><button class="btn btn-primary" onclick="speakWord('inevitable')">練習發音</button></div></div></div>
             <div class="mastery-ring-container" id="mastery-ring"><svg width="160" height="160"><circle cx="80" cy="80" r="74" fill="none" stroke="var(--bg-secondary)" stroke-width="12"></circle><circle cx="80" cy="80" r="74" fill="none" stroke="var(--success)" stroke-width="12" stroke-dasharray="464.9557127312894" stroke-dashoffset="371.9645701850315" stroke-linecap="round"></circle></svg><div style="text-align:center;margin-top:-100px;position:relative;"><div style="font-size:2rem;font-weight:700;color:var(--success);">20%</div><div style="color:var(--text-secondary);font-size:0.85rem;">掌握率</div></div><div style="height:30px;"></div></div>
-            <div class="rank-card" id="rank-card"><div class="rank-header"><div class="rank-icon">🌱</div><div class="rank-info"><h3>等級 1 - 初心者</h3><p>已收集 5 個生字，掌握 1 個</p></div></div><div class="rank-xp-bar"><div class="rank-xp-label"><span>經驗值：97 XP</span><span>下一等級：100 XP</span></div><div class="rank-progress-track"><div class="rank-progress-fill" style="width:97%"></div></div></div><div class="rank-levels"><h4 style="color:var(--text-secondary);font-size:0.85rem;margin-bottom:12px;">等級一覽</h4><div class="rank-level-item current"><div class="rank-level-num">1</div><div class="rank-level-name">🌱 初心者</div><div class="rank-level-xp">0 XP</div></div><div class="rank-level-item locked"><div class="rank-level-num">2</div><div class="rank-level-name">📖 學習新手</div><div class="rank-level-xp">100 XP</div></div><div class="rank-level-item locked"><div class="rank-level-num">3</div><div class="rank-level-name">📝 勤奮學生</div><div class="rank-level-xp">300 XP</div></div><div class="rank-level-item locked"><div class="rank-level-num">4</div><div class="rank-level-name">📚 積極學習者</div><div class="rank-level-xp">600 XP</div></div><div class="rank-level-item locked"><div class="rank-level-num">5</div><div class="rank-level-name">🔍 詞彙探索者</div><div class="rank-level-xp">1000 XP</div></div><div class="rank-level-item locked"><div class="rank-level-num">6</div><div class="rank-level-name">⚡ 學習高手</div><div class="rank-level-xp">1500 XP</div></div><div class="rank-level-item locked"><div class="rank-level-num">7</div><div class="rank-level-name">🎯 閱讀達人</div><div class="rank-level-xp">2200 XP</div></div><div class="rank-level-item locked"><div class="rank-level-num">8</div><div class="rank-level-name">🎓 詞彙學者</div><div class="rank-level-xp">3000 XP</div></div><div class="rank-level-item locked"><div class="rank-level-num">9</div><div class="rank-level-name">🏆 語言學家</div><div class="rank-level-xp">4000 XP</div></div><div class="rank-level-item locked"><div class="rank-level-num">10</div><div class="rank-level-name">👑 詞彙大師</div><div class="rank-level-xp">5000 XP</div></div></div><div class="tier-card"><div class="tier-header-banner" style="background: linear-gradient(135deg, #CD7F32CC, #CD7F3288); color: #fff;"><span class="tier-header-icon">🛡️</span><div class="tier-header-name">青銅級 Bronze</div><div class="tier-header-division">Division 4</div><div class="tier-xp-info">147 XP → 300 XP</div><div class="tier-progress-bar"><div class="tier-progress-fill" style="width:23.5%"></div></div></div><div class="tier-ladder"><div class="tier-ladder-title">段位階梯 TIER LADDER</div><div class="tier-ladder-item locked"><div class="tier-ladder-icon">👑</div><div class="tier-ladder-info"><div class="tier-ladder-name" style="">傳說 <span style="opacity:0.5;font-size:0.75rem;">Legend</span></div><div class="tier-ladder-xp">7000 XP 以上</div></div></div><div class="tier-ladder-item locked"><div class="tier-ladder-icon">⚡</div><div class="tier-ladder-info"><div class="tier-ladder-name" style="">宗師 <span style="opacity:0.5;font-size:0.75rem;">Grandmaster</span></div><div class="tier-ladder-xp">4800 XP ~ 7000 XP</div></div></div><div class="tier-ladder-item locked"><div class="tier-ladder-icon">🔮</div><div class="tier-ladder-info"><div class="tier-ladder-name" style="">大師 <span style="opacity:0.5;font-size:0.75rem;">Master</span></div><div class="tier-ladder-xp">3200 XP ~ 4800 XP</div></div></div><div class="tier-ladder-item locked"><div class="tier-ladder-icon">💠</div><div class="tier-ladder-info"><div class="tier-ladder-name" style="">鑽石級 <span style="opacity:0.5;font-size:0.75rem;">Diamond</span></div><div class="tier-ladder-xp">2000 XP ~ 3200 XP</div></div></div><div class="tier-ladder-item locked"><div class="tier-ladder-icon">💎</div><div class="tier-ladder-info"><div class="tier-ladder-name" style="">鉑金級 <span style="opacity:0.5;font-size:0.75rem;">Platinum</span></div><div class="tier-ladder-xp">1200 XP ~ 2000 XP</div></div></div><div class="tier-ladder-item locked"><div class="tier-ladder-icon">🏅</div><div class="tier-ladder-info"><div class="tier-ladder-name" style="">黃金級 <span style="opacity:0.5;font-size:0.75rem;">Gold</span></div><div class="tier-ladder-xp">600 XP ~ 1200 XP</div></div></div><div class="tier-ladder-item locked"><div class="tier-ladder-icon">✨</div><div class="tier-ladder-info"><div class="tier-ladder-name" style="">白銀級 <span style="opacity:0.5;font-size:0.75rem;">Silver</span></div><div class="tier-ladder-xp">300 XP ~ 600 XP</div></div></div><div class="tier-ladder-item current"><div class="tier-ladder-icon">🛡️</div><div class="tier-ladder-info"><div class="tier-ladder-name" style="color:#CD7F32">青銅級 <span style="opacity:0.5;font-size:0.75rem;">Bronze</span></div><div class="tier-ladder-xp">100 XP ~ 300 XP</div></div><div class="tier-ladder-check" style="color:#CD7F32">◄</div></div><div class="tier-ladder-item"><div class="tier-ladder-icon">⚔️</div><div class="tier-ladder-info"><div class="tier-ladder-name" style="">鐵級 <span style="opacity:0.5;font-size:0.75rem;">Iron</span></div><div class="tier-ladder-xp">0 XP ~ 100 XP</div></div><div class="tier-ladder-check">✓</div></div></div></div><div class="ebbinghaus-card"><div class="ebbinghaus-title">🧠 艾賓浩斯遺忘曲線</div><div class="ebbinghaus-subtitle">基於你的複習數據計算記憶保持率衰減</div><div class="ebbinghaus-canvas-wrap"><canvas id="ebbinghaus-canvas" width="0" height="0" style="width: 0px; height: 0px;"></canvas></div><div class="ebbinghaus-stats"><div class="ebbinghaus-stat"><div class="ebbinghaus-stat-value" style="color:var(--danger)">44%</div><div class="ebbinghaus-stat-label">平均保持率</div></div><div class="ebbinghaus-stat"><div class="ebbinghaus-stat-value">4</div><div class="ebbinghaus-stat-label">需要複習</div></div><div class="ebbinghaus-stat"><div class="ebbinghaus-stat-value">5</div><div class="ebbinghaus-stat-label">總生字數</div></div></div><h4 style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:12px;">保持率分佈</h4><div class="retention-bar-container"><div class="retention-bar-header"><span class="retention-bar-label">90%+</span><span class="retention-bar-count">1</span></div><div class="retention-bar-track"><div class="retention-bar-fill" style="width:20%;background:#22C55E"></div></div></div><div class="retention-bar-container"><div class="retention-bar-header"><span class="retention-bar-label">70-89%</span><span class="retention-bar-count">0</span></div><div class="retention-bar-track"><div class="retention-bar-fill" style="width:0%;background:#3B82F6"></div></div></div><div class="retention-bar-container"><div class="retention-bar-header"><span class="retention-bar-label">50-69%</span><span class="retention-bar-count">1</span></div><div class="retention-bar-track"><div class="retention-bar-fill" style="width:20%;background:#F59E0B"></div></div></div><div class="retention-bar-container"><div class="retention-bar-header"><span class="retention-bar-label">30-49%</span><span class="retention-bar-count">1</span></div><div class="retention-bar-track"><div class="retention-bar-fill" style="width:20%;background:#F97316"></div></div></div><div class="retention-bar-container"><div class="retention-bar-header"><span class="retention-bar-label">&lt;30%</span><span class="retention-bar-count">2</span></div><div class="retention-bar-track"><div class="retention-bar-fill" style="width:40%;background:#EF4444"></div></div></div><h4 style="font-size:0.85rem;color:var(--text-secondary);margin:16px 0 12px;">⚠️ 需要複習的生字</h4><div class="needs-review-list"><div class="needs-review-item"><span class="needs-review-word">elaborate</span><span class="needs-review-meaning">精心設計的；詳盡的</span><span class="needs-review-retention critical">6%</span></div><div class="needs-review-item"><span class="needs-review-word">inevitable</span><span class="needs-review-meaning">不可避免的</span><span class="needs-review-retention critical">21%</span></div><div class="needs-review-item"><span class="needs-review-word">abandon</span><span class="needs-review-meaning">放棄；遺棄</span><span class="needs-review-retention warning">31%</span></div><div class="needs-review-item"><span class="needs-review-word">resilient</span><span class="needs-review-meaning">有韌性的；適應力強的</span><span class="needs-review-retention warning">64%</span></div></div></div></div>
-            <div class="dashboard-grid" id="dashboard-stats"><div class="stat-card"><div class="stat-value accent">5</div><div class="stat-label">總生字數</div></div><div class="stat-card"><div class="stat-value success">1</div><div class="stat-label">已掌握</div></div><div class="stat-card"><div class="stat-value warning">11</div><div class="stat-label">總複習次數</div></div><div class="stat-card"><div class="stat-value accent">82%</div><div class="stat-label">答對率</div></div><div class="stat-card"><div class="stat-value warning">0</div><div class="stat-label">連續天數</div></div><div class="stat-card"><div class="stat-value accent">3</div><div class="stat-label">待複習</div></div></div>
+            <div class="rank-card" id="rank-card"><div class="rank-header"><div class="rank-icon">🌱</div><div class="rank-info"><h3>等級 1 - 初心者</h3><p>已收集 5 個生字，掌握 1 個</p></div></div><div class="rank-xp-bar"><div class="rank-xp-label"><span>經驗值：97 XP</span><span>下一等級：100 XP</span></div><div class="rank-progress-track"><div class="rank-progress-fill" style="width:97%"></div></div></div><div class="rank-levels"><h4 style="color:var(--text-secondary);font-size:0.85rem;margin-bottom:12px;">等級一覽</h4><div class="rank-level-item current"><div class="rank-level-num">1</div><div class="rank-level-name">🌱 初心者</div><div class="rank-level-xp">0 XP</div></div><div class="rank-level-item locked"><div class="rank-level-num">2</div><div class="rank-level-name">📖 學習新手</div><div class="rank-level-xp">100 XP</div></div><div class="rank-level-item locked"><div class="rank-level-num">3</div><div class="rank-level-name">📝 勤奮學生</div><div class="rank-level-xp">300 XP</div></div><div class="rank-level-item locked"><div class="rank-level-num">4</div><div class="rank-level-name">📚 積極學習者</div><div class="rank-level-xp">600 XP</div></div><div class="rank-level-item locked"><div class="rank-level-num">5</div><div class="rank-level-name">🔍 詞彙探索者</div><div class="rank-level-xp">1000 XP</div></div><div class="rank-level-item locked"><div class="rank-level-num">6</div><div class="rank-level-name">⚡ 學習高手</div><div class="rank-level-xp">1500 XP</div></div><div class="rank-level-item locked"><div class="rank-level-num">7</div><div class="rank-level-name">🎯 閱讀達人</div><div class="rank-level-xp">2200 XP</div></div><div class="rank-level-item locked"><div class="rank-level-num">8</div><div class="rank-level-name">🎓 詞彙學者</div><div class="rank-level-xp">3000 XP</div></div><div class="rank-level-item locked"><div class="rank-level-num">9</div><div class="rank-level-name">🏆 語言學家</div><div class="rank-level-xp">4000 XP</div></div><div class="rank-level-item locked"><div class="rank-level-num">10</div><div class="rank-level-name">👑 詞彙大師</div><div class="rank-level-xp">5000 XP</div></div></div><div class="tier-card"><div class="tier-header-banner" style="background: linear-gradient(135deg, #CD7F32CC, #CD7F3288); color: #fff;"><span class="tier-header-icon">🛡️</span><div class="tier-header-name">青銅級 Bronze</div><div class="tier-header-division">Division 4</div><div class="tier-xp-info">147 XP → 300 XP</div><div class="tier-progress-bar"><div class="tier-progress-fill" style="width:23.5%"></div></div></div><div class="tier-ladder"><div class="tier-ladder-title">段位階梯 TIER LADDER</div><div class="tier-ladder-item locked"><div class="tier-ladder-icon">👑</div><div class="tier-ladder-info"><div class="tier-ladder-name" style="">傳說 <span style="opacity:0.5;font-size:0.75rem;">Legend</span></div><div class="tier-ladder-xp">7000 XP 以上</div></div></div><div class="tier-ladder-item locked"><div class="tier-ladder-icon">⚡</div><div class="tier-ladder-info"><div class="tier-ladder-name" style="">宗師 <span style="opacity:0.5;font-size:0.75rem;">Grandmaster</span></div><div class="tier-ladder-xp">4800 XP ~ 7000 XP</div></div></div><div class="tier-ladder-item locked"><div class="tier-ladder-icon">🔮</div><div class="tier-ladder-info"><div class="tier-ladder-name" style="">大師 <span style="opacity:0.5;font-size:0.75rem;">Master</span></div><div class="tier-ladder-xp">3200 XP ~ 4800 XP</div></div></div><div class="tier-ladder-item locked"><div class="tier-ladder-icon">💠</div><div class="tier-ladder-info"><div class="tier-ladder-name" style="">鑽石級 <span style="opacity:0.5;font-size:0.75rem;">Diamond</span></div><div class="tier-ladder-xp">2000 XP ~ 3200 XP</div></div></div><div class="tier-ladder-item locked"><div class="tier-ladder-icon">💎</div><div class="tier-ladder-info"><div class="tier-ladder-name" style="">鉑金級 <span style="opacity:0.5;font-size:0.75rem;">Platinum</span></div><div class="tier-ladder-xp">1200 XP ~ 2000 XP</div></div></div><div class="tier-ladder-item locked"><div class="tier-ladder-icon">🏅</div><div class="tier-ladder-info"><div class="tier-ladder-name" style="">黃金級 <span style="opacity:0.5;font-size:0.75rem;">Gold</span></div><div class="tier-ladder-xp">600 XP ~ 1200 XP</div></div></div><div class="tier-ladder-item locked"><div class="tier-ladder-icon">✨</div><div class="tier-ladder-info"><div class="tier-ladder-name" style="">白銀級 <span style="opacity:0.5;font-size:0.75rem;">Silver</span></div><div class="tier-ladder-xp">300 XP ~ 600 XP</div></div></div><div class="tier-ladder-item current"><div class="tier-ladder-icon">🛡️</div><div class="tier-ladder-info"><div class="tier-ladder-name" style="color:#CD7F32">青銅級 <span style="opacity:0.5;font-size:0.75rem;">Bronze</span></div><div class="tier-ladder-xp">100 XP ~ 300 XP</div></div><div class="tier-ladder-check" style="color:#CD7F32">◄</div></div><div class="tier-ladder-item"><div class="tier-ladder-icon">⚔️</div><div class="tier-ladder-info"><div class="tier-ladder-name" style="">鐵級 <span style="opacity:0.5;font-size:0.75rem;">Iron</span></div><div class="tier-ladder-xp">0 XP ~ 100 XP</div></div><div class="tier-ladder-check">✓</div></div></div></div><div class="ebbinghaus-card"><div class="ebbinghaus-title">🧠 艾賓浩斯遺忘曲線</div><div class="ebbinghaus-subtitle">基於你的複習數據計算記憶保持率衰減</div><div class="ebbinghaus-canvas-wrap"><canvas id="ebbinghaus-canvas" width="0" height="0" style="width: 0px; height: 0px;"></canvas></div><div class="ebbinghaus-stats"><div class="ebbinghaus-stat"><div class="ebbinghaus-stat-value" style="color:var(--danger)">28%</div><div class="ebbinghaus-stat-label">平均保持率</div></div><div class="ebbinghaus-stat"><div class="ebbinghaus-stat-value">4</div><div class="ebbinghaus-stat-label">需要複習</div></div><div class="ebbinghaus-stat"><div class="ebbinghaus-stat-value">5</div><div class="ebbinghaus-stat-label">總生字數</div></div></div><h4 style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:12px;">保持率分佈</h4><div class="retention-bar-container"><div class="retention-bar-header"><span class="retention-bar-label">90%+</span><span class="retention-bar-count">1</span></div><div class="retention-bar-track"><div class="retention-bar-fill" style="width:20%;background:#22C55E"></div></div></div><div class="retention-bar-container"><div class="retention-bar-header"><span class="retention-bar-label">70-89%</span><span class="retention-bar-count">0</span></div><div class="retention-bar-track"><div class="retention-bar-fill" style="width:0%;background:#3B82F6"></div></div></div><div class="retention-bar-container"><div class="retention-bar-header"><span class="retention-bar-label">50-69%</span><span class="retention-bar-count">0</span></div><div class="retention-bar-track"><div class="retention-bar-fill" style="width:0%;background:#F59E0B"></div></div></div><div class="retention-bar-container"><div class="retention-bar-header"><span class="retention-bar-label">30-49%</span><span class="retention-bar-count">0</span></div><div class="retention-bar-track"><div class="retention-bar-fill" style="width:0%;background:#F97316"></div></div></div><div class="retention-bar-container"><div class="retention-bar-header"><span class="retention-bar-label">&lt;30%</span><span class="retention-bar-count">4</span></div><div class="retention-bar-track"><div class="retention-bar-fill" style="width:80%;background:#EF4444"></div></div></div><h4 style="font-size:0.85rem;color:var(--text-secondary);margin:16px 0 12px;">⚠️ 需要複習的生字</h4><div class="needs-review-list"><div class="needs-review-item"><span class="needs-review-word">elaborate</span><span class="needs-review-meaning">精心設計的；詳盡的</span><span class="needs-review-retention critical">2%</span></div><div class="needs-review-item"><span class="needs-review-word">inevitable</span><span class="needs-review-meaning">不可避免的</span><span class="needs-review-retention critical">4%</span></div><div class="needs-review-item"><span class="needs-review-word">resilient</span><span class="needs-review-meaning">有韌性的；適應力強的</span><span class="needs-review-retention critical">19%</span></div><div class="needs-review-item"><span class="needs-review-word">abandon</span><span class="needs-review-meaning">放棄；遺棄</span><span class="needs-review-retention critical">22%</span></div></div></div></div>
+            <div class="dashboard-grid" id="dashboard-stats"><div class="stat-card"><div class="stat-value accent">5</div><div class="stat-label">總生字數</div></div><div class="stat-card"><div class="stat-value success">1</div><div class="stat-label">已掌握</div></div><div class="stat-card"><div class="stat-value warning">11</div><div class="stat-label">總複習次數</div></div><div class="stat-card"><div class="stat-value accent">82%</div><div class="stat-label">答對率</div></div><div class="stat-card"><div class="stat-value warning">0</div><div class="stat-label">連續天數</div></div><div class="stat-card"><div class="stat-value accent">4</div><div class="stat-label">待複習</div></div></div>
+            <div class="heatmap-card" id="heatmap-card">
+                <div class="heatmap-header">
+                    <h3>學習熱力圖</h3>
+                    <span class="heatmap-subtitle" id="heatmap-subtitle">近 35 日 · 0 天有學習</span>
+                </div>
+                <div class="heatmap-grid" id="heatmap-grid"><div class="heatmap-cell" title="2026-07-16: 0 次"></div><div class="heatmap-cell" title="2026-07-17: 0 次"></div><div class="heatmap-cell" title="2026-07-18: 0 次"></div><div class="heatmap-cell" title="2026-07-19: 0 次"></div><div class="heatmap-cell" title="2026-07-20: 0 次"></div><div class="heatmap-cell" title="2026-07-21: 0 次"></div><div class="heatmap-cell" title="2026-07-22: 0 次"></div><div class="heatmap-cell" title="2026-07-23: 0 次"></div><div class="heatmap-cell" title="2026-07-24: 0 次"></div><div class="heatmap-cell" title="2026-07-25: 0 次"></div><div class="heatmap-cell" title="2026-07-26: 0 次"></div><div class="heatmap-cell" title="2026-07-27: 0 次"></div><div class="heatmap-cell" title="2026-07-28: 0 次"></div><div class="heatmap-cell" title="2026-07-29: 0 次"></div><div class="heatmap-cell" title="2026-07-30: 0 次"></div><div class="heatmap-cell" title="2026-07-31: 0 次"></div><div class="heatmap-cell" title="2026-08-01: 0 次"></div><div class="heatmap-cell" title="2026-08-02: 0 次"></div><div class="heatmap-cell" title="2026-08-03: 0 次"></div><div class="heatmap-cell" title="2026-08-04: 0 次"></div><div class="heatmap-cell" title="2026-08-05: 0 次"></div><div class="heatmap-cell" title="2026-08-06: 0 次"></div><div class="heatmap-cell" title="2026-08-07: 0 次"></div><div class="heatmap-cell" title="2026-08-08: 0 次"></div><div class="heatmap-cell" title="2026-08-09: 0 次"></div><div class="heatmap-cell" title="2026-08-10: 0 次"></div><div class="heatmap-cell" title="2026-08-11: 0 次"></div><div class="heatmap-cell" title="2026-08-12: 0 次"></div><div class="heatmap-cell" title="2026-08-13: 0 次"></div><div class="heatmap-cell" title="2026-08-14: 0 次"></div><div class="heatmap-cell" title="2026-08-15: 0 次"></div><div class="heatmap-cell" title="2026-08-16: 0 次"></div><div class="heatmap-cell" title="2026-08-17: 0 次"></div><div class="heatmap-cell" title="2026-08-18: 0 次"></div><div class="heatmap-cell" title="2026-08-19: 0 次"></div></div>
+            </div>
             <div id="daily-goal-card"><div class="stat-card" style="grid-column:1 / -1;display:flex;align-items:center;gap:16px;padding:18px 20px;"><div style="flex:1;"><div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;"><strong style="font-size:0.9rem;font-weight:400;letter-spacing:0.05em;">今日進度</strong><span style="font-size:0.88rem;color:var(--text-secondary);">0 / 10 次</span></div><div class="progress-bar-outer"><div class="progress-bar-inner" style="width:0%;background:var(--accent);"></div></div></div></div></div>
             <div class="category-bars" id="category-bars">
                 <h3>分類進度</h3>
@@ -4186,12 +4448,12 @@
             </div>
             <div class="activity-chart" id="activity-chart">
                 <h3>近 7 日複習次數</h3>
-                <div class="chart-bars" id="chart-bars"><div class="chart-bar" style="height:4px" title="2026-08-12: 0次"></div><div class="chart-bar" style="height:4px" title="2026-08-13: 0次"></div><div class="chart-bar" style="height:4px" title="2026-08-14: 0次"></div><div class="chart-bar" style="height:4px" title="2026-08-15: 0次"></div><div class="chart-bar" style="height:4px" title="2026-08-16: 0次"></div><div class="chart-bar" style="height:4px" title="2026-08-17: 0次"></div><div class="chart-bar" style="height:4px" title="2026-08-18: 0次"></div></div>
-                <div class="chart-labels" id="chart-labels"><span>四</span><span>五</span><span>六</span><span>日</span><span>一</span><span>二</span><span>三</span></div>
+                <div class="chart-bars" id="chart-bars"><div class="chart-bar" style="height:4px" title="2026-08-14: 0次"></div><div class="chart-bar" style="height:4px" title="2026-08-15: 0次"></div><div class="chart-bar" style="height:4px" title="2026-08-16: 0次"></div><div class="chart-bar" style="height:4px" title="2026-08-17: 0次"></div><div class="chart-bar" style="height:4px" title="2026-08-18: 0次"></div><div class="chart-bar" style="height:4px" title="2026-08-19: 0次"></div><div class="chart-bar" style="height:4px" title="2026-08-20: 0次"></div></div>
+                <div class="chart-labels" id="chart-labels"><span>五</span><span>六</span><span>日</span><span>一</span><span>二</span><span>三</span><span>四</span></div>
             </div>
             <div class="review-list" id="review-list">
                 <h3>需要複習</h3>
-                <div id="review-items"><div class="review-item"><div><strong>inevitable</strong> — 不可避免的</div><span style="color:var(--text-secondary);font-size:0.85rem;">正確率 0%</span></div></div>
+                <div id="review-items"><div class="review-item"><div><strong>inevitable</strong> — 不可避免的</div><span style="color:var(--text-secondary);font-size:0.85rem;">正確率 0%</span></div><div class="review-item"><div><strong>elaborate</strong> — 精心設計的；詳盡的</div><span style="color:var(--text-secondary);font-size:0.85rem;">正確率 100%</span></div><div class="review-item"><div><strong>resilient</strong> — 有韌性的；適應力強的</div><span style="color:var(--text-secondary);font-size:0.85rem;">正確率 50%</span></div><div class="review-item"><div><strong>abandon</strong> — 放棄；遺棄</div><span style="color:var(--text-secondary);font-size:0.85rem;">正確率 67%</span></div></div>
             </div>
             <div class="settings-section">
                 <h3 style="margin-bottom:16px;">設定</h3>
@@ -4221,6 +4483,7 @@
 
     <div class="modal-overlay" id="word-modal">
         <div class="modal">
+            <button class="modal-close" id="modal-close" aria-label="關閉">×</button>
             <h2 id="modal-title">新增生字</h2>
             <div class="auto-fill-box" id="auto-fill-box" style="display:none;">
                 <span class="af-text" id="auto-fill-text">輸入英文單字後，可自動從字典填入音標、釋義、例句</span>
@@ -4273,8 +4536,8 @@
                     <input type="text" id="m-new-category" placeholder="輸入新分類名稱">
                 </div>
                 <div class="form-group">
-                    <label>難度 (1-5)</label>
-                    <input type="number" id="m-difficulty" min="1" max="5" value="3">
+                    <label>AI 難度評估</label>
+                    <div id="m-auto-level" class="auto-level-display">輸入生字後自動評估</div>
                 </div>
             </div>
             <div class="button-group">
@@ -4362,6 +4625,103 @@
     var THEME_KEY = 'vocab_app_theme';
     var HISTORY_KEY = 'vocab_search_history';
 
+    var MS_PER_DAY = 86400000;
+    var ANIMATION_DELAY = 300;
+    var CONFETTI_DURATION = 5000;
+    var SEARCH_DEBOUNCE_MS = 200;
+
+    function haptic(ms) {
+        if (navigator.vibrate) navigator.vibrate(ms || 10);
+    }
+
+    function fetchWithTimeout(url, options, timeoutMs) {
+        timeoutMs = timeoutMs || 8000;
+        return Promise.race([
+            fetch(url, options),
+            new Promise(function(_, reject) {
+                setTimeout(function() { reject(new Error('Request timed out')); }, timeoutMs);
+            })
+        ]);
+    }
+
+    var ECDICT_BASE_URL = 'https://raw.githubusercontent.com/Hufung/ECDICT-Traditional-Chinese/master/api/dict/';
+    var ECDICT_CHUNK_COUNT = 770;
+    var ecdictChunkCache = {};
+
+    function normalizeECDICTEntry(entry) {
+        if (!entry) return null;
+        var translation = String(entry.translation || '').trim();
+        var definition = String(entry.definition || '').trim();
+        return {
+            word: String(entry.word || ''),
+            phonetic: String(entry.phonetic || ''),
+            translation: translation,
+            definition: definition,
+            pos: inferECDICTPos(entry.pos, translation),
+            audio: String(entry.audio || '').trim(),
+            exchange: String(entry.exchange || '').trim(),
+            tag: String(entry.tag || '').trim(),
+            meanings: [{
+                partOfSpeech: formatPosLabel(inferECDICTPos(entry.pos, translation)),
+                definitions: [{ definition: translation || definition, example: '' }],
+                synonyms: []
+            }]
+        };
+    }
+
+    function loadECDICTChunk(chunkNumber) {
+        if (!ecdictChunkCache[chunkNumber]) {
+            var filename = String(chunkNumber).padStart(4, '0') + '.json';
+            ecdictChunkCache[chunkNumber] = fetchWithTimeout(ECDICT_BASE_URL + filename)
+                .then(function(res) {
+                    if (!res.ok) throw new Error('dictionary_request_failed');
+                    return res.json();
+                })
+                .then(function(entries) {
+                    return Array.isArray(entries) ? entries : [];
+                });
+        }
+        return ecdictChunkCache[chunkNumber];
+    }
+
+    async function lookupECDICTWord(word) {
+        var target = String(word || '').trim().toLowerCase();
+        if (!target) return [];
+        var low = 1;
+        var high = ECDICT_CHUNK_COUNT;
+        while (low <= high) {
+            var middle = Math.floor((low + high) / 2);
+            var entries = await loadECDICTChunk(middle);
+            if (!entries.length) {
+                high = middle - 1;
+                continue;
+            }
+            var first = String(entries[0].word || '').toLowerCase();
+            var last = String(entries[entries.length - 1].word || '').toLowerCase();
+            if (target < first) {
+                high = middle - 1;
+            } else if (target > last) {
+                low = middle + 1;
+            } else {
+                return entries.filter(function(entry) {
+                    return String(entry.word || '').toLowerCase() === target;
+                }).map(normalizeECDICTEntry);
+            }
+        }
+        return [];
+    }
+
+    var PREFERRED_VOICE_NAMES = ['Sin-Yi', 'Sinji', 'Google UK English Female', 'Google US English', 'Microsoft Zira', 'Samantha'];
+
+    function findPreferredVoice(voices) {
+        for (var n = 0; n < PREFERRED_VOICE_NAMES.length; n++) {
+            for (var v = 0; v < voices.length; v++) {
+                if (voices[v].name.indexOf(PREFERRED_VOICE_NAMES[n]) !== -1) return voices[v];
+            }
+        }
+        return null;
+    }
+
     var db = {
         data: null,
         load: function() {
@@ -4442,9 +4802,9 @@
                         examples: ['He abandoned the plan due to lack of funding.'],
                         examplesZh: ['他因缺乏資金而放棄了那個計劃。'],
                         notes: '',
-                        category: 'DSE 5**', difficulty: 3, createdAt: now - 86400000 * 5,
-                        stats: { reviews: 3, correct: 2, lastReviewed: now - 86400000, mastered: false },
-                        srs: { interval: 3, easeFactor: 2.5, nextReview: now + 86400000, repetitions: 2 }
+                        category: 'DSE 5**', difficulty: 3, createdAt: now - MS_PER_DAY * 5,
+                        stats: { reviews: 3, correct: 2, lastReviewed: now - MS_PER_DAY, mastered: false },
+                        srs: { interval: 3, easeFactor: 2.5, nextReview: now + MS_PER_DAY, repetitions: 2 }
                     },
                     {
                         id: 'seed2', word: 'elaborate', pos: 'adj.', phonetic: '/ɪˈlæbərət/',
@@ -4454,8 +4814,8 @@
                         examples: ['She made elaborate preparations for the party.'],
                         examplesZh: ['她為派對做了精心的準備。'],
                         notes: '',
-                        category: 'DSE 5**', difficulty: 4, createdAt: now - 86400000 * 3,
-                        stats: { reviews: 1, correct: 1, lastReviewed: now - 86400000 * 2, mastered: false },
+                        category: 'DSE 5**', difficulty: 4, createdAt: now - MS_PER_DAY * 3,
+                        stats: { reviews: 1, correct: 1, lastReviewed: now - MS_PER_DAY * 2, mastered: false },
                         srs: { interval: 1, easeFactor: 2.5, nextReview: now, repetitions: 1 }
                     },
                     {
@@ -4466,9 +4826,9 @@
                         examples: ['Both sides reached a compromise after long negotiations.'],
                         examplesZh: ['經過長時間談判，雙方達成了妥協。'],
                         notes: '',
-                        category: 'DSE 5**', difficulty: 3, createdAt: now - 86400000 * 2,
+                        category: 'DSE 5**', difficulty: 3, createdAt: now - MS_PER_DAY * 2,
                         stats: { reviews: 5, correct: 5, lastReviewed: now - 3600000, mastered: true },
-                        srs: { interval: 30, easeFactor: 2.8, nextReview: now + 86400000 * 30, repetitions: 5 }
+                        srs: { interval: 30, easeFactor: 2.8, nextReview: now + MS_PER_DAY * 30, repetitions: 5 }
                     },
                     {
                         id: 'seed4', word: 'inevitable', pos: 'adj.', phonetic: '/ɪnˈevɪtəbl/',
@@ -4478,7 +4838,7 @@
                         examples: ['Change is inevitable in a growing organisation.'],
                         examplesZh: ['在發展中的組織裡，改變是不可避免的。'],
                         notes: '',
-                        category: '日常', difficulty: 4, createdAt: now - 86400000,
+                        category: '日常', difficulty: 4, createdAt: now - MS_PER_DAY,
                         stats: { reviews: 0, correct: 0, lastReviewed: null, mastered: false },
                         srs: { interval: 1, easeFactor: 2.5, nextReview: now, repetitions: 0 }
                     },
@@ -4491,7 +4851,7 @@
                         examplesZh: ['孩子往往比大人想的更有韌性。'],
                         notes: '',
                         category: '日常', difficulty: 3, createdAt: now,
-                        stats: { reviews: 2, correct: 1, lastReviewed: now - 86400000, mastered: false },
+                        stats: { reviews: 2, correct: 1, lastReviewed: now - MS_PER_DAY, mastered: false },
                         srs: { interval: 1, easeFactor: 2.5, nextReview: now, repetitions: 1 }
                     }
                 ],
@@ -4506,7 +4866,7 @@
             };
         },
         addWord: function(w) {
-            w.id = 'w' + Date.now() + Math.random().toString(36).substr(2,5);
+            w.id = 'w' + Date.now() + Math.random().toString(36).substr(2,8);
             w.createdAt = Date.now();
             w.stats = { reviews: 0, correct: 0, lastReviewed: null, mastered: false };
             w.srs = { interval: 1, easeFactor: 2.5, nextReview: Date.now(), repetitions: 0, lastReview: Date.now() };
@@ -4545,7 +4905,7 @@
             var s = this.data.streak;
             if (!s) { this.data.streak = { current: 1, lastDate: today, maxStreak: 1 }; return; }
             if (s.lastDate === today) return;
-            var yesterday = new Date(Date.now() - 86400000).toISOString().slice(0,10);
+            var yesterday = new Date(Date.now() - MS_PER_DAY).toISOString().slice(0,10);
             if (s.lastDate === yesterday) {
                 s.current++;
             } else {
@@ -4718,7 +5078,7 @@
         calculateRetention: function(word) {
             if (!word.srs) return 1;
             var lastReview = word.srs.lastReview || word.createdAt || Date.now();
-            var daysSinceReview = Math.max(0, (Date.now() - lastReview) / 86400000);
+            var daysSinceReview = Math.max(0, (Date.now() - lastReview) / MS_PER_DAY);
             var stability = Math.max(1, word.srs.interval || 1);
             var repetitions = word.srs.repetitions || 0;
             var stabilityMultiplier = 1 + (repetitions * 0.3);
@@ -4738,7 +5098,7 @@
                 words.forEach(function(w) {
                     if (!w.srs) return;
                     var lastReview = w.srs.lastReview || w.createdAt || now;
-                    var daysSinceReview = Math.max(0, (now - lastReview) / 86400000) + t;
+                    var daysSinceReview = Math.max(0, (now - lastReview) / MS_PER_DAY) + t;
                     var stability = Math.max(1, w.srs.interval || 1);
                     var reps = w.srs.repetitions || 0;
                     var effectiveStability = stability * (1 + reps * 0.3);
@@ -4807,7 +5167,7 @@
                 srs.repetitions++;
             }
             srs.easeFactor = Math.max(1.3, srs.easeFactor + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02)));
-            srs.nextReview = Date.now() + srs.interval * 86400000;
+            srs.nextReview = Date.now() + srs.interval * MS_PER_DAY;
             w.srs.lastReview = Date.now();
             if (srs.repetitions >= 3 && srs.interval >= 21) {
                 w.stats.mastered = true;
@@ -4820,14 +5180,188 @@
 
     function $(id) { return document.getElementById(id); }
 
+    function debounce(fn, delay) {
+        var timer;
+        return function() {
+            var ctx = this, args = arguments;
+            clearTimeout(timer);
+            timer = setTimeout(function() { fn.apply(ctx, args); }, delay);
+        };
+    }
+
     var POS_MAP = {
-        'noun': 'n.', 'verb': 'v.', 'adjective': 'adj.', 'adverb': 'adv.',
-        'preposition': 'prep.', 'conjunction': 'conj.', 'interjection': 'interj.',
-        'pronoun': 'pron.'
+        'noun': 'n.', 'n': 'n.', 'n.': 'n.',
+        'verb': 'v.', 'v': 'v.', 'v.': 'v.',
+        'adjective': 'adj.', 'adjectival': 'adj.', 'adj': 'adj.', 'adj.': 'adj.', 'a': 'adj.', 'a.': 'adj.',
+        'adverb': 'adv.', 'adv': 'adv.', 'adv.': 'adv.',
+        'preposition': 'prep.', 'prep': 'prep.', 'prep.': 'prep.',
+        'conjunction': 'conj.', 'conj': 'conj.', 'conj.': 'conj.',
+        'interjection': 'interj.', 'interj': 'interj.', 'interj.': 'interj.',
+        'pronoun': 'pron.', 'pron': 'pron.', 'pron.': 'pron.',
+        'article': 'art.', 'art': 'art.', 'art.': 'art.'
     };
+
+    var POS_LABELS = {
+        'n.': '名詞 (noun)',
+        'v.': '動詞 (verb)',
+        'adj.': '形容詞 (adjective)',
+        'adv.': '副詞 (adverb)',
+        'prep.': '介系詞 (preposition)',
+        'conj.': '連接詞 (conjunction)',
+        'interj.': '感嘆詞 (interjection)',
+        'pron.': '代名詞 (pronoun)',
+        'art.': '冠詞 (article)'
+    };
+
     function mapPos(apiPos) {
-        if (!apiPos) return 'n.';
-        return POS_MAP[apiPos.toLowerCase()] || 'n.';
+        var value = String(apiPos || '').trim().toLowerCase();
+        return POS_MAP[value] || 'n.';
+    }
+
+    function formatPosLabel(pos) {
+        var normalized = mapPos(pos);
+        return POS_LABELS[normalized] || String(pos || '').trim() || '詞性未標示';
+    }
+
+    function inferECDICTPos(pos, translation) {
+        var normalized = String(pos || '').trim();
+        if (normalized) return mapPos(normalized);
+        var match = String(translation || '').match(/(?:^|\\n|；|;|，|,)\\s*(n\\.|v\\.|a\\.|adj\\.|adv\\.|prep\\.|conj\\.|pron\\.|art\\.)/i);
+        return match ? mapPos(match[1]) : 'n.';
+    }
+
+    var WORD_LEVELS = [
+        { key: 1, label: '基礎', labelEn: 'Basic', color: '#22C55E', bgColor: 'rgba(34,197,94,0.12)' },
+        { key: 2, label: '中級', labelEn: 'Intermediate', color: '#3B82F6', bgColor: 'rgba(59,130,246,0.12)' },
+        { key: 3, label: '進階', labelEn: 'Advanced', color: '#F59E0B', bgColor: 'rgba(245,158,11,0.12)' },
+        { key: 4, label: '高級', labelEn: 'Expert', color: '#F97316', bgColor: 'rgba(249,115,22,0.12)' },
+        { key: 5, label: '專家', labelEn: 'Master', color: '#EF4444', bgColor: 'rgba(239,68,68,0.12)' }
+    ];
+
+    var FREQ_BASIC = ['the','be','to','of','and','a','in','that','have','i','it','for','not','on','with','he','as','you','do','at','this','but','his','by','from','they','we','say','her','she','or','an','will','my','one','all','would','there','their','what','so','up','out','if','about','who','get','which','go','me','when','make','can','like','time','no','just','him','know','take','people','come','could','than','look','only','new','some','very','way','how','find','here','day','work','may','year','back','its','let','put','think','big','high','old','great','little','own','other','use','man','land','want','day','right','boy','did','got','use','her','need','house','try','again','hand','port','large','spell','add','land','here','must','too','kind','mean','men','run','long','move','live','even','real','left','play','small','end','under','head','open','seem','together','next','white','children','begin','got','walk','example','ease','paper','group','always','music','those','both','mark','book','letter','until','mile','river','car','feet','care','second','enough','plain','girl','usual','young','ready','above','ever','red','list','though','feel','talk','bird','soon','body','dog','family','direct','pose','leave','song','measure','door','product','black','short','numeral','class','wind','question','happen','complete','ship','area','half','rock','order','fire','south','problem','piece','told','knew','pass','since','top','whole','king','space','heard','best','hour','better','true','during','hundred','five','remember','step','early','hold','west','ground','interest','reach','fast','verb','sing','listen','six','table','travel','less','morning','ten','simple','several','vowel','toward','war','lay','against','pattern','slow','center','love','person','money','serve','appear','road','map','rain','rule','govern','pull','cold','notice','voice','energy','hunt','probable','bed','brother','egg','ride','cell','believe','perhaps','pick','sudden','count','square','reason','length','represent','mouth','locust','unit','serve','prevent','product','small','guess','require','present','learn','school','break','should','America','world'];
+
+    var FREQ_ADVANCED = ['abandon','abstract','absurd','academic','accelerate','accessible','accommodate','accomplish','accumulate','accurate','achieve','acknowledge','acquire','adapt','adequate','adjust','administration','admire','adolescent','advocate','aggregate','aggressive','agriculture','allocate','alter','ambiguous','ambition','amend','ample','analyse','ancestor','anniversary','anticipate','apparent','appetite','applause','appliance','applicable','appraise','appreciable','approach','appropriate','approximate','arbitrary','architecture','ardent','arise','aspect','assemble','assert','assess','assign','assist','associate','assume','assure','atmosphere','attach','attain','attempt','attribute','audience','authority','automatic','available','benefit','bias','bind','blanket','boost','bound','brief','broad','budget','burden','bureau','campaign','capable','capacity','capture','category','cease','certificate','challenge','channel','chapter','character','charter','chronic','circulate','circumstance','civilian','clarify','classic','classify','client','climate','clinical','cluster','coincide','collapse','colleague','collision','combine','comment','commit','commodity','communist','companion','compete','complex','component','compose','compound','comprehensive','comprise','compromise','concentrate','concept','concern','conclude','concrete','conduct','conference','confine','confirm','conflict','conform','confront','congress','conscience','conscious','consensus','consequence','conservative','considerable','consistent','constant','constitute','construct','consult','consume','contemporary','content','contest','context','contract','contradict','contrast','contribute','controversial','convention','convert','convince','cooperate','coordinate','cope','corporate','correspond','corrupt','council','counsel','coverage','create','creative','credit','crisis','critical','criticize','crucial','cultivate','cumulative','currency','curriculum','database','deadline','debate','decade','deceive','decide','declaration','decline','decorate','decrease','dedicate','defeat','defend','deficit','define','definite','deliberate','delicate','demonstrate','deny','depression','derive','descend','deserve','design','designate','desire','desperate','despite','destination','detect','determine','devote','diagnosis','dialogue','dictate','differ','digest','dilemma','dimension','diminish','diplomatic','disapprove','disaster','discipline','disclose','discount','discover','discriminate','disorder','display','dispose','dispute','dissolve','distinct','distinguish','distribute','disturb','diverse','divorce','document','domestic','dominant','donate','dose','dramatic','drift','due','duration','dynamic','eager','economy','editorial','effect','efficient','elaborate','elderly','elect','elegant','element','eliminate','elite','embrace','emerge','emission','emphasis','empire','encounter','encourage','engage','enhance','enormous','enterprise','enthusiasm','entire','entrepreneur','envelope','episode','equivalent','erode','essential','establish','estate','estimate','evaluate','eventual','evidence','evil','evolution','exceed','exception','excess','exclude','execute','exempt','exercise','exhibit','expand','expedition','expense','expertise','explicit','exploit','explore','export','expose','extend','extensive','extent','external','extraordinary','extreme','fabric','facilitate','facility','faculty','fancy','fatal','fate','favor','feature','federal','feedback','fertile','fiction','fierce','figure','filter','finance','fiscal','flaw','flee','float','flood','flourish','fluctuate','focus','forbid','forecast','forehead','formal','formation','former','formula','forth','fortune','found','foundation','fraction','fragment','framework','frequent','friction','frontier','frustrate','fulfill','fund','fundamental','funeral','generate','generous','genetic','genius','genuine','gesture','global','govern','grace','grant','graphic','gravity','grief','gross','guarantee','guardian','guideline','harmony','harsh','hatred','heal','heritage','hierarchy','highlight','horizon','hostile','humble','hypothesis','identical','ideology','illustrate','image','immense','immune','implement','implication','implicit','impose','impress','incredible','index','indicate','individual','induce','inevitable','infant','inflation','influence','inform','ingredient','inhabit','inherit','initial','initiative','innocent','innovation','input','insert','inspect','inspire','install','instance','institute','institution','instruction','instrument','insult','integrate','intellectual','intelligent','intend','intense','interact','interference','interior','intermediate','internal','interpret','interval','intimate','investigate','investment','invisible','involve','isolate','judicial','keen','label','landscape','launch','lawsuit','layer','lecture','legal','legend','legislation','legitimate','leisure','lend','liberal','liberty','license','lightweight','likewise','limit','link','literacy','literal','literature','lobby','logical','longterm','loyalty','lunar','luxury','magnificent','maintain','majority','manifest','manipulate','manufacture','margin','massive','mature','mechanism','medium','membership','memo','mental','mentor','merchant','merit','metaphor','migrate','military','mineral','minimal','minister','minor','miracle','mission','mixture','moderate','modern','modify','momentum','monopoly','moral','moreover','mortgage','motivate','municipal','mutual','mysterious','narrative','neglect','negotiate','neutral','nevertheless','nominal','norm','notable','notion','novel','nuclear','numerous','obey','object','objective','obligation','observe','obtain','obvious','occupy','offend','offset','ongoing','opponent','oppose','optimistic','option','orbit','organ','orient','origin','outcome','output','outrage','outstanding','overcome','overlook','overtime','overview','owing','ownership','oxygen','pace','parallel','parameter','participate','particular','patent','patience','pattern','penalty','perceive','permanent','persist','personality','perspective','phenomenon','philosophy','pioneer','policy','portion','portrait','pose','possess','potential','poverty','practical','precede','precise','predict','predominant','prejudice','preliminary','premium','preparation','prescribe','presence','preserve','pressure','prestige','presume','previous','primary','primitive','principal','principle','prior','priority','privilege','probe','proceed','process','produce','profession','profit','profound','prohibit','project','prominent','promote','proof','proper','proportion','proposal','propose','prospect','protocol','provision','provoke','pursue','qualify','quote','radical','random','range','rapid','ratio','rational','raw','react','reality','reasonable','rebuild','receipt','receive','recover','recruit','reform','regime','region','register','regulate','reinforce','reject','relevant','reliable','relieve','reluctant','rely','remaining','remark','remedy','remote','render','renew','rent','reproduce','reputation','request','require','resemble','reserve','reside','resign','resist','resolve','resort','resource','respond','restore','restrain','restrict','retain','retire','retrieve','reveal','revenue','reverse','revise','revolution','reward','rhythm','ridiculous','rigid','role','rough','routine','rural','sacrifice','satellite','satisfy','scale','scatter','scenario','schedule','scheme','scholar','scope','scratch','sector','secure','segment','select','sequence','severe','shelter','shift','shortage','shrink','significance','simulate','simultaneous','skeptic','somewhat','sophisticated','source','specific','speculate','sphere','stable','status','stimulate','strain','strategy','strengthen','stress','strict','strike','structural','substance','substitute','subtle','succeed','sufficient','suggest','summary','summit','supplement','supreme','surface','surgery','surplus','surrender','surround','survey','survival','survive','suspect','suspend','sustain','symbol','sympathy','symptom','synthetic','target','technique','technology','temporary','tendency','terminal','territory','testify','texture','theoretical','therapy','thereby','threshold','thrive','tissue','toll','tradition','transaction','transform','transmit','transport','tremendous','trend','trial','tribute','trigger','triumph','trivial','tropical','turbulent','ultimate','undergo','underlie','undermine','undertake','unemployment','uniform','unique','unite','universal','update','upgrade','uphold','urban','urge','utilize','vacuum','valid','variable','venture','verbal','verify','version','veteran','violate','virtual','visible','vision','vital','vivid','volume','voluntary','welfare','widespread','withdraw','withstand','witness','workforce'];
+
+    var PREFIXES = ['un','re','in','im','dis','en','em','non','over','mis','sub','pre','inter','trans','anti','auto','bi','co','de','ex','fore','multi','neo','out','post','pro','retro','semi','super','tri','ultra','under','uni'];
+    var SUFFIXES = ['tion','sion','ment','ness','able','ible','ful','less','ous','ive','ing','ed','er','or','ist','ism','ize','ise','ify','ality','ation','ence','ance','ship','hood','dom','ful','ward','wise'];
+
+    function analyzeWordComplexity(word) {
+        var w = word.toLowerCase().trim();
+        var score = 0;
+
+        if (w.length <= 3) score += 0;
+        else if (w.length <= 5) score += 1;
+        else if (w.length <= 8) score += 2;
+        else if (w.length <= 11) score += 3;
+        else score += 4;
+
+        var vowelGroups = 0;
+        var prevIsVowel = false;
+        for (var i = 0; i < w.length; i++) {
+            var isV = 'aeiou'.indexOf(w[i]) !== -1;
+            if (isV && !prevIsVowel) vowelGroups++;
+            prevIsVowel = isV;
+        }
+        if (vowelGroups <= 1) score += 0;
+        else if (vowelGroups <= 2) score += 1;
+        else if (vowelGroups <= 3) score += 2;
+        else if (vowelGroups <= 4) score += 3;
+        else score += 4;
+
+        var hasComplexPrefix = false;
+        for (var p = 0; p < PREFIXES.length; p++) {
+            if (w.indexOf(PREFIXES[p]) === 0 && w.length > PREFIXES[p].length + 2) {
+                hasComplexPrefix = true;
+                break;
+            }
+        }
+        if (hasComplexPrefix) score += 1;
+
+        var suffixCount = 0;
+        for (var s = 0; s < SUFFIXES.length; s++) {
+            if (w.indexOf(SUFFIXES[s], Math.max(0, w.length - SUFFIXES[s].length - 2)) !== -1) {
+                suffixCount++;
+            }
+        }
+        if (suffixCount >= 2) score += 1;
+
+        var consonantClusters = 0;
+        var consecConsonants = 0;
+        for (var c = 0; c < w.length; c++) {
+            if ('aeiou'.indexOf(w[c]) === -1) {
+                consecConsonants++;
+                if (consecConsonants >= 3) consonantClusters++;
+            } else {
+                consecConsonants = 0;
+            }
+        }
+        if (consonantClusters > 0) score += 1;
+
+        if (w.indexOf('x') !== -1 || w.indexOf('z') !== -1 || w.indexOf('q') !== -1 || w.indexOf('j') !== -1) score += 1;
+
+        return score;
+    }
+
+    function isCommonWord(word) {
+        var w = word.toLowerCase().trim();
+        for (var i = 0; i < FREQ_BASIC.length; i++) {
+            if (FREQ_BASIC[i] === w) return true;
+        }
+        return false;
+    }
+
+    function isAdvancedWord(word) {
+        var w = word.toLowerCase().trim();
+        for (var i = 0; i < FREQ_ADVANCED.length; i++) {
+            if (FREQ_ADVANCED[i] === w) return true;
+        }
+        return false;
+    }
+
+    function determineWordLevel(word) {
+        if (!word || word.length === 0) return WORD_LEVELS[0];
+        var w = word.toLowerCase().trim();
+
+        if (isCommonWord(w)) return WORD_LEVELS[0];
+
+        if (w.length <= 4) return WORD_LEVELS[0];
+
+        var complexity = analyzeWordComplexity(w);
+
+        if (complexity <= 2) {
+            if (w.length <= 6) return WORD_LEVELS[0];
+            return WORD_LEVELS[1];
+        }
+        if (complexity <= 4) {
+            if (isAdvancedWord(w)) return WORD_LEVELS[2];
+            return WORD_LEVELS[1];
+        }
+        if (complexity <= 6) {
+            if (isAdvancedWord(w)) return WORD_LEVELS[3];
+            return WORD_LEVELS[2];
+        }
+        if (complexity <= 8) {
+            return WORD_LEVELS[3];
+        }
+        return WORD_LEVELS[4];
+    }
+
+    function getWordLevelDisplay(level) {
+        if (typeof level === 'number') {
+            return WORD_LEVELS[Math.max(0, Math.min(4, level - 1))];
+        }
+        if (level && level.key) {
+            for (var i = 0; i < WORD_LEVELS.length; i++) {
+                if (WORD_LEVELS[i].key === level.key) return WORD_LEVELS[i];
+            }
+        }
+        return WORD_LEVELS[2];
+    }
+
+    function renderWordLevel(word) {
+        var level = determineWordLevel(word);
+        return '<span class="badge badge-level" style="background:' + level.bgColor + ';color:' + level.color + ';">' +
+            level.label + '<span class="badge-level-en">' + level.labelEn + '</span></span>';
     }
 
     var flashState = { cards: [], index: 0, flipped: false };
@@ -4999,7 +5533,7 @@
 
     function autoSpeakCurrent() {
         var w = discoverState.deck[discoverState.currentSlide];
-        if (w) setTimeout(function(){ speakWord(w.word); }, 300);
+        if (w) setTimeout(function(){ speakWord(w.word); }, ANIMATION_DELAY);
     }
 
     function reelAddWord(index, btn) {
@@ -5009,7 +5543,7 @@
         db.addWord({
             word: w.word, pos: w.pos, phonetic: w.phonetic,
             meaningZh: w.meaning, example: w.example, exampleZh: w.exampleZh,
-            notes: '', category: cat, difficulty: w.difficulty
+            notes: '', category: cat, difficulty: determineWordLevel(w.word).key
         });
         btn.classList.add('added');
         btn.textContent = '已加入';
@@ -5062,6 +5596,10 @@
         initTTS();
         initReelTouch();
         loadReel();
+        var initialTab = window.location.hash.replace('#', '');
+        if (initialTab && document.querySelector('[data-tab="' + initialTab + '"]')) {
+            switchTab(initialTab);
+        }
     }
 
     function initTTS() {
@@ -5081,29 +5619,9 @@
     }
 
     function registerPWA() {
-        if ('serviceWorker' in navigator) {
-            var swCode = [
-                'var CACHE="vocab-cache-v1";',
-                'self.addEventListener("install",function(e){self.skipWaiting();});',
-                'self.addEventListener("activate",function(e){e.waitUntil(self.clients.claim());});',
-                'self.addEventListener("fetch",function(e){',
-                '  if(e.request.method!=="GET")return;',
-                '  e.respondWith(',
-                '    caches.match(e.request).then(function(c){',
-                '      return c||fetch(e.request).then(function(r){',
-                '        if(e.request.url.indexOf("dictionaryapi.dev")===-1&&e.request.url.indexOf("jsdelivr")===-1&&e.request.url.indexOf("huggingface")===-1){',
-                '          var rc=r.clone();caches.open(CACHE).then(function(ca){ca.put(e.request,rc);});',
-                '        }',
-                '        return r;',
-                '      }).catch(function(){return c;});',
-                '    })',
-                '  );',
-                '});'
-            ].join('\n');
-            var swBlob = new Blob([swCode], { type: 'application/javascript' });
-            var swUrl = URL.createObjectURL(swBlob);
-            navigator.serviceWorker.register(swUrl).catch(function(e) {});
-        }
+        // A separate sw.js file is needed for true offline PWA support.
+        // Blob URL service workers are not supported in most browsers.
+        // See: https://w3c.github.io/ServiceWorker/#service-worker-global-scope-fetch-event
     }
 
     function populateCategorySelects() {
@@ -5121,6 +5639,26 @@
             });
             if (val) sel.value = val;
         });
+    }
+
+    function renderEmptyState(type) {
+        var states = {
+            empty: { icon: '📖', title: '尚未加入生字', desc: '從字典查詢或探索頁面加入你的第一個生字', cta: '查詢字典', tab: 'dict' },
+            noResults: { icon: '🔍', title: '沒有符合的生字', desc: '嘗試不同的搜尋關鍵字', cta: null },
+            noFlash: { icon: '🎴', title: '沒有可複習的生字', desc: '先加入生字或調整篩選條件', cta: '加入生字', tab: 'list' },
+            noQuiz: { icon: '✍️', title: '沒有可測驗的生字', desc: '先加入生字開始測驗', cta: '加入生字', tab: 'list' },
+            noMatch: { icon: '🧩', title: '需要更多生字', desc: '至少需要3個生字才能開始配對遊戲', cta: '加入生字', tab: 'list' }
+        };
+        var s = states[type] || states.empty;
+        var html = '<div class="empty-state">';
+        html += '<div class="empty-icon">' + s.icon + '</div>';
+        html += '<p class="empty-title">' + s.title + '</p>';
+        html += '<p class="empty-desc">' + s.desc + '</p>';
+        if (s.cta) {
+            html += '<button class="btn btn-primary empty-cta" onclick="switchTab(\'' + s.tab + '\')">' + s.cta + '</button>';
+        }
+        html += '</div>';
+        return html;
     }
 
     function renderWordList() {
@@ -5156,12 +5694,11 @@
         if (countDiv) { countDiv.textContent = words.length > 0 ? '共 ' + words.length + ' 個生字' : ''; }
 
         if (words.length === 0) {
-            container.innerHTML = '<div class="empty-state"><h3>' + (search || catFilter ? '沒有符合的生字' : '尚未加入生字') + '</h3><p>' + (search || catFilter ? '請嘗試其他搜尋條件' : '按「新增生字」開始建立你的生字本') + '</p></div>';
+            container.innerHTML = renderEmptyState(search || catFilter ? 'noResults' : 'empty');
             return;
         }
 container.innerHTML = words.map(function(w) {
-            var stars = '';
-            for (var i = 0; i < 5; i++) stars += i < w.difficulty ? '★' : '☆';
+            var levelDisplay = renderWordLevel(w.word);
             var isDue = w.srs && w.srs.nextReview <= Date.now();
             var srsBadge = '';
             if (w.srs) {
@@ -5191,7 +5728,7 @@ container.innerHTML = words.map(function(w) {
                 '<div class="word-footer">' +
                     '<div class="word-meta">' +
                         '<span class="badge badge-category">' + escHtml(w.category) + '</span>' +
-                        '<span class="badge badge-difficulty">' + stars + '</span>' +
+                        levelDisplay +
                         '<span class="badge badge-reviews">複習 ' + w.stats.reviews + ' 次</span>' +
                     '</div>' +
                     '<div class="word-actions">' +
@@ -5202,11 +5739,16 @@ container.innerHTML = words.map(function(w) {
                 '</div>' +
             '</div>';
         }).join('');
+        var cards = container.querySelectorAll('.word-card');
+        cards.forEach(function(card, i) {
+            card.classList.add('animate-in');
+            card.style.animationDelay = (i * 40) + 'ms';
+        });
     }
 
     function escHtml(s) {
         if (!s) return '';
-        return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+        return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
     }
 
     function openModal(word) {
@@ -5219,15 +5761,40 @@ container.innerHTML = words.map(function(w) {
         $('m-example').value = word ? (word.example || '') : '';
         $('m-example-zh').value = word ? (word.exampleZh || '') : '';
         $('m-notes').value = word ? (word.notes || '') : '';
-        $('m-difficulty').value = word ? word.difficulty : 3;
         $('m-new-category').value = '';
         populateCategorySelects();
         if (word) {
             $('m-category').value = word.category;
+            var level = determineWordLevel(word.word);
+            $('m-auto-level').innerHTML = '<span style="color:' + level.color + ';font-weight:700;">' + level.label + '</span> <span style="opacity:0.6;font-size:0.8rem;">' + level.labelEn + '</span>';
+        } else {
+            $('m-auto-level').textContent = '輸入生字後自動評估';
         }
         $('word-modal').classList.add('show');
         $('word-modal')._editId = word ? word.id : null;
         updateAutoFillBox();
+        var modal = $('word-modal');
+        setTimeout(function() {
+            var firstInput = modal.querySelector('input, textarea');
+            if (firstInput) firstInput.focus();
+        }, 100);
+        if (!modal._focusTrapBound) {
+            modal._focusTrapBound = true;
+            modal.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab') {
+                var focusable = modal.querySelectorAll('input, textarea, select, button, [tabindex]:not([tabindex="-1"])');
+                var first = focusable[0];
+                var last = focusable[focusable.length - 1];
+                if (e.shiftKey && document.activeElement === first) {
+                    e.preventDefault();
+                    last.focus();
+                } else if (!e.shiftKey && document.activeElement === last) {
+                    e.preventDefault();
+                    first.focus();
+                }
+            }
+        });
+        }
     }
 
     function updateAutoFillBox() {
@@ -5249,28 +5816,42 @@ container.innerHTML = words.map(function(w) {
         if (!word) { toast('請先輸入英文單字', 'danger'); return; }
 
         var btn = $('btn-auto-fill');
+        var box = $('auto-fill-box');
         btn.disabled = true;
         btn.innerHTML = '<span class="auto-fill-loading"></span>查詢中...';
-        $('auto-fill-text').textContent = '正在查詢「' + word + '」的字典資料...';
+        $('auto-fill-text').textContent = '🔍 正在查詢「' + word + '」的字典資料...';
+        box.className = 'auto-fill-box';
+
+        var fields = { phonetic: false, pos: false, meaning: false, example: false };
+        var statusHtml = '<div class="af-status-grid">' +
+            '<span class="af-status-item" id="af-phonetic">🎤 音標 <span class="af-dot pending">⏳</span></span>' +
+            '<span class="af-status-item" id="af-pos">📖 詞性 <span class="af-dot pending">⏳</span></span>' +
+            '<span class="af-status-item" id="af-meaning">🇨🇳 中文釋義 <span class="af-dot pending">⏳</span></span>' +
+            '<span class="af-status-item" id="af-example">💬 例句 <span class="af-dot pending">⏳</span></span>' +
+            '</div>';
+        $('auto-fill-text').innerHTML = '🔍 正在查詢「' + word + '」...' + statusHtml;
+
+        function setFieldStatus(id, ok, detail) {
+            var el = document.getElementById(id);
+            if (!el) return;
+            el.innerHTML = el.textContent.split(' ').slice(0, 2).join(' ') +
+                ' <span class="af-dot ' + (ok ? 'ok' : 'fail') + '">' + (ok ? '✅' : '❌') + '</span>' +
+                (detail ? '<span class="af-detail">' + detail + '</span>' : '');
+        }
 
         try {
-            var res = await fetch('https://api.dictionaryapi.dev/api/v2/entries/en/' + encodeURIComponent(word));
-            if (!res.ok) throw new Error('not_found');
-            var entries = await res.json();
-
+            var entries = await lookupECDICTWord(word);
             if (!entries || entries.length === 0) throw new Error('not_found');
 
             var entry = entries[0];
-            var filled = [];
 
-            var phonetic = '';
-            (entry.phonetics || []).forEach(function(p) {
-                if (!phonetic && p.text) phonetic = p.text;
-            });
-            if (!phonetic && entry.phonetic) phonetic = entry.phonetic;
+            var phonetic = entry.phonetic || '';
             if (phonetic) {
                 $('m-phonetic').value = phonetic;
-                filled.push('音標');
+                fields.phonetic = true;
+                setFieldStatus('af-phonetic', true, phonetic);
+            } else {
+                setFieldStatus('af-phonetic', false, 'API無資料');
             }
 
             if (entry.meanings && entry.meanings.length > 0) {
@@ -5280,56 +5861,110 @@ container.innerHTML = words.map(function(w) {
                 for (var i = 0; i < posSelect.options.length; i++) {
                     if (posSelect.options[i].value === pos) { posSelect.selectedIndex = i; break; }
                 }
-                filled.push('詞性');
-
-                if (m.definitions && m.definitions.length > 0) {
-                    var d = m.definitions[0];
-                    if (d.definition) {
-                        if (!$('m-meaning').value.trim()) {
-                            $('m-meaning').value = d.definition;
-                            filled.push('釋義');
-                        }
-                    }
-                    if (d.example && !$('m-example').value.trim()) {
-                        $('m-example').value = d.example;
-                        filled.push('例句');
-                    }
-                }
-
-                var allSyns = [];
-                entry.meanings.forEach(function(mm) {
-                    (mm.synonyms || []).forEach(function(s) {
-                        if (allSyns.indexOf(s) === -1) allSyns.push(s);
-                    });
-                });
+                fields.pos = true;
+                setFieldStatus('af-pos', true, pos);
             }
 
-            if (entry.meanings && entry.meanings.length > 1) {
-                for (var mi = 0; mi < entry.meanings.length; mi++) {
-                    var defs = entry.meanings[mi].definitions || [];
-                    for (var di = 0; di < defs.length; di++) {
-                        if (defs[di].example && !$('m-example').value.trim()) {
-                            $('m-example').value = defs[di].example;
-                            filled.push('例句');
-                            break;
-                        }
-                    }
-                    if ($('m-example').value.trim()) break;
+            var englishMeaning = entry.definition || '';
+            var bestExample = '';
+            var allDefinitions = [];
+
+            if (entry.definition) {
+                allDefinitions.push({ def: entry.definition, example: '', pos: entry.pos || '' });
+            }
+
+            if (allDefinitions.length > 0) {
+                if (!$('m-meaning').value.trim()) {
+                    $('auto-fill-text').innerHTML = '🔍 正在查詢「' + word + '」...';
                 }
             }
 
-            $('auto-fill-text').textContent = '已填入：' + (filled.length > 0 ? filled.join('、') : '無新資料（欄位已有內容）');
+            if (entry.translation && !$('m-meaning').value.trim()) {
+                $('m-meaning').value = entry.translation;
+                fields.meaning = true;
+                setFieldStatus('af-meaning', true, entry.translation.substring(0, 20) + (entry.translation.length > 20 ? '...' : ''));
+            }
+
+            if (allDefinitions.length > 0) {
+                for (var d = 0; d < allDefinitions.length; d++) {
+                    if (allDefinitions[d].example && allDefinitions[d].example.length > 10) {
+                        bestExample = allDefinitions[d].example;
+                        break;
+                    }
+                }
+                if (!bestExample) {
+                    for (var d2 = 0; d2 < allDefinitions.length; d2++) {
+                        if (allDefinitions[d2].example) { bestExample = allDefinitions[d2].example; break; }
+                    }
+                }
+                if (!bestExample && allDefinitions.length > 1) {
+                    bestExample = allDefinitions[0].def;
+                }
+            }
+
+            if (englishMeaning && !$('m-meaning').value.trim()) {
+                var translatedZh = '';
+                try {
+                    var tUrl = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=zh-TW&dt=t&q=' + encodeURIComponent(englishMeaning.substring(0, 500));
+                    var tRes = await fetchWithTimeout(tUrl);
+                    var tData = await tRes.json();
+                    if (tData && tData[0]) {
+                        tData[0].forEach(function(part) { if (part[0]) translatedZh += part[0]; });
+                    }
+                } catch(te) {}
+
+                if (translatedZh) {
+                    $('m-meaning').value = translatedZh;
+                    fields.meaning = true;
+                    setFieldStatus('af-meaning', true, translatedZh.substring(0, 20) + (translatedZh.length > 20 ? '...' : ''));
+                } else if (englishMeaning) {
+                    $('m-meaning').value = englishMeaning;
+                    fields.meaning = true;
+                    setFieldStatus('af-meaning', false, '翻譯失敗，已填英文');
+                } else {
+                    setFieldStatus('af-meaning', false, '無資料');
+                }
+            } else if ($('m-meaning').value.trim()) {
+                setFieldStatus('af-meaning', true, '已有資料');
+            } else {
+                setFieldStatus('af-meaning', false, '無資料');
+            }
+
+            if (bestExample && !$('m-example').value.trim()) {
+                var exampleZh = '';
+                try {
+                    var eUrl = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=zh-TW&dt=t&q=' + encodeURIComponent(bestExample.substring(0, 500));
+                    var eRes = await fetchWithTimeout(eUrl);
+                    var eData = await eRes.json();
+                    if (eData && eData[0]) {
+                        eData[0].forEach(function(part) { if (part[0]) exampleZh += part[0]; });
+                    }
+                } catch(ee) {}
+
+                var exampleText = bestExample;
+                if (exampleZh) exampleText += '\n📝 ' + exampleZh;
+                $('m-example').value = exampleText;
+                fields.example = true;
+                setFieldStatus('af-example', true, bestExample.substring(0, 30) + (bestExample.length > 30 ? '...' : ''));
+            } else if ($('m-example').value.trim()) {
+                setFieldStatus('af-example', true, '已有資料');
+            } else {
+                setFieldStatus('af-example', false, '無例句');
+            }
+
+            var filledCount = Object.values(fields).filter(function(v){ return v; }).length;
+            $('auto-fill-text').innerHTML = '✅ 查詢完成！已填入 ' + filledCount + ' 項資料' + statusHtml;
             btn.disabled = false;
-            btn.innerHTML = '再次查詢';
-            toast('已從字典填入 ' + filled.length + ' 項資料', 'success');
+            btn.innerHTML = '🔄 再次查詢';
+            toast('已從字典填入 ' + filledCount + ' 項資料', 'success');
         } catch(e) {
             btn.disabled = false;
-btn.innerHTML = '自動填入字典資料';
+            btn.innerHTML = '🔄 自動填入字典資料';
             if (e.message === 'not_found') {
-                $('auto-fill-text').textContent = '字典中找不到「' + word + '」，請檢查拼寫';
+                $('auto-fill-text').textContent = '❌ 字典中找不到「' + word + '」，請檢查拼寫';
                 toast('字典中找不到此單字', 'danger');
             } else {
-                $('auto-fill-text').textContent = '查詢失敗，請檢查網路連線';
+                $('auto-fill-text').textContent = '❌ 查詢失敗，請檢查網路連線';
                 toast('查詢失敗，請檢查網路', 'danger');
             }
         }
@@ -5359,16 +5994,18 @@ var data = {
             exampleZh: $('m-example-zh').value.trim(),
             notes: $('m-notes').value.trim(),
             category: cat,
-            difficulty: parseInt($('m-difficulty').value) || 3
+            difficulty: 3
         };
 
         var editId = $('word-modal')._editId;
         if (editId) {
             db.updateWord(editId, data);
         } else {
+            data.difficulty = determineWordLevel(data.word).key;
             db.addWord(data);
         }
         closeModal();
+        haptic(10);
         populateCategorySelects();
         renderWordList();
     }
@@ -5429,6 +6066,7 @@ var data = {
         $('flash-deck').style.display = 'block';
         $('flash-empty').style.display = 'none';
         showFlashCard();
+        initFlashSwipe();
     }
 
     function showFlashCard() {
@@ -5468,6 +6106,7 @@ function flashAnswer(correct) {
             real.stats.lastReviewed = Date.now();
             var quality = correct ? 5 : 1;
             db.applySRS(w.id, quality);
+            haptic(15);
             if (correct) {
                 real.stats.correct++;
                 if (real.stats.reviews >= 3 && (real.stats.correct / real.stats.reviews) >= 0.7) {
@@ -5491,6 +6130,48 @@ function flashAnswer(correct) {
             return;
         }
         showFlashCard();
+    }
+
+    var flashTouchStartX = 0;
+    var flashTouchStartY = 0;
+    var flashSwipeThreshold = 80;
+    var flashSwipeBound = false;
+
+    function initFlashSwipe() {
+        if (flashSwipeBound) return;
+        var card = document.querySelector('.flashcard');
+        if (!card) return;
+        flashSwipeBound = true;
+        
+        card.addEventListener('touchstart', function(e) {
+            flashTouchStartX = e.touches[0].clientX;
+            flashTouchStartY = e.touches[0].clientY;
+        }, { passive: true });
+        
+        card.addEventListener('touchmove', function(e) {
+            if (!flashTouchStartX) return;
+            var dx = e.touches[0].clientX - flashTouchStartX;
+            var dy = e.touches[0].clientY - flashTouchStartY;
+            if (Math.abs(dx) > Math.abs(dy)) {
+                e.preventDefault();
+                var rotate = dx * 0.1;
+                card.style.transform = 'rotate(' + rotate + 'deg) translateX(' + (dx * 0.5) + 'px)';
+                card.style.opacity = Math.max(0.5, 1 - Math.abs(dx) / 400);
+            }
+        }, { passive: false });
+        
+        card.addEventListener('touchend', function(e) {
+            var dx = e.changedTouches[0].clientX - flashTouchStartX;
+            card.style.transform = '';
+            card.style.opacity = '';
+            
+            if (dx > flashSwipeThreshold) {
+                flashAnswer(true);
+            } else if (dx < -flashSwipeThreshold) {
+                flashAnswer(false);
+            }
+            flashTouchStartX = 0;
+        }, { passive: true });
     }
 
     var ttsState = { audio: null, engine: 'streamelements', fallbackVoice: null };
@@ -5837,6 +6518,7 @@ function flashAnswer(correct) {
         if (correct) {
             $('typing-input').classList.add('correct');
             typingState.correct++;
+            haptic(15);
             var real = db.data.words.find(function(x){ return x.id === w.id; });
             if (real) {
                 db.applySRS(w.id, 5);
@@ -5943,7 +6625,7 @@ function flashAnswer(correct) {
         card.classList.add('selected');
         matchState.selected.push(index);
         if (matchState.selected.length === 2) {
-            setTimeout(checkMatchPair, 300);
+            setTimeout(checkMatchPair, ANIMATION_DELAY);
         }
     }
 
@@ -5960,6 +6642,7 @@ function flashAnswer(correct) {
             c2.classList.remove('selected');
             c2.classList.add('matched');
             matchState.matched++;
+            haptic(20);
             if (matchState.matched === matchState.total) {
                 clearInterval(matchState.timerInterval);
                 showMatchResult();
@@ -5992,6 +6675,7 @@ function flashAnswer(correct) {
 
     function resetMatch() {
         if (matchState.timerInterval) clearInterval(matchState.timerInterval);
+        matchState = { pairs: [], selected: [], matched: 0, total: 0, startTime: 0, timerInterval: null };
         $('match-play').style.display = 'none';
         $('match-result').style.display = 'none';
     }
@@ -6076,28 +6760,17 @@ function flashAnswer(correct) {
             $('bulk-status').textContent = '正在處理 ' + (i+1) + ' / ' + words.length + ' (' + escHtml(w) + ')...';
             $('bulk-progress-bar').style.width = ((i+1) / words.length * 100) + '%';
             try {
-                var res = await fetch('https://api.dictionaryapi.dev/api/v2/entries/en/' + encodeURIComponent(w));
-                if (!res.ok) continue;
-                var entries = await res.json();
+                var entries = await lookupECDICTWord(w);
                 if (!entries || entries.length === 0) continue;
                 var entry = entries[0];
-                var phonetic = '';
-                (entry.phonetics || []).forEach(function(p) { if (!phonetic && p.text) phonetic = p.text; });
-                var pos = 'n.', meaning = '', example = '';
-                if (entry.meanings && entry.meanings.length > 0) {
-                    var m = entry.meanings[0];
-                    pos = mapPos(m.partOfSpeech);
-                    if (m.definitions && m.definitions.length > 0) {
-                        meaning = m.definitions[0].definition || '';
-                        example = m.definitions[0].example || '';
-                    }
-                }
+                var phonetic = entry.phonetic || '';
+                var pos = mapPos(entry.pos), meaning = entry.translation || entry.definition || '', example = '';
                 var existing = db.data.words.find(function(x){ return x.word.toLowerCase() === w; });
                 if (!existing) {
                     db.addWord({
                         word: w, pos: pos, phonetic: phonetic || '',
                         meaningZh: meaning, example: example, exampleZh: '', notes: '',
-                        category: cat, difficulty: 3
+                        category: cat, difficulty: determineWordLevel(w).key
                     });
                     added++;
                 }
@@ -6421,7 +7094,7 @@ function renderProgress() {
         var maxCount = 1;
         var days = [];
         for (var d = 6; d >= 0; d--) {
-            var date = new Date(Date.now() - d * 86400000);
+            var date = new Date(Date.now() - d * MS_PER_DAY);
             var key = date.toISOString().slice(0,10);
             var cnt = log[key] || 0;
             if (cnt > maxCount) maxCount = cnt;
@@ -6438,7 +7111,7 @@ function renderProgress() {
         var needReview = words.filter(function(w) {
             if (w.stats.mastered) return false;
             if (w.stats.reviews === 0) return true;
-            if (w.stats.lastReviewed && Date.now() - w.stats.lastReviewed > 86400000 * 3) return true;
+            if (w.stats.lastReviewed && Date.now() - w.stats.lastReviewed > MS_PER_DAY * 3) return true;
             var acc = w.stats.reviews > 0 ? w.stats.correct / w.stats.reviews : 0;
             if (acc < 0.5) return true;
             return false;
@@ -6455,6 +7128,35 @@ function renderProgress() {
                 '</div>';
             }).join('') :
             '<p style="color:var(--text-secondary);">所有生字都複習得很好！</p>';
+        renderHeatmap();
+    }
+
+    function renderHeatmap() {
+        var log = db.data.activityLog || {};
+        var grid = $('heatmap-grid');
+        var sub = $('heatmap-subtitle');
+        if (!grid) return;
+        var cells = '';
+        var totalDays = 35;
+        var today = new Date();
+        today.setHours(0,0,0,0);
+        for (var i = totalDays - 1; i >= 0; i--) {
+            var d = new Date(today.getTime() - i * MS_PER_DAY);
+            var key = d.toISOString().slice(0, 10);
+            var cnt = log[key] || 0;
+            var level = 0;
+            if (cnt >= 10) level = 4;
+            else if (cnt >= 5) level = 3;
+            else if (cnt >= 2) level = 2;
+            else if (cnt >= 1) level = 1;
+            var cls = level > 0 ? 'heatmap-cell level-' + level : 'heatmap-cell';
+            cells += '<div class="' + cls + '" title="' + key + ': ' + cnt + ' 次"></div>';
+        }
+        grid.innerHTML = cells;
+        if (sub) {
+            var activeDays = Object.keys(log).filter(function(k) { return log[k] > 0; }).length;
+            sub.textContent = '近 35 日 · ' + activeDays + ' 天有學習';
+        }
     }
 
     function renderRankingCard() {
@@ -6726,13 +7428,10 @@ function searchDictionary() {
 
         $('dict-results').innerHTML = '<div class="dict-loading"><div class="spinner"></div><p>正在查詢「' + escHtml(word) + '」...</p></div>';
 
-        fetch('https://api.dictionaryapi.dev/api/v2/entries/en/' + encodeURIComponent(word))
-            .then(function(res) {
-                if (!res.ok) throw new Error('not_found');
-                return res.json();
-            })
-            .then(function(data) {
-                renderDictResults(data);
+        lookupECDICTWord(word)
+            .then(function(entries) {
+                if (!entries || entries.length === 0) throw new Error('not_found');
+                renderDictResults(entries);
             })
             .catch(function(err) {
                 if (err.message === 'not_found') {
@@ -6752,13 +7451,8 @@ function searchDictionary() {
         window._dictLatestResults = entries;
 
         $('dict-results').innerHTML = entries.map(function(entry, ei) {
-            var phonetic = '';
-            var audioUrl = '';
-            (entry.phonetics || []).forEach(function(p) {
-                if (!phonetic && p.text) phonetic = p.text;
-                if (!audioUrl && p.audio) audioUrl = p.audio;
-            });
-            if (!phonetic && entry.phonetic) phonetic = entry.phonetic;
+            var phonetic = entry.phonetic || '';
+            var audioUrl = entry.audio || '';
 
 var meaningsHtml = (entry.meanings || []).map(function(m, mi) {
                 var defsHtml = (m.definitions || []).slice(0, 4).map(function(d, di) {
@@ -6777,7 +7471,7 @@ var meaningsHtml = (entry.meanings || []).map(function(m, mi) {
                 var antRow = ants ? '<div class="dict-antonym-row">反義詞：' + ants + '</div>' : '';
 
                 return '<div class="dict-meaning-block">' +
-                    '<div class="dict-pos-label">' + escHtml(m.partOfSpeech) + '</div>' +
+                    '<div class="dict-pos-label">' + escHtml(formatPosLabel(m.partOfSpeech)) + '</div>' +
                     '<ol class="dict-def-list">' + defsHtml + '</ol>' +
                     synRow +
                     antRow +
@@ -6785,7 +7479,8 @@ var meaningsHtml = (entry.meanings || []).map(function(m, mi) {
             }).join('');
 
             var audioBtn = audioUrl ?
-                '<button class="dict-audio-btn" onclick="playDictAudio(\'' + audioUrl.replace(/'/g, "\\'") + '\')" title="播放發音">&#9654;</button>' : '';
+                '<button class="dict-audio-btn" onclick="playDictAudio(\'' + audioUrl.replace(/'/g, "\\'") + '\')" title="播放字典音訊">&#9654;</button>' : '';
+            var ttsBtn = '<button class="dict-audio-btn" onclick="speakWord(\'' + escHtml(entry.word) + '\')" title="使用文字轉語音播放">&#9654;</button>';
 
             var addBtn = '<button class="btn btn-success" style="margin-top:4px;padding:6px 14px;font-size:0.85rem;" onclick="dictAddToVocab(\'' + escHtml(entry.word) + '\',\'' + (phonetic || '').replace(/'/g, "\\'") + '\',' + ei + ')">+ 加入生字本</button>';
 
@@ -6795,7 +7490,7 @@ var meaningsHtml = (entry.meanings || []).map(function(m, mi) {
                         '<div class="dict-word">' + escHtml(entry.word) + '</div>' +
                         '<div class="dict-phonetic-row">' +
                             (phonetic ? '<span>' + escHtml(phonetic) + '</span>' : '') +
-                            audioBtn +
+                            audioBtn + ttsBtn +
                         '</div>' +
                     '</div>' +
                     '<div>' + addBtn + '</div>' +
@@ -6836,7 +7531,7 @@ var meaningsHtml = (entry.meanings || []).map(function(m, mi) {
 
         var promises = texts.map(function(text) {
             var url = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=zh-TW&dt=t&q=' + encodeURIComponent(text.substring(0, 500));
-            return fetch(url).then(function(r) { return r.json(); }).then(function(data) {
+            return fetchWithTimeout(url).then(function(r) { return r.json(); }).then(function(data) {
                 var translated = '';
                 if (data && data[0]) {
                     data[0].forEach(function(part) { if (part[0]) translated += part[0]; });
@@ -6849,7 +7544,7 @@ var meaningsHtml = (entry.meanings || []).map(function(m, mi) {
             var html = '<div style="color:var(--accent);font-size:0.85rem;letter-spacing:0.03em;margin-bottom:10px;font-weight:500;">繁體中文釋義</div>';
             var ti = 0;
             (entry.meanings || []).forEach(function(m) {
-                html += '<div style="margin-bottom:6px;"><span style="color:var(--text-secondary);font-style:italic;font-size:0.82rem;">' + escHtml(m.partOfSpeech) + '</span></div>';
+                html += '<div style="margin-bottom:6px;"><span style="color:var(--text-secondary);font-style:italic;font-size:0.82rem;">' + escHtml(formatPosLabel(m.partOfSpeech)) + '</span></div>';
                 (m.definitions || []).slice(0, 5).forEach(function(d) {
                     var tc = translations[ti] || '';
                     if (tc) {
@@ -6883,43 +7578,52 @@ var meaningsHtml = (entry.meanings || []).map(function(m, mi) {
         var latestResults = window._dictLatestResults;
         var pos = '';
         var meaning = '';
+        var meaningZh = '';
         var example = '';
 
         if (latestResults && latestResults[entryIndex]) {
             var entry = latestResults[entryIndex];
-            if (entry.meanings && entry.meanings.length > 0) {
-                var m = entry.meanings[0];
-                pos = m.partOfSpeech || '';
-                if (m.definitions && m.definitions.length > 0) {
-                    meaning = m.definitions[0].definition || '';
-                    example = m.definitions[0].example || '';
-                }
-            }
+            pos = entry.pos || '';
+            meaning = entry.definition || '';
+            meaningZh = entry.translation || '';
         }
 
         var cat = db.data.categories.length > 0 ? db.data.categories[0] : '未分類';
 
-        db.addWord({
-            word: word,
-            pos: mapPos(pos),
-            phonetic: phonetic || '',
-            meaningZh: '',
-            example: example || meaning,
-            exampleZh: '',
-            category: cat,
-            difficulty: 3
-        });
-
-        renderWordList();
-        renderProgress();
-
-        toast('已加入「' + word + '」，請編輯中文釋義', 'success');
-
         var btn = event ? event.currentTarget || event.target : null;
         if (btn) {
-            btn.textContent = '已加入';
+            btn.textContent = '加入中...';
             btn.disabled = true;
         }
+
+        Promise.resolve(meaningZh)
+            .then(function(meaningZh) {
+                db.addWord({
+                    word: word,
+                    pos: mapPos(pos),
+                    phonetic: phonetic || '',
+                    meaningZh: meaningZh,
+                    example: example || meaning,
+                    exampleZh: '',
+                    category: cat,
+                    difficulty: determineWordLevel(word).key
+                });
+                haptic(10);
+
+                renderWordList();
+                renderProgress();
+
+                if (meaningZh) {
+                    toast('已加入「' + word + '」— ' + meaningZh, 'success');
+                } else {
+                    toast('已加入「' + word + '」，請編輯中文釋義', 'warning');
+                }
+
+                if (btn) {
+                    btn.textContent = '已加入';
+                    btn.disabled = true;
+                }
+            });
     }
 
     function showWordDetail(id) {
@@ -6958,12 +7662,9 @@ var meaningsHtml = (entry.meanings || []).map(function(m, mi) {
         existingInfo += '</div>';
         $('dd-meanings').innerHTML = existingInfo;
 
-        fetch('https://api.dictionaryapi.dev/api/v2/entries/en/' + encodeURIComponent(w.word))
-            .then(function(res) {
-                if (!res.ok) throw new Error('not_found');
-                return res.json();
-            })
+        lookupECDICTWord(w.word)
             .then(function(entries) {
+                if (!entries || entries.length === 0) throw new Error('not_found');
                 $('dd-loading').style.display = 'none';
                 if (!entries || entries.length === 0) {
                     $('dd-notfound').style.display = 'block';
@@ -6971,12 +7672,8 @@ var meaningsHtml = (entry.meanings || []).map(function(m, mi) {
                 }
 
                 var entry = entries[0];
-                var phonetic = '';
-                var audioUrl = '';
-                (entry.phonetics || []).forEach(function(p) {
-                    if (!phonetic && p.text) phonetic = p.text;
-                    if (!audioUrl && p.audio) audioUrl = p.audio;
-                });
+                var phonetic = entry.phonetic || '';
+                var audioUrl = entry.audio || '';
 
                 var phRow = '';
                 if (phonetic) phRow += '<span>' + escHtml(phonetic) + '</span>';
@@ -6995,13 +7692,13 @@ var meaningsHtml = (entry.meanings || []).map(function(m, mi) {
                     var synRow = syns ? '<div class="dict-syn-row">同義詞：' + syns + '</div>' : '';
 
                     return '<div class="dict-meaning-block">' +
-                        '<div class="dict-pos-label">' + escHtml(m.partOfSpeech) + '</div>' +
+                        '<div class="dict-pos-label">' + escHtml(formatPosLabel(m.partOfSpeech)) + '</div>' +
                         '<ol class="dict-def-list">' + defsHtml + '</ol>' +
                         synRow +
                     '</div>';
                 }).join('');
 
-                $('dd-meanings').innerHTML += '<div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);"><div style="color:var(--text-secondary);font-size:0.85rem;margin-bottom:12px;">來自 Free Dictionary API 的詳細釋義：</div>' + html + '</div>';
+                $('dd-meanings').innerHTML += '<div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);"><div style="color:var(--text-secondary);font-size:0.85rem;margin-bottom:12px;">來自 ECDICT Traditional Chinese 的詳細釋義：</div>' + html + '</div>';
             })
             .catch(function() {
                 $('dd-loading').style.display = 'none';
@@ -7017,11 +7714,20 @@ var meaningsHtml = (entry.meanings || []).map(function(m, mi) {
     }
 
     function switchTab(tab) {
-        document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+        if (window.location.hash !== '#' + tab) {
+            history.pushState({ tab: tab }, '', '#' + tab);
+        }
+        document.querySelectorAll('.sidebar-nav-btn').forEach(function(b){ b.classList.remove('active'); });
         document.querySelectorAll('section').forEach(function(s){ s.classList.remove('active'); });
-        var btn = document.querySelector('.tab-btn[data-tab="'+tab+'"]');
+        var btn = document.querySelector('.sidebar-nav-btn[data-tab="'+tab+'"]');
         if (btn) btn.classList.add('active');
         $('view-' + tab).classList.add('active');
+        document.querySelectorAll('.sidebar-nav-btn').forEach(function(b) {
+            b.setAttribute('aria-selected', b.classList.contains('active') ? 'true' : 'false');
+        });
+        document.querySelectorAll('.bottom-nav-btn').forEach(function(b) {
+            b.classList.toggle('active', b.dataset.tab === tab);
+        });
     }
 
     var aiState = { llm: null, loading: false, loaded: false, currentWord: null, lastSentence: null };
@@ -7220,6 +7926,9 @@ function toast(msg, type) {
         var t = document.createElement('div');
         t.className = 'toast' + (type ? ' ' + type : '');
         t.textContent = msg;
+        if (type === 'warning') { t.style.color = 'hsl(35 25% 50%)'; }
+        t.addEventListener('click', function() { t.remove(); });
+        t.style.cursor = 'pointer';
         container.appendChild(t);
         setTimeout(function() {
             t.classList.add('fade-out');
@@ -7271,6 +7980,19 @@ function toast(msg, type) {
                 return;
             }
 
+            var validWords = [];
+            var skipped = 0;
+            for (var i = 0; i < parsed.words.length; i++) {
+                var w = parsed.words[i];
+                if (w && typeof w.word === 'string' && typeof w.id === 'string' && typeof w.meaningZh === 'string') {
+                    validWords.push(w);
+                } else {
+                    skipped++;
+                }
+            }
+            if (skipped > 0) { toast('跳過 ' + skipped + ' 個無效單字', 'warning'); }
+            parsed.words = validWords;
+
             var wordCount = parsed.words.length;
             showConfirm(
                 '匯入資料',
@@ -7298,7 +8020,7 @@ function toast(msg, type) {
             db.data.words.forEach(function(w) { existingIds[w.id] = true; });
             parsed.words.forEach(function(w) {
                 if (!existingIds[w.id]) {
-                    if (!w.id) w.id = 'w' + Date.now() + Math.random().toString(36).substr(2, 5);
+                    if (!w.id) w.id = 'w' + Date.now() + Math.random().toString(36).substr(2, 8);
                     if (!w.stats) w.stats = { reviews: 0, correct: 0, lastReviewed: null, mastered: false };
                     db.data.words.push(w);
                 }
@@ -7317,31 +8039,66 @@ function toast(msg, type) {
     }
 
     function bindEvents() {
-document.querySelectorAll('.tab-btn').forEach(function(btn) {
+document.querySelectorAll('.sidebar-nav-btn').forEach(function(btn) {
             btn.addEventListener('click', function() {
-                document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+                haptic(5);
+                document.querySelectorAll('.sidebar-nav-btn').forEach(function(b){ b.classList.remove('active'); });
                 btn.classList.add('active');
+                document.querySelectorAll('.sidebar-nav-btn').forEach(function(b) {
+                    b.setAttribute('aria-selected', b.classList.contains('active') ? 'true' : 'false');
+                });
                 document.querySelectorAll('section').forEach(function(s){ s.classList.remove('active'); });
                 $('view-' + btn.dataset.tab).classList.add('active');
                 if (btn.dataset.tab === 'progress') renderProgress();
                 if (btn.dataset.tab === 'discover') updateReelPosition();
                 if (btn.dataset.tab === 'dict') renderSearchHistory();
+                var sidebar = $('sidebar');
+                var overlay = $('app-overlay');
+                if (sidebar) sidebar.classList.remove('open');
+                if (overlay) overlay.classList.remove('active');
             });
         });
 
-        $('search-input').addEventListener('input', renderWordList);
+        $('search-input').addEventListener('input', debounce(renderWordList, SEARCH_DEBOUNCE_MS));
         $('filter-category').addEventListener('change', renderWordList);
         $('filter-sort').addEventListener('change', renderWordList);
 
         $('btn-add-word').addEventListener('click', function(){ openModal(null); });
         $('btn-modal-save').addEventListener('click', saveModal);
         $('btn-modal-cancel').addEventListener('click', closeModal);
+        var modalClose = $('modal-close');
+        if (modalClose) {
+            modalClose.addEventListener('click', function() {
+                closeModal();
+            });
+        }
         $('btn-auto-fill').addEventListener('click', autoFillFromDictionary);
         $('m-word').addEventListener('input', updateAutoFillBox);
+        $('m-word').addEventListener('input', function() {
+            var w = $('m-word').value.trim();
+            var levelEl = $('m-auto-level');
+            if (!levelEl) return;
+            if (w.length === 0) {
+                levelEl.textContent = '輸入生字後自動評估';
+                return;
+            }
+            var level = determineWordLevel(w);
+            levelEl.innerHTML = '<span style="color:' + level.color + ';font-weight:700;">' + level.label + '</span> <span style="opacity:0.6;font-size:0.8rem;">' + level.labelEn + '</span>';
+        });
 
         $('btn-dict-search').addEventListener('click', searchDictionary);
         $('dict-input').addEventListener('keydown', function(e) {
             if (e.key === 'Enter') searchDictionary();
+        });
+        function syncDictClearBtn() {
+            $('dict-input-clear').style.display = $('dict-input').value ? '' : 'none';
+        }
+        $('dict-input').addEventListener('input', syncDictClearBtn);
+        $('dict-input-clear').addEventListener('click', function() {
+            $('dict-input').value = '';
+            syncDictClearBtn();
+            renderSearchHistory();
+            $('dict-input').focus();
         });
 
         $('btn-confirm-yes').addEventListener('click', function() {
@@ -7396,6 +8153,20 @@ document.querySelectorAll('.tab-btn').forEach(function(btn) {
 
         $('theme-toggle').addEventListener('click', toggleTheme);
 
+        var sidebarToggle = $('sidebar-toggle');
+        var sidebar = $('sidebar');
+        var overlay = $('app-overlay');
+        if (sidebarToggle && sidebar && overlay) {
+            sidebarToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+            });
+            overlay.addEventListener('click', function() {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+            });
+        }
+
         $('btn-start-typing').addEventListener('click', startTyping);
         $('typing-input').addEventListener('keydown', function(e) {
             if (e.key === 'Enter') {
@@ -7436,7 +8207,10 @@ document.querySelectorAll('.tab-btn').forEach(function(btn) {
 
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
-                if ($('confirm-modal').classList.contains('show')) {
+                if (sidebar && sidebar.classList.contains('open')) {
+                    sidebar.classList.remove('open');
+                    overlay.classList.remove('active');
+                } else if ($('confirm-modal').classList.contains('show')) {
                     $('confirm-modal').classList.remove('show');
                     confirmCallback = null;
                 } else if ($('bulk-modal').classList.contains('show')) {
@@ -7476,9 +8250,45 @@ document.querySelectorAll('.tab-btn').forEach(function(btn) {
         });
     }
 
+    window.addEventListener('error', function(e) {
+        console.error('Uncaught error:', e.message, e.filename, e.lineno);
+    });
+    window.addEventListener('unhandledrejection', function(e) {
+        console.error('Unhandled promise rejection:', e.reason);
+    });
+
+    window.addEventListener('popstate', function(e) {
+        if (e.state && e.state.tab) {
+            switchTab(e.state.tab);
+        }
+    });
+
     document.addEventListener('DOMContentLoaded', init);
     </script>
-<div class="toast-container" id="toast-container"></div>
+<div class="toast-container" id="toast-container" aria-live="assertive"></div>
+<nav class="bottom-nav" id="bottom-nav">
+    <button class="bottom-nav-btn active" data-tab="list">
+        <span class="bottom-nav-icon">📖</span>
+        <span class="bottom-nav-label">生字</span>
+    </button>
+    <button class="bottom-nav-btn" data-tab="flash">
+        <span class="bottom-nav-icon">🎴</span>
+        <span class="bottom-nav-label">閃卡</span>
+    </button>
+    <button class="bottom-nav-btn" data-tab="quiz">
+        <span class="bottom-nav-icon">✍️</span>
+        <span class="bottom-nav-label">測驗</span>
+    </button>
+    <button class="bottom-nav-btn" data-tab="dict">
+        <span class="bottom-nav-icon">📚</span>
+        <span class="bottom-nav-label">字典</span>
+    </button>
+    <button class="bottom-nav-btn" data-tab="progress">
+        <span class="bottom-nav-icon">📊</span>
+        <span class="bottom-nav-label">進度</span>
+    </button>
+</nav>
     
+
 
 <div class="dark"><div class="trae-browser-inspect-highlight-tag"></div><div class="trae-browser-inspect-highlight-tag"></div><div class="trae-browser-inspect-highlight-box"></div><div class="trae-browser-inspect-highlight-box trae-browser-inspect-select-highlight-box" style="cursor: grab; pointer-events: auto;"></div><div class="trae-browser-inspect-overlay" style="display: none;"></div><div class="trae-browser-inspect-comment-card-container"></div><div class="trae-browser-inspect-drop-indicator" style="position: fixed; pointer-events: none; z-index: 999999; display: none; background: linear-gradient(90deg, rgb(0, 102, 255), rgb(0, 170, 255)); box-shadow: rgba(0, 102, 255, 0.4) 0px 0px 4px 1px, rgba(0, 102, 255, 0.3) 0px 0px 8px 2px, rgba(0, 102, 255, 0.2) 0px 0px 12px 3px; transition: transform 0.15s, width 0.15s, height 0.15s;"></div></div><div class="trae-browser-inspect-text-selection-container dark"><div class="trae-browser-inspect-comment-card-container"></div></div><div class="trae-browser-inspect-operation dark"></div></body></html>
