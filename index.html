@@ -35,8 +35,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&amp;family=Noto+Serif+JP:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
 <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { -webkit-text-size-adjust: 100%; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
         :root {
             --bg-primary: hsl(12 71.4% 1.4%);
             --bg-secondary: hsl(35 15% 20%);
@@ -634,13 +634,17 @@
             .modal-overlay {
                 align-items: flex-end;
                 padding: 0;
+                inset: 0;
+                padding-top: env(safe-area-inset-top);
+                padding-bottom: env(safe-area-inset-bottom);
             }
             .modal-overlay .modal {
                 max-height: 85vh;
                 max-width: 100%;
                 width: 100%;
-                border-radius: 16px 16px 0 0;
+                border-radius: var(--radius-lg) var(--radius-lg) 0 0;
                 animation: sheetSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+                max-height: min(85vh, calc(var(--app-height) - env(safe-area-inset-top) - env(safe-area-inset-bottom)));
             }
             .modal-drag-handle { display: block; }
         }
@@ -2231,7 +2235,7 @@
             .progress-text { font-size: 0.82rem; }
 
             .bottom-nav { display: flex; }
-            .container { padding-bottom: 70px; }
+            .container { padding-bottom: max(80px, calc(72px + env(safe-area-inset-bottom))); }
 
             .tts-btn { min-width: 44px; min-height: 44px; }
             .flashcard-btns .btn { min-height: 44px; }
@@ -2275,34 +2279,39 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: var(--bg-card);
+            background: hsla(12, 71.4%, 1.4%, 0.85);
             border-top: 1px solid var(--border);
-            padding: 6px 0 calc(6px + env(safe-area-inset-bottom));
-            z-index: 100;
+            padding: 6px 0 max(12px, env(safe-area-inset-bottom));
+            z-index: 200;
             justify-content: space-around;
             align-items: center;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            min-height: 56px;
         }
         .bottom-nav-btn {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 2px;
-            padding: 4px 8px;
+            padding: 6px 8px;
             background: none;
             border: none;
             color: var(--text-secondary);
             font-size: 0.65rem;
             cursor: pointer;
-            transition: var(--transition);
+            transition: color 0.2s ease, transform 0.15s ease;
             min-width: 50px;
+            min-height: 48px;
             -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
         .bottom-nav-btn.active {
             color: var(--accent);
             font-weight: 600;
         }
-        .bottom-nav-icon { font-size: 1.2rem; }
-        .bottom-nav-label { letter-spacing: 0.03em; }
+        .bottom-nav-icon { font-size: 1.2rem; transition: transform 0.2s ease; }
+        .bottom-nav-label { letter-spacing: 0.03em; transition: color 0.2s ease; }
         body.keyboard-open .bottom-nav { display: none !important; }
         body.keyboard-open .container { padding-bottom: 20px; }
         @keyframes navBounce {
@@ -2357,6 +2366,366 @@
             }
         }
 
+        /* ============================
+           MOBILE UI IMPROVEMENTS
+           Golden Time warm dark theme
+           ============================ */
+
+        /* --- Touch interaction defaults --- */
+        button, .btn, .word-item, .match-card, .tab-item, .bottom-nav-btn,
+        .word-card, .stat-card, .reel-add-btn, .reel-tts-btn, .reel-nav-btn,
+        .quiz-option, .flashcard, .wotd-card {
+            touch-action: manipulation;
+        }
+
+        /* --- Hover guards: only on devices with hover capability --- */
+        @media (hover: hover) {
+            .sidebar-nav-btn:hover {
+                background: var(--bg-main);
+                color: var(--text-primary);
+            }
+            .sidebar-theme-btn:hover { border-color: var(--accent); color: var(--accent); }
+            .reel-add-btn:hover { background: var(--accent); color: var(--bg-primary); }
+            .reel-tts-btn:hover { border-color: var(--accent); color: var(--accent); }
+            .reel-nav-btn:hover { border-color: var(--accent); color: var(--accent); }
+            .reel-level-btn:hover { color: var(--text-primary); }
+            .modal-close:hover { background: var(--danger-soft); color: var(--danger); }
+        }
+
+        /* --- Section scroll momentum scrolling --- */
+        .section-scroll, .container {
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* ============================
+           @media (max-width: 600px)
+           Comprehensive mobile polish
+           ============================ */
+        @media (max-width: 600px) {
+
+            /* --- Body & typography --- */
+            body {
+                font-size: 15px;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+
+            /* --- Container adjustments --- */
+            .container {
+                padding: 10px 14px;
+                padding-top: 56px;
+                padding-bottom: max(80px, calc(72px + env(safe-area-inset-bottom)));
+                max-width: 100%;
+            }
+
+            /* --- Page / section titles --- */
+            h2, .page-title {
+                font-size: 1.1rem;
+                line-height: 1.3;
+            }
+            h3 {
+                font-size: 0.95rem;
+            }
+
+            /* --- Word card spacing & touch targets --- */
+            .word-card {
+                padding: 16px 18px;
+                margin-bottom: 12px;
+                border-radius: var(--radius);
+            }
+            .word-card:active {
+                transform: scale(0.99);
+                transition: transform 0.1s ease;
+            }
+
+            /* --- Stat card grid --- */
+            .stat-card {
+                padding: 14px 16px;
+                border-radius: var(--radius);
+            }
+
+            /* --- Rank card --- */
+            .rank-card {
+                padding: 14px 16px;
+                margin-bottom: 12px;
+                border-radius: var(--radius);
+            }
+
+            /* --- WOTD card --- */
+            .wotd-card {
+                padding: 18px;
+                margin-bottom: 12px;
+            }
+            .wotd-card .wotd-word {
+                font-size: 1.4rem;
+            }
+            .wotd-card .wotd-meaning {
+                font-size: 1rem;
+            }
+
+            /* --- Search form & inputs --- */
+            .search-form {
+                padding: 16px;
+                border-radius: var(--radius);
+                margin-bottom: 16px;
+            }
+            .search-with-mic input,
+            .search-input-wrap input {
+                font-size: 16px;
+                padding: 12px 16px;
+                min-height: 44px;
+                border-radius: var(--radius-sm);
+            }
+            .mic-btn {
+                width: 44px;
+                min-width: 44px;
+                height: 44px;
+                border-radius: var(--radius-sm);
+            }
+
+            /* --- Form groups --- */
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                font-size: 16px;
+                padding: 12px 14px;
+                min-height: 44px;
+            }
+
+            /* --- Typography scaling --- */
+            .word-title {
+                font-size: 1.15rem;
+            }
+            .word-meaning {
+                font-size: 0.95rem;
+            }
+            .word-example {
+                font-size: 0.82rem;
+            }
+
+            /* --- Flashcard area improvements --- */
+            .flashcard-area {
+                padding: 14px 12px;
+            }
+            .flashcard {
+                min-height: 240px;
+                max-height: calc(var(--app-height) - 240px);
+            }
+            .flashcard-inner {
+                min-height: 240px;
+            }
+            .flashcard-front, .flashcard-back {
+                min-height: 240px;
+                padding: 20px 16px;
+                border-radius: var(--radius);
+            }
+            .flashcard-front .fc-word {
+                font-size: 1.5rem;
+            }
+            .flashcard-front .fc-phonetic {
+                font-size: 0.88rem;
+            }
+            .flashcard-back .fc-meaning {
+                font-size: 1.25rem;
+            }
+            .flashcard-back .fc-example {
+                font-size: 0.8rem;
+                padding: 0 8px;
+            }
+
+            /* --- Typing prompt --- */
+            .typing-prompt {
+                padding: 20px 14px;
+            }
+            .typing-prompt .tp-meaning {
+                font-size: 1.3rem;
+            }
+
+            /* --- Matching grid --- */
+            .matching-grid {
+                gap: 8px;
+            }
+            .match-card {
+                padding: 12px 8px;
+                font-size: 0.82rem;
+                min-height: 52px;
+                border-radius: var(--radius-sm);
+            }
+
+            /* --- Dashboard grid --- */
+            .dashboard-grid {
+                gap: 10px;
+            }
+
+            /* --- Reel viewport (Word of the Day reel) --- */
+            .reel-viewport {
+                height: calc(var(--app-height) - 200px);
+                min-height: 380px;
+                max-height: 600px;
+                border-radius: var(--radius);
+            }
+            .reel-track {
+                scroll-snap-type: y mandatory;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .reel-slide {
+                scroll-snap-align: start;
+                padding: 24px 16px;
+            }
+            .reel-word {
+                font-size: 2rem;
+                line-height: 1.2;
+            }
+            .reel-phonetic {
+                font-size: 0.9rem;
+            }
+            .reel-meaning {
+                font-size: 1.1rem;
+                max-width: 320px;
+            }
+            .reel-example {
+                font-size: 0.82rem;
+                max-width: 300px;
+            }
+            .reel-example-zh {
+                font-size: 0.8rem;
+                max-width: 300px;
+            }
+
+            /* --- Modal / Drawer improvements --- */
+            .modal-overlay {
+                inset: 0;
+                padding: 0;
+                padding-top: env(safe-area-inset-top);
+                padding-bottom: env(safe-area-inset-bottom);
+                align-items: flex-end;
+            }
+            .modal-overlay .modal {
+                max-width: 100%;
+                width: 100%;
+                max-height: min(90vh, calc(var(--app-height) - env(safe-area-inset-top) - env(safe-area-inset-bottom)));
+                border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+                padding: 24px 20px;
+                animation: sheetSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .modal h2 {
+                font-size: 1.05rem;
+            }
+            .modal-drag-handle {
+                display: block;
+                margin-bottom: 16px;
+            }
+
+            /* --- Button improvements --- */
+            .btn {
+                min-height: 44px;
+                font-size: 0.88rem;
+                border-radius: var(--radius-sm);
+                touch-action: manipulation;
+            }
+            .button-group {
+                gap: 10px;
+            }
+
+            /* --- Toast notification --- */
+            .toast {
+                font-size: 0.82rem;
+                padding: 10px 16px;
+                max-width: 90vw;
+                border-radius: var(--radius-sm);
+                bottom: max(80px, calc(72px + env(safe-area-inset-bottom)));
+            }
+
+            /* --- Dictionary panel --- */
+            .dict-result {
+                padding: 14px;
+            }
+
+            /* --- Settings sections --- */
+            .settings-section {
+                padding: 14px;
+            }
+
+            /* --- Quiz result --- */
+            .quiz-result {
+                padding: 24px 16px;
+            }
+
+            /* --- Progress indicators --- */
+            .progress-bar-outer {
+                height: 4px;
+                border-radius: 2px;
+            }
+        }
+
+        /* ============================
+           Extra-small screens (< 380px)
+           ============================ */
+        @media (max-width: 380px) {
+            .container {
+                padding: 8px 10px;
+                padding-top: 52px;
+            }
+            .reel-word {
+                font-size: 1.6rem;
+            }
+            .word-title {
+                font-size: 1.05rem;
+            }
+            .bottom-nav-btn {
+                min-width: 44px;
+                font-size: 0.6rem;
+            }
+            .bottom-nav-icon {
+                font-size: 1.1rem;
+            }
+            .flashcard-front .fc-word {
+                font-size: 1.3rem;
+            }
+            .flashcard-back .fc-meaning {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* ============================
+           Safe area support
+           ============================ */
+        @supports (padding: env(safe-area-inset-top)) {
+            body {
+                padding-top: env(safe-area-inset-top);
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+            .container {
+                padding-bottom: max(80px, calc(72px + env(safe-area-inset-bottom)));
+            }
+            .bottom-nav {
+                padding-bottom: max(12px, env(safe-area-inset-bottom));
+            }
+        }
+
+        /* ============================
+           Smooth transitions for
+           bottom nav active state
+           ============================ */
+        .bottom-nav-btn.active {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        .bottom-nav-btn.active .bottom-nav-icon {
+            transform: scale(1.1);
+        }
+
+        /* ============================
+           Keyboard open adjustments
+           ============================ */
+        body.keyboard-open .bottom-nav {
+            display: none !important;
+        }
+        body.keyboard-open .container {
+            padding-bottom: 20px;
+        }
+
         .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
         .sr-only-focusable:focus { position: static; width: auto; height: auto; padding: 8px 16px; margin: 0; overflow: visible; clip: auto; background: var(--accent); color: #fff; z-index: 10000; }
 @keyframes cardSlideIn {
@@ -2398,6 +2767,332 @@
 [data-theme="light"] .heatmap-cell.level-3 { background: hsl(35 25% 65%); }
 [data-theme="light"] .heatmap-cell.level-4 { background: hsl(35 30% 55%); }
 .heatmap-cell[title] { cursor: default; }
+
+        /* ============================
+           Dictation mode
+           ============================ */
+        .dictation-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .dictation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        .dictation-progress {
+            flex: 1;
+            margin-right: 20px;
+        }
+        .dictation-progress-bar {
+            height: 6px;
+            background: var(--border);
+            border-radius: 3px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+        .dictation-progress-fill {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+        .dictation-difficulty {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .dictation-difficulty select {
+            padding: 6px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+
+        .dictation-player {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 30px 0;
+            gap: 16px;
+        }
+        .dictation-play-btn {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: white;
+            border: none;
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        .dictation-play-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+        .dictation-play-btn:active {
+            transform: scale(0.95);
+        }
+        .dictation-play-btn.playing {
+            background: var(--danger);
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .dictation-replay-btn {
+            padding: 8px 16px;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .dictation-replay-btn:hover {
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+        }
+
+        .dictation-input-area {
+            display: flex;
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .dictation-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1.1rem;
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+            transition: border-color 0.2s ease;
+        }
+        .dictation-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        .dictation-input.correct {
+            border-color: var(--success);
+            background: rgba(40, 167, 69, 0.1);
+        }
+        .dictation-input.wrong {
+            border-color: var(--danger);
+            background: rgba(220, 53, 69, 0.1);
+        }
+        .dictation-submit-btn {
+            padding: 12px 24px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .dictation-submit-btn:hover {
+            background: var(--accent-hover);
+        }
+        .dictation-submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .dictation-feedback {
+            text-align: center;
+            margin: 20px 0;
+            padding: 16px;
+            border-radius: 8px;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dictation-feedback.correct {
+            background: rgba(40, 167, 69, 0.1);
+            border: 1px solid var(--success);
+        }
+        .dictation-feedback.wrong {
+            background: rgba(220, 53, 69, 0.1);
+            border: 1px solid var(--danger);
+        }
+        .dictation-feedback-text {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        .dictation-feedback.correct .dictation-feedback-text {
+            color: var(--success);
+        }
+        .dictation-feedback.wrong .dictation-feedback-text {
+            color: var(--danger);
+        }
+        .dictation-correct-word {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+        }
+        .dictation-correct-word strong {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .dictation-stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 24px 0;
+            padding: 16px;
+            background: var(--bg-elevated);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+        .dictation-stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+        .dictation-stat-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .dictation-stat-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .dictation-stat:nth-child(1) .dictation-stat-value {
+            color: var(--success);
+        }
+        .dictation-stat:nth-child(2) .dictation-stat-value {
+            color: var(--danger);
+        }
+
+        .dictation-complete {
+            text-align: center;
+            margin: 30px 0;
+            padding: 24px;
+            background: var(--bg-elevated);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            animation: fadeIn 0.5s ease;
+        }
+        .dictation-complete h3 {
+            margin: 0 0 20px 0;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+        }
+        .dictation-complete-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .dictation-complete-stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 12px;
+            background: var(--bg-main);
+            border-radius: 6px;
+        }
+        .dictation-complete-stat span:first-child {
+            color: var(--text-secondary);
+        }
+        .dictation-complete-stat span:last-child {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .dictation-restart-btn {
+            padding: 12px 24px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .dictation-restart-btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .dictation-source {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+        .dictation-source label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .dictation-source select {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 640px) {
+            .dictation-container {
+                padding: 16px;
+            }
+            .dictation-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+            .dictation-progress {
+                margin-right: 0;
+            }
+            .dictation-difficulty {
+                justify-content: center;
+            }
+            .dictation-play-btn {
+                width: 70px;
+                height: 70px;
+                font-size: 1.8rem;
+            }
+            .dictation-input-area {
+                flex-direction: column;
+            }
+            .dictation-submit-btn {
+                width: 100%;
+            }
+            .dictation-stats {
+                padding: 12px;
+            }
+            .dictation-complete-stats {
+                grid-template-columns: 1fr;
+            }
+            .dictation-source {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
     </style>
 <style>.trae-browser-inspect-overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:999997;pointer-events:auto;background:rgba(0,0,0,0)}.trae-browser-inspect-highlight-box{position:absolute;top:0;left:0;z-index:999998;display:none}.trae-browser-inspect-highlight-tag{position:absolute;left:0px;top:0px;height:18px;padding:0 6px;box-sizing:border-box;border-radius:4px;background-color:var(--vscode-icube-colorSuccessHover, "#2FB287");color:var(--vscode-icube-colorSnow, "#fff");font-size:12px;font-weight:400;display:none;align-items:center;z-index:999999}.trae-browser-inspect-highlight-box-show{display:flex}.trae-browser-inspect-select-button.trae-browser-inspect-highlight-box-show{display:flex !important}.trae-browser-inspect-select-button{position:absolute;top:0;left:0;background-color:var(--vscode-icube--bg-bg-base-secondary, "#222427");color:var(--vscode-icube--text-text-default-active, "#F5F9FE");font-size:11px;font-weight:500;border:1px solid var(--vscode-icube--border-neutral-l1, "#E0E2F217");border-radius:6px;padding:0 8px;height:32px;display:none;align-items:center;cursor:pointer;z-index:999999;gap:4px}.trae-browser-inspect-select-button svg,.trae-browser-inspect-select-button span{z-index:1}.trae-browser-inspect-select-highlight-box{background:rgba(0,0,0,0) !important}.trae-browser-inspect-select-highlight-box .trae-browser-inspect-highlight-tag{background-color:var(--vscode-icube--status-success-active, "#1E8B56")}.trae-browser-inspect-comment-card-container{position:fixed;top:0;left:0;z-index:9999999;pointer-events:auto}.trae-browser-inspect-comment-card-container .trae-browser-inspect-comment-card{display:flex;padding-top:0px !important;align-items:center;z-index:9999999 !important;background-color:var(--vscode-icube--bg-bg-menu)}*[contenteditable]{outline:none}.trae-browser-inspect-click-effect{position:fixed;width:40px;height:40px;margin-left:-20px;margin-top:-20px;border-radius:50%;background-color:var(--vscode-icube-colorSuccessHover, #2FB287);pointer-events:none;animation:trae-browser-inspect-ripple 500ms ease-out forwards;z-index:999999}@keyframes trae-browser-inspect-ripple{0%{transform:scale(0.3);opacity:.8}100%{transform:scale(2);opacity:0}}.trae-browser-inspect-ref-box{position:absolute;border:2px solid var(--vscode-icube-colorSuccessHover, "#2FB287");pointer-events:none;z-index:999998;animation:trae-browser-inspect-fadeInOut 2s ease-in-out forwards}.trae-browser-inspect-ref-label{position:absolute;top:-14px;left:0;height:14px;padding:0 4px;box-sizing:border-box;border-radius:2px;background-color:var(--vscode-icube-colorSuccessHover, "#2FB287");color:var(--vscode-icube-colorSnow, "#fff");font-size:9px;font-weight:500;display:flex;align-items:center;white-space:nowrap;z-index:999999}@keyframes trae-browser-inspect-fadeInOut{0%{opacity:0}10%{opacity:1}90%{opacity:1}100%{opacity:0}}.trae-browser-inspect-input-highlight{position:absolute;border:2px solid var(--vscode-icube-colorSuccessHover, "#2FB287");border-radius:4px;pointer-events:none;z-index:999998;box-shadow:0 0 8px var(--vscode-icube-colorSuccessHover, "#2FB287");animation:trae-browser-inspect-input-pulse 600ms ease-out forwards}@keyframes trae-browser-inspect-input-pulse{0%{opacity:0;box-shadow:0 0 0 var(--vscode-icube-colorSuccessHover, "#2FB287")}30%{opacity:1;box-shadow:0 0 12px var(--vscode-icube-colorSuccessHover, "#2FB287")}100%{opacity:0;box-shadow:0 0 0 var(--vscode-icube-colorSuccessHover, "#2FB287")}}.trae-browser-inspect-virtual-cursor{position:fixed;width:20px;height:20px;pointer-events:none;z-index:9999999;opacity:0;transition:opacity .2s ease}.trae-browser-inspect-virtual-cursor.trae-browser-inspect-cursor-visible{opacity:1}.trae-browser-inspect-virtual-cursor.trae-browser-inspect-cursor-idle{animation:trae-browser-inspect-cursor-breathe 2s ease-in-out infinite}.trae-browser-inspect-virtual-cursor svg{width:20px;height:20px;filter:drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3))}@keyframes trae-browser-inspect-cursor-breathe{0%,100%{opacity:.7}50%{opacity:1}}.trae-browser-inspect-scroll-indicator{position:fixed;display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 16px;border-radius:8px;background-color:rgba(0,0,0,.7);color:#fff;font-size:13px;font-weight:500;pointer-events:none;z-index:999999;animation:trae-browser-inspect-indicator-fade 800ms ease-out forwards;backdrop-filter:blur(4px)}.trae-browser-inspect-scroll-indicator svg{width:16px;height:16px;fill:#fff}.trae-browser-inspect-scroll-indicator.trae-scroll-up{top:12px;left:50%;transform:translateX(-50%)}.trae-browser-inspect-scroll-indicator.trae-scroll-down{bottom:12px;left:50%;transform:translateX(-50%)}.trae-browser-inspect-scroll-indicator.trae-scroll-left{left:12px;top:50%;transform:translateY(-50%)}.trae-browser-inspect-scroll-indicator.trae-scroll-right{right:12px;top:50%;transform:translateY(-50%)}@keyframes trae-browser-inspect-indicator-fade{0%{opacity:0;transform:translateX(-50%) scale(0.9)}15%{opacity:1;transform:translateX(-50%) scale(1)}85%{opacity:1}100%{opacity:0}}.trae-browser-inspect-scroll-indicator.trae-scroll-left,.trae-browser-inspect-scroll-indicator.trae-scroll-right{animation-name:trae-browser-inspect-indicator-fade-y}@keyframes trae-browser-inspect-indicator-fade-y{0%{opacity:0;transform:translateY(-50%) scale(0.9)}15%{opacity:1;transform:translateY(-50%) scale(1)}85%{opacity:1}100%{opacity:0}}.trae-browser-inspect-key-badge{position:fixed;bottom:60px;left:50%;transform:translateX(-50%);padding:8px 20px;border-radius:8px;background-color:rgba(0,0,0,.8);color:#fff;font-size:18px;font-weight:600;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,monospace;pointer-events:none;z-index:999999;animation:trae-browser-inspect-key-pop 500ms ease-out forwards;backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.15);box-shadow:0 4px 12px rgba(0,0,0,.3);letter-spacing:1px}@keyframes trae-browser-inspect-key-pop{0%{opacity:0;transform:translateX(-50%) translateY(10px) scale(0.9)}20%{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}80%{opacity:1}100%{opacity:0;transform:translateX(-50%) translateY(-10px)}}.trae-browser-inspect-step-badge{position:fixed;top:12px;left:12px;padding:6px 12px;border-radius:6px;background-color:var(--vscode-icube-colorSuccessHover, #2FB287);color:#fff;font-size:12px;font-weight:600;pointer-events:none;z-index:999999;animation:trae-browser-inspect-step-slide 600ms ease-out forwards;box-shadow:0 2px 8px rgba(47,178,135,.3);max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.trae-browser-inspect-step-badge.trae-step-old{opacity:.4;transform:translateY(0)}@keyframes trae-browser-inspect-step-slide{0%{opacity:0;transform:translateX(-20px)}20%{opacity:1;transform:translateX(0)}100%{opacity:1;transform:translateX(0)}}.trae-browser-inspect-drag-trail{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999998}.trae-browser-inspect-drag-trail svg{width:100%;height:100%}.trae-browser-inspect-drag-trail .trae-drag-path{fill:none;stroke:var(--vscode-icube-colorSuccessHover, #2FB287);stroke-width:2;stroke-dasharray:8 4;opacity:.6;animation:trae-browser-inspect-dash 600ms linear forwards}.trae-browser-inspect-drag-trail .trae-drag-dot{fill:var(--vscode-icube-colorSuccessHover, #2FB287);filter:drop-shadow(0 0 4px rgba(47, 178, 135, 0.6))}.trae-browser-inspect-drag-trail .trae-drag-endpoint{fill:none;stroke:var(--vscode-icube-colorSuccessHover, #2FB287);stroke-width:2;opacity:.5}@keyframes trae-browser-inspect-dash{0%{stroke-dashoffset:200}100%{stroke-dashoffset:0}}.trae-browser-inspect-drag-trail.trae-drag-fade{animation:trae-browser-inspect-trail-fade 400ms ease-out forwards}@keyframes trae-browser-inspect-trail-fade{0%{opacity:1}100%{opacity:0}}</style><script type="module">(async () => {
   try {
@@ -4348,6 +5043,10 @@
                     <span class="sidebar-nav-icon">📊</span>
                     <span class="sidebar-nav-label">學習進度</span>
                 </button>
+                <button class="sidebar-nav-btn" id="tab-dictation" data-tab="dictation" role="tab" aria-selected="false" aria-controls="view-dictation">
+                    <span class="sidebar-nav-icon">🎧</span>
+                    <span class="sidebar-nav-label">聽寫</span>
+                </button>
             </nav>
         </div>
         <div class="sidebar-bottom">
@@ -4544,6 +5243,89 @@
                 <div id="match-result" style="display:none;"></div>
             </div>
         </section>
+
+<section id="view-dictation" role="tabpanel" aria-labelledby="tab-dictation" class="">
+    <div class="dictation-container">
+        <div class="dictation-header">
+            <div class="dictation-progress">
+                <span id="dict-progress-text">0/0</span>
+                <div class="dict-progress-bar">
+                    <div class="dict-progress-fill" id="dict-progress-fill"></div>
+                </div>
+            </div>
+            <div class="dictation-difficulty">
+                <label>難度：</label>
+                <select id="dict-difficulty">
+                    <option value="easy">簡單</option>
+                    <option value="medium" selected>中等</option>
+                    <option value="hard">困難</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="dictation-player">
+            <button class="dictation-play-btn" id="dict-play-btn" aria-label="播放當前單詞">
+                <span class="dictation-play-icon">▶</span>
+            </button>
+            <button class="dictation-replay-btn" id="dict-replay-btn" aria-label="重新播放當前單詞">🔄 重新播放</button>
+        </div>
+        
+        <div class="dictation-input-area">
+            <input type="text" id="dict-input" class="dictation-input" placeholder="輸入聽到的單詞..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-label="輸入聽到的單詞">
+            <button class="dictation-submit-btn" id="dict-submit-btn" aria-label="提交答案">提交</button>
+        </div>
+        
+        <div class="dictation-feedback" id="dict-feedback" style="display: none;">
+            <div class="dictation-feedback-text" id="dict-feedback-text"></div>
+            <div class="dictation-correct-word" id="dict-correct-word" style="display: none;"></div>
+        </div>
+        
+        <div class="dictation-stats">
+            <div class="dictation-stat">
+                <span class="dictation-stat-label">正確</span>
+                <span class="dictation-stat-value" id="dict-correct-count">0</span>
+            </div>
+            <div class="dictation-stat">
+                <span class="dictation-stat-label">錯誤</span>
+                <span class="dictation-stat-value" id="dict-wrong-count">0</span>
+            </div>
+            <div class="dictation-stat">
+                <span class="dictation-stat-label">正確率</span>
+                <span class="dictation-stat-value" id="dict-accuracy">0%</span>
+            </div>
+        </div>
+        
+        <div class="dictation-complete" id="dict-complete" style="display: none;">
+            <h3>練習完成！</h3>
+            <div class="dictation-complete-stats">
+                <div class="dictation-complete-stat">
+                    <span>總數：</span>
+                    <span id="dict-total-count">0</span>
+                </div>
+                <div class="dictation-complete-stat">
+                    <span>正確：</span>
+                    <span id="dict-final-correct">0</span>
+                </div>
+                <div class="dictation-complete-stat">
+                    <span>正確率：</span>
+                    <span id="dict-final-accuracy">0%</span>
+                </div>
+                <div class="dictation-complete-stat">
+                    <span>用時：</span>
+                    <span id="dict-time-spent">0秒</span>
+                </div>
+            </div>
+            <button class="dictation-restart-btn" id="dict-restart-btn" aria-label="重新開始聽寫練習">重新開始</button>
+        </div>
+        
+        <div class="dictation-source">
+            <label>單詞來源：</label>
+            <select id="dict-source">
+                <option value="wordbook">從生字本隨機選擇</option>
+            </select>
+        </div>
+    </div>
+</section>
 
 <section id="view-progress" role="tabpanel" aria-labelledby="tab-progress">
             <div id="wotd-container"><div class="wotd-card"><div class="wotd-word" onclick="showWordDetail('seed4')">inevitable<button class="tts-btn" onclick="speakWord('inevitable')">▶</button></div><div class="wotd-meaning">不可避免的</div><div class="wotd-example">「Change is inevitable in a growing organisation.」</div><div style="margin-top:12px;"><button class="btn btn-primary" onclick="speakWord('inevitable')">練習發音</button></div></div></div>
@@ -4772,17 +5554,19 @@
         if (!entry) return null;
         var translation = String(entry.translation || '').trim();
         var definition = String(entry.definition || '').trim();
+        var inferredPos = inferECDICTPos(entry.pos, translation, definition);
+        
         return {
             word: String(entry.word || ''),
             phonetic: String(entry.phonetic || ''),
             translation: translation,
             definition: definition,
-            pos: inferECDICTPos(entry.pos, translation, definition),
+            pos: inferredPos,
             audio: String(entry.audio || '').trim(),
             exchange: String(entry.exchange || '').trim(),
             tag: String(entry.tag || '').trim(),
             meanings: [{
-                partOfSpeech: inferECDICTPos(entry.pos, translation, definition),
+                partOfSpeech: inferredPos,
                 definitions: [{ definition: translation || definition, example: '' }],
                 synonyms: []
             }]
@@ -5507,17 +6291,19 @@
     function inferECDICTPos(pos, translation, definition) {
         var best = normalizeECDICTPos(pos);
         if (best) return mapPos(best);
+        
         var leading = extractLeadingTranslationPos(translation);
         if (leading) return mapPos(leading);
-        // Try definition field — it often starts with POS like "a. contrived by art"
+        
         var defLeading = extractLeadingTranslationPos(definition);
         if (defLeading) return mapPos(defLeading);
-        // Broader scan: find any POS abbreviation in translation (after brackets, newlines, etc.)
+        
         var fallback = String(translation || '').match(/(?:^|\n|；|;|，|,|\])\s*(suf\.|pref\.|abbr\.|num\.|det\.|phr\.v\.|n\.|v\.|a\.|adj\.|adv\.|prep\.|conj\.|pron\.|art\.|interj\.|excl\.)/i);
         if (fallback) return mapPos(fallback[1]);
-        // Also scan definition for any POS abbreviation
+        
         var defFallback = String(definition || '').match(/(?:^|\n)\s*(suf\.|pref\.|abbr\.|num\.|det\.|phr\.v\.|n\.|v\.|a\.|adj\.|adv\.|prep\.|conj\.|pron\.|art\.|interj\.|excl\.)/i);
         if (defFallback) return mapPos(defFallback[1]);
+        
         return 'n.';
     }
 
@@ -5872,6 +6658,240 @@
         }, { passive: false });
     }
 
+    var dictationState = {
+        words: [],
+        currentIndex: 0,
+        correctCount: 0,
+        wrongCount: 0,
+        isPlaying: false,
+        difficulty: 'medium',
+        source: 'wordbook',
+        startTime: null,
+        endTime: null
+    };
+
+    function dictationSelectWords() {
+        var source = $('dict-source').value;
+        var words = [];
+
+        try {
+            var vocabList = db.data.words;
+            if (!vocabList || vocabList.length === 0) {
+                toast('生字本為空，請先添加單詞', 'warning');
+                return [];
+            }
+            var pool = vocabList.slice().sort(function() { return 0.5 - Math.random(); });
+            words = pool.slice(0, Math.min(10, pool.length));
+
+            return words.map(function(w) { return w.word; });
+        } catch (e) {
+            console.error('Error selecting words for dictation:', e);
+            toast('選擇單詞時發生錯誤', 'danger');
+            return [];
+        }
+    }
+
+    function dictationPlayWord() {
+        if (dictationState.words.length === 0) return;
+
+        var word = dictationState.words[dictationState.currentIndex];
+        if (!word) {
+            console.error('No word to play at index:', dictationState.currentIndex);
+            return;
+        }
+
+        var playBtn = $('dict-play-btn');
+        playBtn.classList.add('playing');
+        dictationState.isPlaying = true;
+
+        try {
+            speakWord(word);
+        } catch (e) {
+            console.error('Error playing word:', e);
+            toast('播放單詞時發生錯誤', 'danger');
+            playBtn.classList.remove('playing');
+            dictationState.isPlaying = false;
+            return;
+        }
+
+        setTimeout(function() {
+            playBtn.classList.remove('playing');
+            dictationState.isPlaying = false;
+        }, 2000);
+    }
+
+    function dictationReplayWord() {
+        dictationStopPlayback();
+        dictationPlayWord();
+    }
+
+    function dictationStopPlayback() {
+        ttsStop();
+        var playBtn = $('dict-play-btn');
+        playBtn.classList.remove('playing');
+        dictationState.isPlaying = false;
+    }
+
+    function dictationCheckSpelling() {
+        try {
+            var input = $('dict-input');
+            var userAnswer = input.value.trim().toLowerCase();
+            var correctWord = dictationState.words[dictationState.currentIndex].toLowerCase();
+
+            var feedback = $('dict-feedback');
+            var feedbackText = $('dict-feedback-text');
+            var correctWordElement = $('dict-correct-word');
+
+            feedback.style.display = 'block';
+
+            if (userAnswer === correctWord) {
+                feedback.className = 'dictation-feedback correct';
+                feedbackText.textContent = '✓ 正確！';
+                correctWordElement.style.display = 'none';
+                input.className = 'dictation-input correct';
+                dictationState.correctCount++;
+            } else {
+                feedback.className = 'dictation-feedback wrong';
+                feedbackText.textContent = '✗ 錯誤';
+                correctWordElement.innerHTML = '正確答案：<strong>' + dictationState.words[dictationState.currentIndex] + '</strong>';
+                correctWordElement.style.display = 'block';
+                input.className = 'dictation-input wrong';
+                dictationState.wrongCount++;
+            }
+
+            dictationUpdateStats();
+
+            input.value = '';
+
+            setTimeout(function() {
+                feedback.style.display = 'none';
+                input.className = 'dictation-input';
+                dictationNextWord();
+            }, 2000);
+        } catch (e) {
+            console.error('Error checking spelling:', e);
+            toast('檢查拼寫時發生錯誤', 'danger');
+        }
+    }
+
+    function dictationUpdateStats() {
+        var total = dictationState.words.length;
+        var correct = dictationState.correctCount;
+        var wrong = dictationState.wrongCount;
+        var answered = correct + wrong;
+        var accuracy = answered > 0 ? Math.round((correct / answered) * 100) : 0;
+
+        $('dict-progress-text').textContent = (answered > 0 ? answered : 1) + '/' + total;
+        $('dict-progress-fill').style.width = (answered > 0 ? (answered / total * 100) : (1 / total * 100)) + '%';
+
+        $('dict-correct-count').textContent = correct;
+        $('dict-wrong-count').textContent = wrong;
+        $('dict-accuracy').textContent = accuracy + '%';
+    }
+
+    function dictationSetDifficulty(difficulty) {
+        dictationState.difficulty = difficulty;
+    }
+
+    function dictationStart() {
+        dictationState.words = dictationSelectWords();
+        dictationState.currentIndex = 0;
+        dictationState.correctCount = 0;
+        dictationState.wrongCount = 0;
+        dictationState.startTime = new Date();
+
+        $('dict-complete').style.display = 'none';
+
+        if (dictationState.words.length === 0) {
+            $('dict-progress-text').textContent = '0/0';
+            $('dict-progress-fill').style.width = '0%';
+            $('dict-play-btn').disabled = true;
+            $('dict-replay-btn').disabled = true;
+            $('dict-input').disabled = true;
+            $('dict-submit-btn').disabled = true;
+            return;
+        }
+
+        $('dict-play-btn').disabled = false;
+        $('dict-replay-btn').disabled = false;
+        $('dict-input').disabled = false;
+        $('dict-submit-btn').disabled = false;
+
+        dictationUpdateStats();
+
+        setTimeout(function() {
+            dictationPlayWord();
+        }, 500);
+    }
+
+    function dictationNextWord() {
+        dictationState.currentIndex++;
+
+        if (dictationState.currentIndex >= dictationState.words.length) {
+            dictationComplete();
+            return;
+        }
+
+        dictationUpdateStats();
+
+        setTimeout(function() {
+            dictationPlayWord();
+        }, 500);
+    }
+
+    function dictationComplete() {
+        try {
+            dictationState.endTime = new Date();
+            var timeSpent = Math.round((dictationState.endTime - dictationState.startTime) / 1000);
+
+            $('dict-total-count').textContent = dictationState.words.length;
+            $('dict-final-correct').textContent = dictationState.correctCount;
+            $('dict-final-accuracy').textContent = Math.round((dictationState.correctCount / dictationState.words.length) * 100) + '%';
+            $('dict-time-spent').textContent = timeSpent + '秒';
+
+            $('dict-complete').style.display = 'block';
+
+            var stats = JSON.parse(localStorage.getItem('dictationStats') || '[]');
+            stats.push({
+                date: new Date().toISOString(),
+                total: dictationState.words.length,
+                correct: dictationState.correctCount,
+                accuracy: Math.round((dictationState.correctCount / dictationState.words.length) * 100),
+                timeSpent: timeSpent
+            });
+            localStorage.setItem('dictationStats', JSON.stringify(stats));
+        } catch (e) {
+            console.error('Error completing dictation:', e);
+            toast('保存練習結果時發生錯誤', 'danger');
+        }
+    }
+
+    function dictationInit() {
+        try {
+            $('dict-play-btn').addEventListener('click', dictationPlayWord);
+            $('dict-replay-btn').addEventListener('click', dictationReplayWord);
+            $('dict-submit-btn').addEventListener('click', dictationCheckSpelling);
+            $('dict-restart-btn').addEventListener('click', dictationStart);
+            $('dict-difficulty').addEventListener('change', function() {
+                dictationSetDifficulty(this.value);
+            });
+            $('dict-source').addEventListener('change', function() {
+                dictationState.source = this.value;
+            });
+
+            $('dict-input').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    dictationCheckSpelling();
+                }
+            });
+
+            dictationStart();
+        } catch (e) {
+            console.error('Error initializing dictation mode:', e);
+            toast('初始化聽寫模式時發生錯誤', 'danger');
+        }
+    }
+
     function init() {
         function updateAppHeight() {
             document.documentElement.style.setProperty('--app-height', window.visualViewport ? window.visualViewport.height + 'px' : '100dvh');
@@ -5906,6 +6926,9 @@
         initTTS();
         initReelTouch();
         loadReel();
+        if ($('view-dictation')) {
+            dictationInit();
+        }
         var initialTab = window.location.hash.replace('#', '');
         if (initialTab && document.querySelector('[data-tab="' + initialTab + '"]')) {
             switchTab(initialTab);
@@ -7778,6 +8801,18 @@ function searchDictionary() {
             var phonetic = entry.phonetic || '';
             var audioUrl = entry.audio || '';
 
+            // Debug logging for rendering
+            console.log('renderDictResults entry:', {
+                word: entry.word,
+                pos: entry.pos,
+                meanings: entry.meanings.map(function(m) {
+                    return {
+                        partOfSpeech: m.partOfSpeech,
+                        formatted: formatPosLabel(m.partOfSpeech)
+                    };
+                })
+            });
+
 var meaningsHtml = (entry.meanings || []).map(function(m, mi) {
                 var defsHtml = (m.definitions || []).slice(0, 4).map(function(d, di) {
                     var ex = d.example ? '<span class="dict-def-example">「' + escHtml(d.example) + '」</span>' : '';
@@ -8672,8 +9707,15 @@ document.querySelectorAll('.sidebar-nav-btn').forEach(function(btn) {
         <span class="bottom-nav-icon">📊</span>
         <span class="bottom-nav-label">進度</span>
     </button>
+    <button class="bottom-nav-btn" data-tab="dictation">
+        <span class="bottom-nav-icon">🎧</span>
+        <span class="bottom-nav-label">聽寫</span>
+    </button>
 </nav>
     
+    <script>
+
+</script>
 
 
 <div class="dark"><div class="trae-browser-inspect-highlight-tag"></div><div class="trae-browser-inspect-highlight-tag"></div><div class="trae-browser-inspect-highlight-box"></div><div class="trae-browser-inspect-highlight-box trae-browser-inspect-select-highlight-box" style="cursor: grab; pointer-events: auto;"></div><div class="trae-browser-inspect-overlay" style="display: none;"></div><div class="trae-browser-inspect-comment-card-container"></div><div class="trae-browser-inspect-drop-indicator" style="position: fixed; pointer-events: none; z-index: 999999; display: none; background: linear-gradient(90deg, rgb(0, 102, 255), rgb(0, 170, 255)); box-shadow: rgba(0, 102, 255, 0.4) 0px 0px 4px 1px, rgba(0, 102, 255, 0.3) 0px 0px 8px 2px, rgba(0, 102, 255, 0.2) 0px 0px 12px 3px; transition: transform 0.15s, width 0.15s, height 0.15s;"></div></div><div class="trae-browser-inspect-text-selection-container dark"><div class="trae-browser-inspect-comment-card-container"></div></div><div class="trae-browser-inspect-operation dark"></div></body></html>
