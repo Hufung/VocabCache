@@ -4762,8 +4762,11 @@
     }
 
     var ECDICT_BASE_URL = 'https://raw.githubusercontent.com/Hufung/ECDICT-Traditional-Chinese/master/api/dict/';
-    var ECDICT_CHUNK_COUNT = 770;
+    var ECDICT_WORD_INDEX_URL = ECDICT_BASE_URL + 'word-index.json';
+    var ECDICT_CHUNK_COUNT = 770; // fallback only
     var ecdictChunkCache = {};
+    var ecdictWordIndexCache = null; // null = not loaded, object = loaded, false = failed
+    var ecdictLetterCache = {};
 
     function normalizeECDICTEntry(entry) {
         if (!entry) return null;
@@ -4774,12 +4777,12 @@
             phonetic: String(entry.phonetic || ''),
             translation: translation,
             definition: definition,
-            pos: inferECDICTPos(entry.pos, translation),
+            pos: inferECDICTPos(entry.pos, translation, definition),
             audio: String(entry.audio || '').trim(),
             exchange: String(entry.exchange || '').trim(),
             tag: String(entry.tag || '').trim(),
             meanings: [{
-                partOfSpeech: formatPosLabel(inferECDICTPos(entry.pos, translation)),
+                partOfSpeech: formatPosLabel(inferECDICTPos(entry.pos, translation, definition)),
                 definitions: [{ definition: translation || definition, example: '' }],
                 synonyms: []
             }]
@@ -4801,31 +4804,96 @@
         return ecdictChunkCache[chunkNumber];
     }
 
+    function loadECDICTWordIndex() {
+        if (ecdictWordIndexCache !== null) return Promise.resolve(ecdictWordIndexCache);
+        return fetchWithTimeout(ECDICT_WORD_INDEX_URL, null, 15000)
+            .then(function(res) {
+                if (!res.ok) throw new Error('index_fetch_failed');
+                return res.json();
+            })
+            .then(function(index) {
+                ecdictWordIndexCache = index || {};
+                return ecdictWordIndexCache;
+            })
+            .catch(function() {
+                ecdictWordIndexCache = false;
+                return false;
+            });
+    }
+
+    function loadECDICTLetterFile(letter) {
+        var key = String(letter || '').toLowerCase();
+        if (!key) return Promise.resolve([]);
+        if (ecdictLetterCache[key] !== undefined) return Promise.resolve(ecdictLetterCache[key]);
+        ecdictLetterCache[key] = fetchWithTimeout(ECDICT_BASE_URL + key + '.json')
+            .then(function(res) {
+                if (!res.ok) throw new Error('letter_fetch_failed');
+                return res.json();
+            })
+            .then(function(entries) {
+                var result = Array.isArray(entries) ? entries : [];
+                ecdictLetterCache[key] = result;
+                return result;
+            })
+            .catch(function() {
+                ecdictLetterCache[key] = [];
+                return [];
+            });
+    }
+
     async function lookupECDICTWord(word) {
         var target = String(word || '').trim().toLowerCase();
         if (!target) return [];
+
+        var index = await loadECDICTWordIndex();
+        if (index && index[target] !== undefined) {
+            var entries = await loadECDICTChunk(index[target]);
+            return entries.filter(function(entry) {
+                return String(entry.word || '').toLowerCase() === target;
+            }).map(normalizeECDICTEntry);
+        }
+        if (index === false) {
+            return lookupECDICTWordFallback(target);
+        }
+        return [];
+    }
+
+    async function lookupECDICTWordFallback(target) {
         var low = 1;
         var high = ECDICT_CHUNK_COUNT;
         while (low <= high) {
             var middle = Math.floor((low + high) / 2);
             var entries = await loadECDICTChunk(middle);
-            if (!entries.length) {
-                high = middle - 1;
-                continue;
-            }
+            if (!entries.length) { high = middle - 1; continue; }
             var first = String(entries[0].word || '').toLowerCase();
             var last = String(entries[entries.length - 1].word || '').toLowerCase();
-            if (target < first) {
-                high = middle - 1;
-            } else if (target > last) {
-                low = middle + 1;
-            } else {
+            if (target < first) { high = middle - 1; }
+            else if (target > last) { low = middle + 1; }
+            else {
                 return entries.filter(function(entry) {
                     return String(entry.word || '').toLowerCase() === target;
                 }).map(normalizeECDICTEntry);
             }
         }
         return [];
+    }
+
+    async function lookupECDICTPrefix(prefix) {
+        var p = String(prefix || '').trim().toLowerCase();
+        if (!p) return [];
+        var firstChar = p[0];
+        var letterKey;
+        if (/[a-z]/.test(firstChar)) {
+            letterKey = firstChar;
+        } else if (/[0-9]/.test(firstChar)) {
+            letterKey = '0-9';
+        } else {
+            letterKey = 'special';
+        }
+        var entries = await loadECDICTLetterFile(letterKey);
+        return entries.filter(function(entry) {
+            return String(entry.word || '').toLowerCase().indexOf(p) === 0;
+        }).map(normalizeECDICTEntry);
     }
 
     var PREFERRED_VOICE_NAMES = ['Sin-Yi', 'Sinji', 'Google UK English Female', 'Google US English', 'Microsoft Zira', 'Samantha'];
@@ -5436,13 +5504,21 @@
             '</div>';
     }
 
-    function inferECDICTPos(pos, translation) {
+    function inferECDICTPos(pos, translation, definition) {
         var best = normalizeECDICTPos(pos);
         if (best) return mapPos(best);
         var leading = extractLeadingTranslationPos(translation);
         if (leading) return mapPos(leading);
-        var fallback = String(translation || '').match(/(?:^|\n|；|;|，|,)\s*(suf\.|pref\.|abbr\.|num\.|det\.|phr\.v\.|n\.|v\.|a\.|adj\.|adv\.|prep\.|conj\.|pron\.|art\.|interj\.|excl\.)/i);
-        return fallback ? mapPos(fallback[1]) : 'n.';
+        // Try definition field — it often starts with POS like "a. contrived by art"
+        var defLeading = extractLeadingTranslationPos(definition);
+        if (defLeading) return mapPos(defLeading);
+        // Broader scan: find any POS abbreviation in translation (after brackets, newlines, etc.)
+        var fallback = String(translation || '').match(/(?:^|\n|；|;|，|,|\])\s*(suf\.|pref\.|abbr\.|num\.|det\.|phr\.v\.|n\.|v\.|a\.|adj\.|adv\.|prep\.|conj\.|pron\.|art\.|interj\.|excl\.)/i);
+        if (fallback) return mapPos(fallback[1]);
+        // Also scan definition for any POS abbreviation
+        var defFallback = String(definition || '').match(/(?:^|\n)\s*(suf\.|pref\.|abbr\.|num\.|det\.|phr\.v\.|n\.|v\.|a\.|adj\.|adv\.|prep\.|conj\.|pron\.|art\.|interj\.|excl\.)/i);
+        if (defFallback) return mapPos(defFallback[1]);
+        return 'n.';
     }
 
     var WORD_LEVELS = [
