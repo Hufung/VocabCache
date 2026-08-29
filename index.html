@@ -4782,7 +4782,7 @@
             exchange: String(entry.exchange || '').trim(),
             tag: String(entry.tag || '').trim(),
             meanings: [{
-                partOfSpeech: formatPosLabel(inferECDICTPos(entry.pos, translation, definition)),
+                partOfSpeech: inferECDICTPos(entry.pos, translation, definition),
                 definitions: [{ definition: translation || definition, example: '' }],
                 synonyms: []
             }]
