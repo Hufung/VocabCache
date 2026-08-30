@@ -572,7 +572,42 @@
             color: var(--accent);
         }
 
-.empty-state {
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .page-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 6px 12px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 0.82rem;
+            transition: var(--transition);
+            min-width: 36px;
+            text-align: center;
+        }
+        .page-btn:hover:not(:disabled) {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        .page-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--bg-primary);
+            font-weight: 600;
+        }
+        .page-btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+
+        .empty-state {
             text-align: center;
             padding: 40px 20px;
         }
@@ -5093,16 +5128,17 @@
                     <button class="mic-btn" id="mic-search" title="語音搜尋" aria-label="語音搜尋" onclick="startSpeechSearch('search-input', this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg></button>
                 </div>
                 <select id="filter-category"><option value="">所有分類</option><option value="DSE 5**">DSE 5**</option><option value="日常">日常</option><option value="旅遊">旅遊</option></select>
-                <select id="filter-sort">
-                    <option value="recent">最近加入</option>
-                    <option value="alpha">字母排序</option>
-                    <option value="difficulty">按難度</option>
-                    <option value="not-mastered">未掌握優先</option>
-                </select>
+                <div class="sort-bar" id="sort-bar">
+                    <button class="sort-btn active" data-sort="recent">最近加入</button>
+                    <button class="sort-btn" data-sort="alpha">字母排序</button>
+                    <button class="sort-btn" data-sort="difficulty">按難度</button>
+                    <button class="sort-btn" data-sort="not-mastered">未掌握優先</button>
+                </div>
                 <button class="btn btn-primary" id="btn-add-word">新增生字</button>
             </div>
             <div class="result-count" id="result-count">共 5 個生字</div>
-            <div id="word-list" aria-live="polite"><div class="word-card animate-in" data-id="seed5" style="animation-delay: 0ms;"><div class="word-header"><div><span class="word-title" onclick="showWordDetail('seed5')">resilient</span> <span class="word-phonetic">/rɪˈzɪliənt/</span> <span class="word-pos">adj.</span><button class="tts-btn" onclick="speakWord('resilient')" title="播放發音">▶</button></div><div><span class="srs-badge due">待複習</span></div></div><div class="word-meaning">有韌性的；適應力強的</div><div class="word-example">Children are often more resilient than adults think.</div><div class="word-example-zh">孩子往往比大人想的更有韌性。</div><div class="word-footer"><div class="word-meta"><span class="badge badge-category">日常</span><span class="badge badge-level" style="background:rgba(245,158,11,0.12);color:#F59E0B;">進階<span class="badge-level-en">Advanced</span></span><span class="badge badge-reviews">複習 2 次</span></div><div class="word-actions"><button class="btn btn-secondary" onclick="editWord('seed5')">編輯</button><button class="btn btn-secondary" onclick="toggleMastered('seed5')">標記掌握</button><button class="btn btn-danger" onclick="confirmDelete('seed5')">刪除</button></div></div></div><div class="word-card animate-in" data-id="seed4" style="animation-delay: 40ms;"><div class="word-header"><div><span class="word-title" onclick="showWordDetail('seed4')">inevitable</span> <span class="word-phonetic">/ɪnˈevɪtəbl/</span> <span class="word-pos">adj.</span><button class="tts-btn" onclick="speakWord('inevitable')" title="播放發音">▶</button></div><div><span class="srs-badge due">待複習</span></div></div><div class="word-meaning">不可避免的</div><div class="word-example">Change is inevitable in a growing organisation.</div><div class="word-example-zh">在發展中的組織裡，改變是不可避免的。</div><div class="word-footer"><div class="word-meta"><span class="badge badge-category">日常</span><span class="badge badge-level" style="background:rgba(249,115,22,0.12);color:#F97316;">高級<span class="badge-level-en">Expert</span></span><span class="badge badge-reviews">複習 0 次</span></div><div class="word-actions"><button class="btn btn-secondary" onclick="editWord('seed4')">編輯</button><button class="btn btn-secondary" onclick="toggleMastered('seed4')">標記掌握</button><button class="btn btn-danger" onclick="confirmDelete('seed4')">刪除</button></div></div></div><div class="word-card mastered animate-in" data-id="seed3" style="animation-delay: 80ms;"><div class="word-header"><div><span class="word-title" onclick="showWordDetail('seed3')">compromise</span> <span class="word-phonetic">/ˈkɒmprəmaɪz/</span> <span class="word-pos">n.</span><button class="tts-btn" onclick="speakWord('compromise')" title="播放發音">▶</button></div><div><span class="srs-badge">間隔 30 天</span></div><span class="badge badge-mastered">已掌握</span></div><div class="word-meaning">妥協；折衷</div><div class="word-example">Both sides reached a compromise after long negotiations.</div><div class="word-example-zh">經過長時間談判，雙方達成了妥協。</div><div class="word-footer"><div class="word-meta"><span class="badge badge-category">DSE 5**</span><span class="badge badge-level" style="background:rgba(249,115,22,0.12);color:#F97316;">高級<span class="badge-level-en">Expert</span></span><span class="badge badge-reviews">複習 5 次</span></div><div class="word-actions"><button class="btn btn-secondary" onclick="editWord('seed3')">編輯</button><button class="btn btn-secondary" onclick="toggleMastered('seed3')">取消掌握</button><button class="btn btn-danger" onclick="confirmDelete('seed3')">刪除</button></div></div></div><div class="word-card animate-in" data-id="seed2" style="animation-delay: 120ms;"><div class="word-header"><div><span class="word-title" onclick="showWordDetail('seed2')">elaborate</span> <span class="word-phonetic">/ɪˈlæbərət/</span> <span class="word-pos">adj.</span><button class="tts-btn" onclick="speakWord('elaborate')" title="播放發音">▶</button></div><div><span class="srs-badge due">待複習</span></div></div><div class="word-meaning">精心設計的；詳盡的</div><div class="word-example">She made elaborate preparations for the party.</div><div class="word-example-zh">她為派對做了精心的準備。</div><div class="word-footer"><div class="word-meta"><span class="badge badge-category">DSE 5**</span><span class="badge badge-level" style="background:rgba(249,115,22,0.12);color:#F97316;">高級<span class="badge-level-en">Expert</span></span><span class="badge badge-reviews">複習 1 次</span></div><div class="word-actions"><button class="btn btn-secondary" onclick="editWord('seed2')">編輯</button><button class="btn btn-secondary" onclick="toggleMastered('seed2')">標記掌握</button><button class="btn btn-danger" onclick="confirmDelete('seed2')">刪除</button></div></div></div><div class="word-card animate-in" data-id="seed1" style="animation-delay: 160ms;"><div class="word-header"><div><span class="word-title" onclick="showWordDetail('seed1')">abandon</span> <span class="word-phonetic">/əˈbændən/</span> <span class="word-pos">v.</span><button class="tts-btn" onclick="speakWord('abandon')" title="播放發音">▶</button></div><div><span class="srs-badge due">待複習</span></div></div><div class="word-meaning">放棄；遺棄</div><div class="word-example">He abandoned the plan due to lack of funding.</div><div class="word-example-zh">他因缺乏資金而放棄了那個計劃。</div><div class="word-footer"><div class="word-meta"><span class="badge badge-category">DSE 5**</span><span class="badge badge-level" style="background:rgba(245,158,11,0.12);color:#F59E0B;">進階<span class="badge-level-en">Advanced</span></span><span class="badge badge-reviews">複習 3 次</span></div><div class="word-actions"><button class="btn btn-secondary" onclick="editWord('seed1')">編輯</button><button class="btn btn-secondary" onclick="toggleMastered('seed1')">標記掌握</button><button class="btn btn-danger" onclick="confirmDelete('seed1')">刪除</button></div></div></div></div>
+            <div id="word-list" aria-live="polite"></div>
+            <div class="pagination" id="pagination"></div>
         </section>
 
         <section id="view-discover" role="tabpanel" aria-labelledby="tab-discover">
@@ -5540,6 +5576,9 @@
     var ANIMATION_DELAY = 300;
     var CONFETTI_DURATION = 5000;
     var SEARCH_DEBOUNCE_MS = 200;
+    var ITEMS_PER_PAGE = 20;
+    var currentPage = 1;
+    var currentSort = 'recent';
 
     var _prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     function haptic(ms) {
@@ -7011,7 +7050,7 @@
         var words = db.data.words.slice();
         var search = $('search-input').value.trim().toLowerCase();
         var catFilter = $('filter-category').value;
-        var sortBy = $('filter-sort').value;
+        var sortBy = currentSort;
 
         if (search) {
             words = words.filter(function(w) {
@@ -7037,13 +7076,22 @@
 
         var container = $('word-list');
         var countDiv = $('result-count');
+        var paginationDiv = $('pagination');
         if (countDiv) { countDiv.textContent = words.length > 0 ? '共 ' + words.length + ' 個生字' : ''; }
 
         if (words.length === 0) {
             container.innerHTML = renderEmptyState(search || catFilter ? 'noResults' : 'empty');
+            if (paginationDiv) paginationDiv.innerHTML = '';
             return;
         }
-container.innerHTML = words.map(function(w) {
+
+        var totalPages = Math.ceil(words.length / ITEMS_PER_PAGE);
+        if (currentPage > totalPages) currentPage = totalPages;
+        if (currentPage < 1) currentPage = 1;
+        var start = (currentPage - 1) * ITEMS_PER_PAGE;
+        var paged = words.slice(start, start + ITEMS_PER_PAGE);
+
+        container.innerHTML = paged.map(function(w) {
             var levelDisplay = renderWordLevel(w.word);
             var isDue = w.srs && w.srs.nextReview <= Date.now();
             var srsBadge = '';
@@ -7090,6 +7138,26 @@ container.innerHTML = words.map(function(w) {
             card.classList.add('animate-in');
             card.style.animationDelay = (i * 40) + 'ms';
         });
+
+        if (paginationDiv) {
+            if (totalPages <= 1) {
+                paginationDiv.innerHTML = '';
+            } else {
+                var html = '<button class="page-btn" onclick="goToPage(' + (currentPage - 1) + ')"' + (currentPage <= 1 ? ' disabled' : '') + '>&#9664;</button>';
+                for (var p = 1; p <= totalPages; p++) {
+                    html += '<button class="page-btn' + (p === currentPage ? ' active' : '') + '" onclick="goToPage(' + p + ')">' + p + '</button>';
+                }
+                html += '<button class="page-btn" onclick="goToPage(' + (currentPage + 1) + ')"' + (currentPage >= totalPages ? ' disabled' : '') + '>&#9654;</button>';
+                paginationDiv.innerHTML = html;
+            }
+        }
+    }
+
+    function goToPage(n) {
+        currentPage = n;
+        renderWordList();
+        var listSection = $('view-list');
+        if (listSection) listSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     function escHtml(s) {
@@ -9470,9 +9538,19 @@ document.querySelectorAll('.sidebar-nav-btn').forEach(function(btn) {
             });
         });
 
-        $('search-input').addEventListener('input', debounce(renderWordList, SEARCH_DEBOUNCE_MS));
-        $('filter-category').addEventListener('change', renderWordList);
-        $('filter-sort').addEventListener('change', renderWordList);
+        $('search-input').addEventListener('input', debounce(function(){ currentPage = 1; renderWordList(); }, SEARCH_DEBOUNCE_MS));
+        $('filter-category').addEventListener('change', function(){ currentPage = 1; renderWordList(); });
+
+        var sortBtns = document.querySelectorAll('#sort-bar .sort-btn');
+        sortBtns.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                sortBtns.forEach(function(b){ b.classList.remove('active'); });
+                btn.classList.add('active');
+                currentSort = btn.dataset.sort;
+                currentPage = 1;
+                renderWordList();
+            });
+        });
 
         $('btn-add-word').addEventListener('click', function(){ openModal(null); });
         $('btn-modal-save').addEventListener('click', saveModal);
