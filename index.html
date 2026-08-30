@@ -145,6 +145,15 @@
             justify-content: center;
             font-weight: 700;
             font-size: 1.1rem;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: var(--radius);
+        }
             flex-shrink: 0;
             letter-spacing: 0.02em;
         }
@@ -5004,9 +5013,9 @@
     <aside class="sidebar" id="sidebar" role="navigation" aria-label="主選單">
         <div class="sidebar-top">
             <div class="sidebar-logo">
-                <div class="logo-icon">V</div>
+                <div class="logo-icon"><img src="logo.jpeg" alt="VocabCache logo"></div>
                 <div class="sidebar-logo-text">
-                    <h1>VocabMaster</h1>
+                    <h1>VocabCache</h1>
                     <p>DSE English 詞彙</p>
                 </div>
             </div>
