@@ -5887,6 +5887,8 @@
             };
         },
         addWord: function(w) {
+            var exists = this.data.words.some(function(x){ return x.word.toLowerCase() === w.word.toLowerCase(); });
+            if (exists) return null;
             w.id = 'w' + Date.now() + Math.random().toString(36).substr(2,8);
             w.createdAt = Date.now();
             w.stats = { reviews: 0, correct: 0, lastReviewed: null, mastered: false };
@@ -7415,6 +7417,10 @@ var data = {
         if (editId) {
             db.updateWord(editId, data);
         } else {
+            if (isWordInVocab(data.word)) {
+                toast('此生字「' + data.word + '」已存在', 'warning');
+                return;
+            }
             data.difficulty = determineWordLevel(data.word).key;
             db.addWord(data);
         }
@@ -9061,6 +9067,11 @@ var meaningsHtml = (entry.meanings || []).map(function(m, mi) {
 
         Promise.resolve(meaningZh)
             .then(function(meaningZh) {
+                if (isWordInVocab(word)) {
+                    toast('此生字「' + word + '」已存在', 'warning');
+                    if (btn) { btn.textContent = '已加入'; btn.disabled = true; }
+                    return;
+                }
                 db.addWord({
                     word: word,
                     pos: mapPos(pos),
