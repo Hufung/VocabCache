@@ -5183,6 +5183,9 @@
                     <label style="display:flex;align-items:center;gap:6px;color:var(--text-secondary);cursor:pointer;">
                         <input type="checkbox" id="flash-unmastered" checked=""> 只顯示未掌握
                     </label>
+                    <label style="display:flex;align-items:center;gap:6px;color:var(--text-secondary);cursor:pointer;">
+                        <input type="checkbox" id="flash-low-retention"> 保持率 &lt;30%
+                    </label>
                     <button class="btn btn-primary" id="btn-start-flash">開始</button>
                 </div>
                 <div id="flash-deck" style="display:none; width:100%; max-width:500px;">
@@ -5219,7 +5222,7 @@
                 </div>
                 <div class="empty-state" id="flash-empty" style="display:none;">
                     <h3>沒有可複習的生字</h3>
-                    <p>請先加入生字或取消「只顯示未掌握」篩選</p>
+                    <p>請先加入生字或取消「只顯示未掌握」／「保持率 &lt;30%」篩選</p>
                 </div>
             </div>
         </section>
@@ -7519,9 +7522,11 @@ var data = {
         var words = db.data.words.slice();
         var cat = $('flash-category').value;
         var unmastered = $('flash-unmastered').checked;
+        var lowRetention = $('flash-low-retention').checked;
 
         if (cat) words = words.filter(function(w){ return w.category === cat; });
         if (unmastered) words = words.filter(function(w){ return !w.stats.mastered; });
+        if (lowRetention) words = words.filter(function(w){ return db.calculateRetention(w) < 0.3; });
 
         if (words.length === 0) {
             $('flash-deck').style.display = 'none';
