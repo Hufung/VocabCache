@@ -1988,6 +1988,70 @@
             font-size: 0.95rem;
             line-height: 1.6;
         }
+        .typing-ai-analysis {
+            background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary));
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-bottom: 12px;
+            position: relative;
+        }
+        .typing-ai-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+        .typing-ai-grade {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-right: 8px;
+            flex-shrink: 0;
+        }
+        .typing-ai-grade.grade-a { background: var(--success); color: #fff; }
+        .typing-ai-grade.grade-b { background: var(--warning); color: #fff; }
+        .typing-ai-grade.grade-c { background: var(--danger); color: #fff; }
+        .typing-ai-text {
+            font-size: 0.92rem;
+            line-height: 1.65;
+            color: var(--text-primary);
+        }
+        .typing-ai-correction {
+            margin-top: 8px;
+            padding: 8px 12px;
+            background: var(--bg-primary);
+            border-radius: 8px;
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            border-left: 3px solid var(--accent);
+        }
+        .typing-ai-loading {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 16px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .typing-ai-spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
         .typing-feedback-label {
             display: block;
             color: var(--text-secondary);
@@ -5422,6 +5486,7 @@
                         <div class="typing-feedback-sentence" id="typing-feedback-sentence"></div>
                         <div class="typing-feedback-meta" id="typing-feedback-meta"></div>
                         <div class="typing-feedback-section" id="typing-feedback-main"></div>
+                        <div class="typing-ai-analysis" id="typing-ai-analysis" style="display:none;"></div>
                         <div class="typing-feedback-section" id="typing-feedback-suggestions" style="display:none;"></div>
                         <div class="typing-feedback-badges" id="typing-feedback-badges"></div>
                         <div class="typing-feedback-actions">
@@ -7661,11 +7726,13 @@ var data = {
     }
 
     var confirmCallback = null;
-    function showConfirm(title, msg, cb) {
+    var confirmCancelCallback = null;
+    function showConfirm(title, msg, cb, cancelCb) {
         $('confirm-title').textContent = title;
         $('confirm-message').textContent = msg;
         $('confirm-modal').classList.add('show');
         confirmCallback = cb;
+        confirmCancelCallback = cancelCb || null;
     }
 
     function confirmDelete(id) {
@@ -8153,7 +8220,7 @@ function flashAnswer(correct) {
             $('typing-sentence-input').className = 'typing-input typing-sentence';
             $('typing-sentence-input').disabled = false;
             $('typing-sentence-input').focus();
-            $('typing-hint-text').textContent = '包含目標單字才算完成。';
+            $('typing-hint-text').textContent = '包含目標單字才算完成。' + (aiState.loaded ? ' AI 語法檢查已啟用。' : ''); 
             $('typing-sentence-count').textContent = '0 / 120';
             $('typing-submit-row').style.display = 'flex';
             $('typing-feedback').style.display = 'none';
@@ -8163,6 +8230,8 @@ function flashAnswer(correct) {
             $('typing-feedback-title').textContent = '';
             $('typing-feedback-sentence').textContent = '';
             $('typing-feedback-meta').innerHTML = '';
+            $('typing-ai-analysis').style.display = 'none';
+            $('typing-ai-analysis').innerHTML = '';
             var retryBtn = $('btn-typing-retry');
             var feedbackNextBtn = $('btn-typing-next');
             retryBtn.textContent = '重寫句子';
@@ -8256,31 +8325,10 @@ function flashAnswer(correct) {
         else badges.push('未包含單字');
         $('typing-feedback-badges').innerHTML = badges.map(function(b){ return '<span class="typing-feedback-badge">' + escHtml(b) + '</span>'; }).join('');
 
-        if (feedback.feedbackType === 'good') {
-            typingState.correct++;
-            $('btn-typing-retry').style.display = 'none';
-            $('btn-typing-next').style.display = 'inline-flex';
-            var real = db.data.words.find(function(x){ return x.id === w.id; });
-            if (real) {
-                db.applySRS(w.id, 5);
-                real.stats.reviews++;
-                real.stats.correct++;
-                real.stats.lastReviewed = Date.now();
-                db.save();
-                db.logActivity();
-            }
-        } else {
-            $('btn-typing-retry').style.display = 'inline-flex';
-            $('btn-typing-next').style.display = feedback.feedbackType === 'partial' ? 'inline-flex' : 'none';
-            var real2 = db.data.words.find(function(x){ return x.id === w.id; });
-            if (real2) {
-                db.applySRS(w.id, 1);
-                real2.stats.reviews++;
-                real2.stats.lastReviewed = Date.now();
-                db.save();
-                db.logActivity();
-            }
-        }
+        $('typing-ai-analysis').style.display = 'none';
+        $('typing-ai-analysis').innerHTML = '';
+        $('btn-typing-retry').style.display = 'inline-flex';
+        $('btn-typing-next').style.display = 'none';
     }
 
     function checkTypingSentence() {
@@ -8296,6 +8344,7 @@ function flashAnswer(correct) {
         var w = typingState.queue[typingState.index];
         var feedback = getTypingFeedbackRules(sentence, w);
         renderTypingFeedback(sentence, w, feedback);
+        aiCheckSentence(sentence, w);
     }
 
     function retryTypingSentence() {
@@ -8303,6 +8352,8 @@ function flashAnswer(correct) {
         $('typing-sentence-input').focus();
         $('typing-submit-row').style.display = 'flex';
         $('typing-feedback').style.display = 'none';
+        $('typing-ai-analysis').style.display = 'none';
+        $('typing-ai-analysis').innerHTML = '';
     }
 
     function checkTyping() {
@@ -9777,6 +9828,126 @@ var meaningsHtml = (entry.meanings || []).map(function(m, mi) {
         }
     }
 
+    function applyRuleBasedSRS(sentence, w) {
+        var feedback = getTypingFeedbackRules(sentence, w);
+        applyTypingSRS(feedback.feedbackType, w);
+    }
+
+    async function aiCheckSentence(sentence, w) {
+        if (!aiState.loaded) {
+            if (!localStorage.getItem('ai_download_consent')) {
+                showConfirm(
+                    'AI 語法檢查',
+                    '啟用 AI 語法檢查需下載 Gemma 4 E2B 模型（約 2.6 GB）。下載完成後會自動快取。確定要繼續嗎？',
+                    function() {
+                        localStorage.setItem('ai_download_consent', '1');
+                        runAiSentenceCheck(sentence, w);
+                    },
+                    function() {
+                        applyRuleBasedSRS(sentence, w);
+                    }
+                );
+            } else {
+                runAiSentenceCheck(sentence, w);
+            }
+            return;
+        }
+        runAiSentenceCheck(sentence, w);
+    }
+
+    async function runAiSentenceCheck(sentence, w) {
+        $('typing-ai-analysis').style.display = 'block';
+        $('typing-ai-analysis').innerHTML = '<div class="typing-ai-loading"><div class="typing-ai-spinner"></div><span>AI 正在分析句子...</span></div>';
+
+        var llm = await aiEnsureEngine();
+        if (!llm) {
+            $('typing-ai-analysis').innerHTML = '<div class="typing-ai-loading"><span>AI 模型載入失敗，請檢查 WebGPU 支援。</span></div>';
+            applyRuleBasedSRS(sentence, w);
+            return;
+        }
+
+        var prompt = '<|turn>user\nYou are a strict but encouraging English teacher evaluating a sentence written by a Traditional Chinese student. The student was asked to write a sentence using the word "' + w.word + '" (' + w.pos + ', meaning: ' + w.meaningZh + ').\n\nStudent\'s sentence: "' + sentence + '"\n\nEvaluate this sentence. Respond in EXACTLY this format (nothing else):\nGRADE: <A/B/C>\nGRAMMAR: <one line: correct OR brief correction if needed>\nUSAGE: <one line: does the sentence use "' + w.word + '" correctly?\nTIP: <one short helpful tip in Traditional Chinese>\n\nGrading rules:\nA = grammatically correct, natural, uses the target word properly\nB = understandable but has minor grammar issues or awkward phrasing\nC = major grammar errors, doesn\'t make sense, or doesn\'t use the target word\n<turn|>\n<|turn>model\n';
+
+        var fullText = '';
+
+        try {
+            await llm.generateResponse(prompt, function(partial, done) {
+                fullText += partial;
+                if (done) {
+                    renderAiAnalysis(fullText, sentence, w);
+                }
+            });
+        } catch(e) {
+            $('typing-ai-analysis').innerHTML = '<div class="typing-ai-loading"><span>AI 分析失敗：' + escHtml(e.message || '未知錯誤') + '</span></div>';
+            applyRuleBasedSRS(sentence, w);
+        }
+    }
+
+    function renderAiAnalysis(raw, sentence, w) {
+        var gradeMatch = raw.match(/GRADE:\s*([A-C])/i);
+        var grammarMatch = raw.match(/GRAMMAR:\s*(.+)/i);
+        var usageMatch = raw.match(/USAGE:\s*(.+)/i);
+        var tipMatch = raw.match(/TIP:\s*(.+)/i);
+
+        var grade = gradeMatch ? gradeMatch[1].toUpperCase() : 'B';
+        var grammar = grammarMatch ? grammarMatch[1].trim() : '';
+        var usage = usageMatch ? usageMatch[1].trim() : '';
+        var tip = tipMatch ? tipMatch[1].trim() : '';
+
+        var gradeClass = 'grade-' + grade.toLowerCase();
+
+        var html = '<div class="typing-ai-label">AI 語法分析</div>';
+        html += '<div style="display:flex;align-items:flex-start;gap:12px;">';
+        html += '<div class="typing-ai-grade ' + gradeClass + '">' + grade + '</div>';
+        html += '<div class="typing-ai-text">';
+        if (grammar) html += '<div><strong>語法：</strong>' + escHtml(grammar) + '</div>';
+        if (usage) html += '<div><strong>用法：</strong>' + escHtml(usage) + '</div>';
+        if (tip) html += '<div class="typing-ai-correction">' + escHtml(tip) + '</div>';
+        html += '</div></div>';
+
+        $('typing-ai-analysis').innerHTML = html;
+
+        var aiFeedbackType = grade === 'A' ? 'good' : (grade === 'B' ? 'partial' : 'weak');
+        var ruleFeedback = getTypingFeedbackRules(sentence, w);
+        var finalType = aiFeedbackType;
+        if (aiFeedbackType === 'good' && ruleFeedback.feedbackType !== 'good') finalType = 'partial';
+        if (aiFeedbackType === 'weak') finalType = 'weak';
+
+        var titles = { good: '句子很好！語法正確', partial: '句子可以更好，有些小問題', weak: '需要重新組織句子' };
+        $('typing-feedback-title').textContent = titles[finalType] || '語法檢查看看';
+        $('typing-feedback-title').style.color = finalType === 'good' ? 'var(--success)' : (finalType === 'partial' ? 'var(--warning)' : 'var(--danger)');
+
+        applyTypingSRS(finalType, w);
+    }
+
+    function applyTypingSRS(feedbackType, w) {
+        if (feedbackType === 'good') {
+            typingState.correct++;
+            $('btn-typing-retry').style.display = 'none';
+            $('btn-typing-next').style.display = 'inline-flex';
+            var real = db.data.words.find(function(x){ return x.id === w.id; });
+            if (real) {
+                db.applySRS(w.id, 5);
+                real.stats.reviews++;
+                real.stats.correct++;
+                real.stats.lastReviewed = Date.now();
+                db.save();
+                db.logActivity();
+            }
+        } else {
+            $('btn-typing-retry').style.display = 'inline-flex';
+            $('btn-typing-next').style.display = feedbackType === 'partial' ? 'inline-flex' : 'none';
+            var real2 = db.data.words.find(function(x){ return x.id === w.id; });
+            if (real2) {
+                db.applySRS(w.id, 1);
+                real2.stats.reviews++;
+                real2.stats.lastReviewed = Date.now();
+                db.save();
+                db.logActivity();
+            }
+        }
+    }
+
 function toast(msg, type) {
         var container = $('toast-container');
         if (!container) return;
@@ -9988,6 +10159,7 @@ document.querySelectorAll('.sidebar-nav-btn').forEach(function(btn) {
         });
         $('btn-confirm-no').addEventListener('click', function() {
             $('confirm-modal').classList.remove('show');
+            if (confirmCancelCallback) { confirmCancelCallback(); confirmCancelCallback = null; }
             confirmCallback = null;
         });
 
@@ -10123,6 +10295,7 @@ document.querySelectorAll('.sidebar-nav-btn').forEach(function(btn) {
                     overlay.classList.remove('active');
                 } else if ($('confirm-modal').classList.contains('show')) {
                     $('confirm-modal').classList.remove('show');
+                    if (confirmCancelCallback) { confirmCancelCallback(); confirmCancelCallback = null; }
                     confirmCallback = null;
                 } else if ($('bulk-modal').classList.contains('show')) {
                     $('bulk-modal').classList.remove('show');
