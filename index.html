@@ -5645,11 +5645,11 @@
                     <button class="btn btn-secondary" id="btn-export">匯出 JSON</button>
                     <button class="btn btn-secondary" id="btn-export-csv">匯出 CSV</button>
                     <button class="btn btn-secondary" id="btn-export-anki">匯出 Anki</button>
-                    <button class="btn btn-secondary" id="btn-import">匯入資料</button>
+                    <button class="btn btn-secondary" id="btn-import">匯入 JSON / CSV</button>
                     <button class="btn btn-secondary" id="btn-bulk-import">批次匯入</button>
                     <button class="btn btn-danger" id="btn-clear-data">清除所有資料</button>
                 </div>
-                <input type="file" id="import-file" accept=".json" style="display:none">
+                <input type="file" id="import-file" accept=".json,.csv,text/csv,application/json" style="display:none">
             </div>
         </section>
     </div>
@@ -9988,31 +9988,92 @@ function toast(msg, type) {
         fileInput.click();
     }
 
+    function parseCSVLine(line) {
+        var values = [];
+        var value = '';
+        var quoted = false;
+        for (var i = 0; i < line.length; i++) {
+            var ch = line[i];
+            if (ch === '"') {
+                if (quoted && line[i + 1] === '"') {
+                    value += '"';
+                    i++;
+                } else {
+                    quoted = !quoted;
+                }
+            } else if (ch === ',' && !quoted) {
+                values.push(value);
+                value = '';
+            } else {
+                value += ch;
+            }
+        }
+        values.push(value);
+        return values;
+    }
+
+    function parseCSVImport(text) {
+        var lines = text.replace(/^\uFEFF/, '').split(/\r?\n/).filter(function(line) { return line.trim() !== ''; });
+        if (lines.length < 2) throw new Error('CSV 檔案沒有資料');
+        var headers = parseCSVLine(lines[0]).map(function(header) { return header.trim().toLowerCase(); });
+        var required = ['word', 'meaning_zh'];
+        for (var r = 0; r < required.length; r++) {
+            if (headers.indexOf(required[r]) === -1) throw new Error('CSV 缺少必要欄位：' + required[r]);
+        }
+        var words = [];
+        var categories = [];
+        for (var i = 1; i < lines.length; i++) {
+            var columns = parseCSVLine(lines[i]);
+            var row = {};
+            headers.forEach(function(header, index) { row[header] = (columns[index] || '').trim(); });
+            if (!row.word && !row.meaning_zh) continue;
+            if (!row.word || !row.meaning_zh) continue;
+            var category = row.category || '未分類';
+            var now = Date.now();
+            words.push({
+                id: 'csv_' + now + '_' + i + '_' + Math.random().toString(36).substr(2, 6),
+                word: row.word,
+                phonetic: row.phonetic || '',
+                pos: row.pos || '',
+                meaningZh: row.meaning_zh,
+                example: row.example || '',
+                exampleZh: row.example_zh || '',
+                notes: row.notes || '',
+                category: category,
+                difficulty: row.difficulty || determineWordLevel(row.word).key,
+                createdAt: now,
+                stats: { reviews: 0, correct: 0, lastReviewed: null, mastered: false },
+                srs: { interval: 1, easeFactor: 2.5, nextReview: now, repetitions: 0, lastReview: now }
+            });
+            if (categories.indexOf(category) === -1) categories.push(category);
+        }
+        return { version: 2, words: words, categories: categories };
+    }
+
     function doImport(file) {
         if (!file) return;
         var reader = new FileReader();
         reader.onload = function(ev) {
             var parsed;
             try {
-                parsed = JSON.parse(ev.target.result);
+                var isCsv = file.name.toLowerCase().slice(-4) === '.csv' || (file.type && file.type.indexOf('csv') !== -1);
+                parsed = isCsv ? parseCSVImport(ev.target.result) : JSON.parse(ev.target.result);
             } catch(e) {
-                toast('檔案格式錯誤，無法解析 JSON', 'danger');
+                toast('檔案格式錯誤：' + (e.message || '無法解析檔案'), 'danger');
                 return;
             }
             if (!parsed || !Array.isArray(parsed.words)) {
                 toast('檔案結構無效：缺少 words 列表', 'danger');
                 return;
             }
-            if (!Array.isArray(parsed.categories)) {
-                toast('檔案結構無效：缺少 categories 列表', 'danger');
-                return;
-            }
+            if (!Array.isArray(parsed.categories)) parsed.categories = [];
 
             var validWords = [];
             var skipped = 0;
             for (var i = 0; i < parsed.words.length; i++) {
                 var w = parsed.words[i];
-                if (w && typeof w.word === 'string' && typeof w.id === 'string' && typeof w.meaningZh === 'string') {
+                if (w && typeof w.word === 'string' && w.word.trim() && typeof w.meaningZh === 'string' && w.meaningZh.trim()) {
+                    if (!w.id) w.id = 'w' + Date.now() + Math.random().toString(36).substr(2, 8);
                     validWords.push(w);
                 } else {
                     skipped++;
@@ -10020,6 +10081,10 @@ function toast(msg, type) {
             }
             if (skipped > 0) { toast('跳過 ' + skipped + ' 個無效單字', 'warning'); }
             parsed.words = validWords;
+            if (parsed.words.length === 0) {
+                toast('找不到有效的生字資料', 'danger');
+                return;
+            }
 
             var wordCount = parsed.words.length;
             showConfirm(
@@ -10031,10 +10096,11 @@ function toast(msg, type) {
         reader.onerror = function() {
             toast('檔案讀取失敗', 'danger');
         };
-        reader.readAsText(file);
+        reader.readAsText(file, 'UTF-8');
     }
 
     function applyImport(parsed, mode) {
+        var importedCount = parsed.words.length;
         if (mode === 'replace') {
             db.data = {
                 version: parsed.version || 1,
@@ -10045,12 +10111,26 @@ function toast(msg, type) {
             };
         } else {
             var existingIds = {};
-            db.data.words.forEach(function(w) { existingIds[w.id] = true; });
+            var existingWords = {};
+            db.data.words.forEach(function(w) {
+                existingIds[w.id] = true;
+                if (w.word) existingWords[w.word.trim().toLowerCase()] = true;
+            });
+            var addedCount = 0;
             parsed.words.forEach(function(w) {
-                if (!existingIds[w.id]) {
+                var normalizedWord = w.word.trim().toLowerCase();
+                if (!existingIds[w.id] && !existingWords[normalizedWord]) {
                     if (!w.id) w.id = 'w' + Date.now() + Math.random().toString(36).substr(2, 8);
+                    if (!w.createdAt) w.createdAt = Date.now();
                     if (!w.stats) w.stats = { reviews: 0, correct: 0, lastReviewed: null, mastered: false };
+                    if (!w.srs) w.srs = { interval: 1, easeFactor: 2.5, nextReview: Date.now(), repetitions: 0, lastReview: Date.now() };
+                    if (!w.notes) w.notes = '';
+                    if (!w.examples) w.examples = w.example ? [w.example] : [];
+                    if (!w.examplesZh) w.examplesZh = w.exampleZh ? [w.exampleZh] : [];
                     db.data.words.push(w);
+                    existingIds[w.id] = true;
+                    existingWords[normalizedWord] = true;
+                    addedCount++;
                 }
             });
             parsed.categories.forEach(function(cat) {
@@ -10062,7 +10142,11 @@ function toast(msg, type) {
             populateCategorySelects();
             renderWordList();
             renderProgress();
-            toast('已匯入 ' + parsed.words.length + ' 個生字', 'success');
+            if (mode === 'merge') {
+                toast('已匯入 ' + importedCount + ' 個生字（已跳過重複）', 'success');
+            } else {
+                toast('已匯入 ' + importedCount + ' 個生字', 'success');
+            }
         }
     }
 
