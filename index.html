@@ -1932,6 +1932,118 @@
             font-family: inherit;
         }
         .typing-input:focus { outline: none; border-color: var(--accent); box-shadow: none; }
+        .typing-prompt + textarea.typing-input,
+        .typing-input.typing-sentence {
+            min-height: 110px;
+            border-radius: 14px;
+            font-size: 1.02rem;
+            line-height: 1.65;
+            white-space: pre-wrap;
+        }
+        .typing-status-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            color: var(--text-secondary);
+            font-size: 0.86rem;
+        }
+        .typing-submit-row {
+            margin-top: 14px;
+            justify-content: center;
+        }
+        .typing-feedback {
+            margin-top: 18px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 16px;
+            text-align: left;
+        }
+        .typing-feedback-header {
+            margin-bottom: 10px;
+            font-weight: 700;
+            font-size: 1.02rem;
+        }
+        .typing-feedback-sentence {
+            padding: 12px 14px;
+            border-radius: 12px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            white-space: pre-wrap;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+        .typing-feedback-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            color: var(--text-secondary);
+            font-size: 0.86rem;
+            margin-bottom: 10px;
+        }
+        .typing-feedback-section {
+            margin-bottom: 10px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        .typing-feedback-label {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 0.82rem;
+            margin-bottom: 4px;
+        }
+        .typing-feedback-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 14px;
+        }
+        .typing-practice-target {
+            margin-top: 10px;
+            padding: 14px 16px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--accent-alpha), transparent);
+            border: 1px solid var(--accent-border);
+        }
+        .typing-practice-target-label {
+            color: var(--text-secondary);
+            font-size: 0.82rem;
+            margin-bottom: 6px;
+        }
+        .typing-practice-target-word {
+            font-weight: 700;
+            color: var(--text-primary);
+            font-size: 1.18rem;
+        }
+        .typing-practice-target-meta {
+            margin-top: 8px;
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            line-height: 1.55;
+        }
+        .typing-practice-tip {
+            margin-top: 8px;
+            color: var(--text-secondary);
+            font-size: 0.83rem;
+        }
+        .typing-feedback-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .typing-feedback-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 8px;
+            border-radius: 999px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.82rem;
+        }
         .typing-input.correct { border-color: var(--success); background: transparent; }
         .typing-input.wrong { border-color: var(--danger); background: transparent; animation: shake 0.3s; }
         @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
@@ -5291,9 +5403,34 @@
                         <div class="progress-text" id="typing-progress-text">0 / 0</div>
                     </div>
                     <div class="typing-prompt" id="typing-prompt"></div>
-                    <input class="typing-input" id="typing-input" placeholder="輸入英文單字..." autocomplete="off">
+                    <div class="typing-practice-target" id="typing-target-box" style="display:none;">
+                        <div class="typing-practice-target-label">練習單字</div>
+                        <div class="typing-practice-target-word" id="typing-target-word"></div>
+                        <div class="typing-practice-target-meta" id="typing-target-meta"></div>
+                    </div>
+                    <div class="typing-practice-tip" id="typing-tip" style="display:none;">請用上面的單字寫一個完整的英文句子。</div>
+                    <textarea class="typing-input typing-sentence" id="typing-sentence-input" rows="3" placeholder="請在此輸入一個完整的英文句子..." autocomplete="off"></textarea>
+                    <div class="typing-status-line" id="typing-status-line">
+                        <span id="typing-hint-text"></span>
+                        <span id="typing-sentence-count">0 / 120</span>
+                    </div>
+                    <div class="button-group typing-submit-row" id="typing-submit-row">
+                        <button class="btn btn-primary" id="btn-typing-submit">檢查句子</button>
+                    </div>
+                    <div class="typing-feedback" id="typing-feedback" style="display:none;">
+                        <div class="typing-feedback-header" id="typing-feedback-title"></div>
+                        <div class="typing-feedback-sentence" id="typing-feedback-sentence"></div>
+                        <div class="typing-feedback-meta" id="typing-feedback-meta"></div>
+                        <div class="typing-feedback-section" id="typing-feedback-main"></div>
+                        <div class="typing-feedback-section" id="typing-feedback-suggestions" style="display:none;"></div>
+                        <div class="typing-feedback-badges" id="typing-feedback-badges"></div>
+                        <div class="typing-feedback-actions">
+                            <button class="btn btn-secondary" id="btn-typing-retry">重寫句子</button>
+                            <button class="btn btn-primary" id="btn-typing-next" style="display:none;">下一題</button>
+                        </div>
+                    </div>
                     <div class="button-group" id="typing-next-wrap" style="display:none;">
-                        <button class="btn btn-primary" id="btn-typing-next">下一題</button>
+                        <button class="btn btn-primary" id="btn-typing-next-spell">下一題</button>
                     </div>
                 </div>
                 <div id="typing-result" style="display:none;"></div>
@@ -6524,7 +6661,7 @@
 
     var flashState = { cards: [], index: 0, flipped: false };
     var quizState = { questions: [], index: 0, score: 0, results: [], answered: false };
-    var typingState = { queue: [], index: 0, correct: 0, total: 0 };
+    var typingState = { queue: [], index: 0, correct: 0, total: 0, mode: 'spelling' };
     var matchState = { pairs: [], selected: [], matched: 0, total: 0, startTime: 0, timerInterval: null };
 
     var WORD_BANK = [
@@ -7990,7 +8127,7 @@ function flashAnswer(correct) {
             var j = Math.floor(Math.random() * (i + 1));
             var tmp = words[i]; words[i] = words[j]; words[j] = tmp;
         }
-        typingState = { queue: words, index: 0, correct: 0, total: words.length };
+        typingState = { queue: words, index: 0, correct: 0, total: words.length, mode: 'sentence' };
         $('typing-play').style.display = 'block';
         $('typing-result').style.display = 'none';
         showTypingQuestion();
@@ -7998,33 +8135,183 @@ function flashAnswer(correct) {
 
     function showTypingQuestion() {
         var w = typingState.queue[typingState.index];
-        var hint = w.word.split('').map(function(c, i) { return i < 2 ? c : (i === w.word.length - 1 ? c : '_'); }).join('');
-        $('typing-prompt').innerHTML =
-            '<div class="tp-label">請輸入對應的英文單字</div>' +
-            '<div class="tp-meaning">' + escHtml(w.meaningZh) + '</div>' +
-            '<div class="tp-pos">' + escHtml(w.pos) + '</div>' +
-            '<div class="tp-hint">提示: ' + hint + '</div>';
-        $('typing-input').value = '';
-        $('typing-input').className = 'typing-input';
-        $('typing-input').disabled = false;
-        $('typing-input').focus();
-        $('typing-next-wrap').style.display = 'none';
+        if (typingState.mode === 'sentence') {
+            $('typing-prompt').innerHTML =
+                '<div class="tp-label">請用這個單字寫一個完整的英文句子</div>' +
+                '<div class="tp-meaning">' + escHtml(w.meaningZh) + '</div>' +
+                '<div class="tp-pos">' + escHtml(w.pos) + '</div>';
+            var targetBox = $('typing-target-box');
+            targetBox.style.display = 'block';
+            $('typing-target-word').textContent = w.word;
+            var targetMeta = [];
+            if (w.phonetic) targetMeta.push(w.phonetic);
+            if (w.meaningZh) targetMeta.push(w.meaningZh);
+            if (w.example) targetMeta.push('例句：' + w.example);
+            $('typing-target-meta').textContent = targetMeta.join(' · ');
+            $('typing-tip').style.display = 'block';
+            $('typing-sentence-input').value = '';
+            $('typing-sentence-input').className = 'typing-input typing-sentence';
+            $('typing-sentence-input').disabled = false;
+            $('typing-sentence-input').focus();
+            $('typing-hint-text').textContent = '包含目標單字才算完成。';
+            $('typing-sentence-count').textContent = '0 / 120';
+            $('typing-submit-row').style.display = 'flex';
+            $('typing-feedback').style.display = 'none';
+            $('typing-feedback-main').textContent = '';
+            $('typing-feedback-suggestions').style.display = 'none';
+            $('typing-feedback-badges').innerHTML = '';
+            $('typing-feedback-title').textContent = '';
+            $('typing-feedback-sentence').textContent = '';
+            $('typing-feedback-meta').innerHTML = '';
+            var retryBtn = $('btn-typing-retry');
+            var feedbackNextBtn = $('btn-typing-next');
+            retryBtn.textContent = '重寫句子';
+            retryBtn.style.display = 'inline-flex';
+            feedbackNextBtn.style.display = 'none';
+            $('typing-next-wrap').style.display = 'none';
+        } else {
+            var hint = w.word.split('').map(function(c, i) { return i < 2 ? c : (i === w.word.length - 1 ? c : '_'); }).join('');
+            $('typing-prompt').innerHTML =
+                '<div class="tp-label">請輸入對應的英文單字</div>' +
+                '<div class="tp-meaning">' + escHtml(w.meaningZh) + '</div>' +
+                '<div class="tp-pos">' + escHtml(w.pos) + '</div>' +
+                '<div class="tp-hint">提示: ' + hint + '</div>';
+            $('typing-target-box').style.display = 'none';
+            $('typing-tip').style.display = 'none';
+            $('typing-sentence-input').value = '';
+            $('typing-sentence-input').className = 'typing-input typing-sentence';
+            $('typing-sentence-input').disabled = false;
+            $('typing-sentence-input').focus();
+            $('typing-hint-text').textContent = '';
+            $('typing-sentence-count').textContent = '';
+            $('typing-submit-row').style.display = 'none';
+            $('typing-feedback').style.display = 'none';
+            $('typing-next-wrap').style.display = 'none';
+        }
         updateTypingProgress();
     }
 
     function updateTypingProgress() {
-        var pct = ((typingState.index) / typingState.total * 100).toFixed(1);
+        var pct = typingState.total > 0 ? Math.round((typingState.index / typingState.total) * 100) : 0;
         $('typing-progress-bar').style.width = pct + '%';
         $('typing-progress-text').textContent = (typingState.index + 1) + ' / ' + typingState.total;
     }
 
+    function getTypingFeedbackRules(sentence, w) {
+        var lower = sentence.toLowerCase();
+        var hasTargetWord = lower.indexOf(w.word.toLowerCase()) !== -1;
+        var trimmed = sentence.replace(/[.!?]+$/, '').trim();
+        var startsCapital = sentence.length > 0 && sentence[0] !== sentence[0].toLowerCase();
+        var endsCorrectly = /[.!?]$/.test(sentence);
+        var wordCount = trimmed.split(/\s+/).filter(Boolean).length;
+        var looksLikeSentence = startsCapital && endsCorrectly && wordCount >= 3;
+        var issues = [];
+        var suggestions = [];
+        var score = looksLikeSentence ? (hasTargetWord ? 2 : 1) : (hasTargetWord ? 1 : 0);
+
+        if (!hasTargetWord) issues.push('句子沒有包含目標單字「' + w.word + '」。');
+        if (!startsCapital) issues.push('句首請以大寫字母開頭。');
+        if (!endsCorrectly) issues.push('句子結尾缺少句號、問號或驚嘆號。');
+        if (wordCount < 3) issues.push('句子太短，建議至少寫 3 個以上的實質單字。');
+        if (/[，。,]{2,}/.test(sentence) || /\s{3,}/.test(sentence)) issues.push('句子內有重複的標點或空格。');
+
+        if (!hasTargetWord && w.example) suggestions.push('可參考例句：' + w.example);
+        if (!endsCorrectly && hasTargetWord) suggestions.push('試著加上句號：' + w.word + '.');
+        if (!startsCapital && sentence.length > 0) suggestions.push('可改為：' + sentence.charAt(0).toUpperCase() + sentence.slice(1));
+        if (issues.length === 0 && !looksLikeSentence) suggestions.push('試著補上句首大寫與結尾標點，讓它更像完整句子。');
+
+        var feedbackType = score >= 2 ? 'good' : (score === 1 ? 'partial' : 'weak');
+        return { hasTargetWord: hasTargetWord, issues: issues, suggestions: suggestions, feedbackType: feedbackType, wordCount: wordCount, score: score };
+    }
+
+    function renderTypingFeedback(sentence, w, feedback) {
+        $('typing-sentence-input').disabled = true;
+        $('typing-submit-row').style.display = 'none';
+        $('typing-feedback').style.display = 'block';
+        $('typing-feedback-sentence').textContent = sentence;
+
+        var titles = { good: '句子結構大致正確', partial: '句子不完整或格式需修正', weak: '建議重新組織句子' };
+        $('typing-feedback-title').textContent = titles[feedback.feedbackType] || '語法檢查看看';
+        $('typing-feedback-title').style.color = feedback.feedbackType === 'good' ? 'var(--success)' : (feedback.feedbackType === 'partial' ? 'var(--warning)' : 'var(--danger)');
+
+        var metaHtml = '<span>字數：' + feedback.wordCount + '</span><span>含目標單字：' + (feedback.hasTargetWord ? '是' : '否') + '</span>';
+        $('typing-feedback-meta').innerHTML = metaHtml;
+
+        if (feedback.issues.length > 0) {
+            $('typing-feedback-main').innerHTML = '<span class="typing-feedback-label">需要修正</span>' + escHtml(feedback.issues.join(' '));
+        } else {
+            $('typing-feedback-main').innerHTML = '<span class="typing-feedback-label">檢測結果</span>沒有發現明顯的格式或句子結構問題。';
+        }
+
+        var sugBox = $('typing-feedback-suggestions');
+        if (feedback.suggestions.length > 0) {
+            sugBox.style.display = 'block';
+            sugBox.innerHTML = '<span class="typing-feedback-label">你可以這樣改</span>' + escHtml(feedback.suggestions.join(' '));
+        } else {
+            sugBox.style.display = 'none';
+        }
+
+        var badges = [];
+        if (feedback.hasTargetWord) badges.push('已包含單字');
+        else badges.push('未包含單字');
+        $('typing-feedback-badges').innerHTML = badges.map(function(b){ return '<span class="typing-feedback-badge">' + escHtml(b) + '</span>'; }).join('');
+
+        if (feedback.feedbackType === 'good') {
+            typingState.correct++;
+            $('btn-typing-retry').style.display = 'none';
+            $('btn-typing-next').style.display = 'inline-flex';
+            var real = db.data.words.find(function(x){ return x.id === w.id; });
+            if (real) {
+                db.applySRS(w.id, 5);
+                real.stats.reviews++;
+                real.stats.correct++;
+                real.stats.lastReviewed = Date.now();
+                db.save();
+                db.logActivity();
+            }
+        } else {
+            $('btn-typing-retry').style.display = 'inline-flex';
+            $('btn-typing-next').style.display = feedback.feedbackType === 'partial' ? 'inline-flex' : 'none';
+            var real2 = db.data.words.find(function(x){ return x.id === w.id; });
+            if (real2) {
+                db.applySRS(w.id, 1);
+                real2.stats.reviews++;
+                real2.stats.lastReviewed = Date.now();
+                db.save();
+                db.logActivity();
+            }
+        }
+    }
+
+    function checkTypingSentence() {
+        var sentence = $('typing-sentence-input').value.replace(/\s+/g, ' ').trim();
+        if (sentence.length < 2) {
+            toast('請先輸入句子', 'warning');
+            return;
+        }
+        if (sentence.length > 120) {
+            toast('句子太長，請控制在 120 字以內', 'warning');
+            return;
+        }
+        var w = typingState.queue[typingState.index];
+        var feedback = getTypingFeedbackRules(sentence, w);
+        renderTypingFeedback(sentence, w, feedback);
+    }
+
+    function retryTypingSentence() {
+        $('typing-sentence-input').disabled = false;
+        $('typing-sentence-input').focus();
+        $('typing-submit-row').style.display = 'flex';
+        $('typing-feedback').style.display = 'none';
+    }
+
     function checkTyping() {
-        var input = $('typing-input').value.trim().toLowerCase();
+        var input = $('typing-sentence-input').value.trim().toLowerCase();
         var w = typingState.queue[typingState.index];
         var correct = input === w.word.toLowerCase();
-        $('typing-input').disabled = true;
+        $('typing-sentence-input').disabled = true;
         if (correct) {
-            $('typing-input').classList.add('correct');
+            $('typing-sentence-input').classList.add('correct');
             typingState.correct++;
             haptic(15);
             var real = db.data.words.find(function(x){ return x.id === w.id; });
@@ -8037,8 +8324,8 @@ function flashAnswer(correct) {
                 db.logActivity();
             }
         } else {
-            $('typing-input').classList.add('wrong');
-            $('typing-input').value = w.word;
+            $('typing-sentence-input').classList.add('wrong');
+            $('typing-sentence-input').value = w.word;
             var real = db.data.words.find(function(x){ return x.id === w.id; });
             if (real) {
                 db.applySRS(w.id, 1);
@@ -9762,13 +10049,21 @@ document.querySelectorAll('.sidebar-nav-btn').forEach(function(btn) {
         }
 
         $('btn-start-typing').addEventListener('click', startTyping);
-        $('typing-input').addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
+        $('typing-sentence-input').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
-                checkTyping();
+                if (typingState.mode === 'sentence') checkTypingSentence();
+                else checkTyping();
             }
         });
+        $('typing-sentence-input').addEventListener('input', function() {
+            var len = $('typing-sentence-input').value.length;
+            $('typing-sentence-count').textContent = len + ' / 120';
+        });
+        $('btn-typing-submit').addEventListener('click', checkTypingSentence);
+        $('btn-typing-retry').addEventListener('click', retryTypingSentence);
         $('btn-typing-next').addEventListener('click', typingNext);
+        $('btn-typing-next-spell').addEventListener('click', typingNext);
 
         $('btn-start-match').addEventListener('click', startMatch);
 
