@@ -158,7 +158,10 @@
             object-fit: cover;
             border-radius: var(--radius);
         }
-            flex-shrink: 0;
+        .sidebar-logo-text {
+            flex: 1;
+            min-width: 0;
+            flex-shrink: 1;
             letter-spacing: 0.02em;
         }
         .sidebar-logo-text h1 {
@@ -166,6 +169,9 @@
             font-weight: 700;
             letter-spacing: 0.08em;
             line-height: 1.2;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         .sidebar-logo-text p {
             font-size: 0.68rem;
@@ -572,7 +578,42 @@
             color: var(--accent);
         }
 
-.empty-state {
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .page-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 6px 12px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 0.82rem;
+            transition: var(--transition);
+            min-width: 36px;
+            text-align: center;
+        }
+        .page-btn:hover:not(:disabled) {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        .page-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--bg-primary);
+            font-weight: 600;
+        }
+        .page-btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+
+        .empty-state {
             text-align: center;
             padding: 40px 20px;
         }
@@ -1084,6 +1125,18 @@
             box-shadow: none;
         }
         .filter-row input { flex: 1; min-width: 200px; }
+        .filter-row input[type="checkbox"] {
+            flex: none;
+            width: 18px;
+            min-width: 18px;
+            height: 18px;
+            padding: 0;
+            margin: 0;
+            border: none;
+            background: none;
+            accent-color: var(--accent);
+            cursor: pointer;
+        }
         .result-count {
             color: var(--text-secondary);
             font-size: 0.88rem;
@@ -1879,6 +1932,118 @@
             font-family: inherit;
         }
         .typing-input:focus { outline: none; border-color: var(--accent); box-shadow: none; }
+        .typing-prompt + textarea.typing-input,
+        .typing-input.typing-sentence {
+            min-height: 110px;
+            border-radius: 14px;
+            font-size: 1.02rem;
+            line-height: 1.65;
+            white-space: pre-wrap;
+        }
+        .typing-status-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            color: var(--text-secondary);
+            font-size: 0.86rem;
+        }
+        .typing-submit-row {
+            margin-top: 14px;
+            justify-content: center;
+        }
+        .typing-feedback {
+            margin-top: 18px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 16px;
+            text-align: left;
+        }
+        .typing-feedback-header {
+            margin-bottom: 10px;
+            font-weight: 700;
+            font-size: 1.02rem;
+        }
+        .typing-feedback-sentence {
+            padding: 12px 14px;
+            border-radius: 12px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            white-space: pre-wrap;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+        .typing-feedback-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            color: var(--text-secondary);
+            font-size: 0.86rem;
+            margin-bottom: 10px;
+        }
+        .typing-feedback-section {
+            margin-bottom: 10px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        .typing-feedback-label {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 0.82rem;
+            margin-bottom: 4px;
+        }
+        .typing-feedback-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 14px;
+        }
+        .typing-practice-target {
+            margin-top: 10px;
+            padding: 14px 16px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--accent-alpha), transparent);
+            border: 1px solid var(--accent-border);
+        }
+        .typing-practice-target-label {
+            color: var(--text-secondary);
+            font-size: 0.82rem;
+            margin-bottom: 6px;
+        }
+        .typing-practice-target-word {
+            font-weight: 700;
+            color: var(--text-primary);
+            font-size: 1.18rem;
+        }
+        .typing-practice-target-meta {
+            margin-top: 8px;
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            line-height: 1.55;
+        }
+        .typing-practice-tip {
+            margin-top: 8px;
+            color: var(--text-secondary);
+            font-size: 0.83rem;
+        }
+        .typing-feedback-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .typing-feedback-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 8px;
+            border-radius: 999px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.82rem;
+        }
         .typing-input.correct { border-color: var(--success); background: transparent; }
         .typing-input.wrong { border-color: var(--danger); background: transparent; animation: shake 0.3s; }
         @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
@@ -2247,7 +2412,6 @@
             .progress-bar-outer { height: 3px; }
             .progress-text { font-size: 0.82rem; }
 
-            .bottom-nav { display: flex; }
             .container { padding-bottom: max(80px, calc(72px + env(safe-area-inset-bottom))); }
 
             .tts-btn { min-width: 44px; min-height: 44px; }
@@ -2301,6 +2465,9 @@
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             min-height: 56px;
+        }
+        @media (max-width: 768px) {
+            .bottom-nav { display: flex; }
         }
         .bottom-nav-btn {
             display: flex;
@@ -5093,16 +5260,17 @@
                     <button class="mic-btn" id="mic-search" title="語音搜尋" aria-label="語音搜尋" onclick="startSpeechSearch('search-input', this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg></button>
                 </div>
                 <select id="filter-category"><option value="">所有分類</option><option value="DSE 5**">DSE 5**</option><option value="日常">日常</option><option value="旅遊">旅遊</option></select>
-                <select id="filter-sort">
-                    <option value="recent">最近加入</option>
-                    <option value="alpha">字母排序</option>
-                    <option value="difficulty">按難度</option>
-                    <option value="not-mastered">未掌握優先</option>
-                </select>
+                <div class="sort-bar" id="sort-bar">
+                    <button class="sort-btn active" data-sort="recent">最近加入</button>
+                    <button class="sort-btn" data-sort="alpha">字母排序</button>
+                    <button class="sort-btn" data-sort="difficulty">按難度</button>
+                    <button class="sort-btn" data-sort="not-mastered">未掌握優先</button>
+                </div>
                 <button class="btn btn-primary" id="btn-add-word">新增生字</button>
             </div>
             <div class="result-count" id="result-count">共 5 個生字</div>
-            <div id="word-list" aria-live="polite"><div class="word-card animate-in" data-id="seed5" style="animation-delay: 0ms;"><div class="word-header"><div><span class="word-title" onclick="showWordDetail('seed5')">resilient</span> <span class="word-phonetic">/rɪˈzɪliənt/</span> <span class="word-pos">adj.</span><button class="tts-btn" onclick="speakWord('resilient')" title="播放發音">▶</button></div><div><span class="srs-badge due">待複習</span></div></div><div class="word-meaning">有韌性的；適應力強的</div><div class="word-example">Children are often more resilient than adults think.</div><div class="word-example-zh">孩子往往比大人想的更有韌性。</div><div class="word-footer"><div class="word-meta"><span class="badge badge-category">日常</span><span class="badge badge-level" style="background:rgba(245,158,11,0.12);color:#F59E0B;">進階<span class="badge-level-en">Advanced</span></span><span class="badge badge-reviews">複習 2 次</span></div><div class="word-actions"><button class="btn btn-secondary" onclick="editWord('seed5')">編輯</button><button class="btn btn-secondary" onclick="toggleMastered('seed5')">標記掌握</button><button class="btn btn-danger" onclick="confirmDelete('seed5')">刪除</button></div></div></div><div class="word-card animate-in" data-id="seed4" style="animation-delay: 40ms;"><div class="word-header"><div><span class="word-title" onclick="showWordDetail('seed4')">inevitable</span> <span class="word-phonetic">/ɪnˈevɪtəbl/</span> <span class="word-pos">adj.</span><button class="tts-btn" onclick="speakWord('inevitable')" title="播放發音">▶</button></div><div><span class="srs-badge due">待複習</span></div></div><div class="word-meaning">不可避免的</div><div class="word-example">Change is inevitable in a growing organisation.</div><div class="word-example-zh">在發展中的組織裡，改變是不可避免的。</div><div class="word-footer"><div class="word-meta"><span class="badge badge-category">日常</span><span class="badge badge-level" style="background:rgba(249,115,22,0.12);color:#F97316;">高級<span class="badge-level-en">Expert</span></span><span class="badge badge-reviews">複習 0 次</span></div><div class="word-actions"><button class="btn btn-secondary" onclick="editWord('seed4')">編輯</button><button class="btn btn-secondary" onclick="toggleMastered('seed4')">標記掌握</button><button class="btn btn-danger" onclick="confirmDelete('seed4')">刪除</button></div></div></div><div class="word-card mastered animate-in" data-id="seed3" style="animation-delay: 80ms;"><div class="word-header"><div><span class="word-title" onclick="showWordDetail('seed3')">compromise</span> <span class="word-phonetic">/ˈkɒmprəmaɪz/</span> <span class="word-pos">n.</span><button class="tts-btn" onclick="speakWord('compromise')" title="播放發音">▶</button></div><div><span class="srs-badge">間隔 30 天</span></div><span class="badge badge-mastered">已掌握</span></div><div class="word-meaning">妥協；折衷</div><div class="word-example">Both sides reached a compromise after long negotiations.</div><div class="word-example-zh">經過長時間談判，雙方達成了妥協。</div><div class="word-footer"><div class="word-meta"><span class="badge badge-category">DSE 5**</span><span class="badge badge-level" style="background:rgba(249,115,22,0.12);color:#F97316;">高級<span class="badge-level-en">Expert</span></span><span class="badge badge-reviews">複習 5 次</span></div><div class="word-actions"><button class="btn btn-secondary" onclick="editWord('seed3')">編輯</button><button class="btn btn-secondary" onclick="toggleMastered('seed3')">取消掌握</button><button class="btn btn-danger" onclick="confirmDelete('seed3')">刪除</button></div></div></div><div class="word-card animate-in" data-id="seed2" style="animation-delay: 120ms;"><div class="word-header"><div><span class="word-title" onclick="showWordDetail('seed2')">elaborate</span> <span class="word-phonetic">/ɪˈlæbərət/</span> <span class="word-pos">adj.</span><button class="tts-btn" onclick="speakWord('elaborate')" title="播放發音">▶</button></div><div><span class="srs-badge due">待複習</span></div></div><div class="word-meaning">精心設計的；詳盡的</div><div class="word-example">She made elaborate preparations for the party.</div><div class="word-example-zh">她為派對做了精心的準備。</div><div class="word-footer"><div class="word-meta"><span class="badge badge-category">DSE 5**</span><span class="badge badge-level" style="background:rgba(249,115,22,0.12);color:#F97316;">高級<span class="badge-level-en">Expert</span></span><span class="badge badge-reviews">複習 1 次</span></div><div class="word-actions"><button class="btn btn-secondary" onclick="editWord('seed2')">編輯</button><button class="btn btn-secondary" onclick="toggleMastered('seed2')">標記掌握</button><button class="btn btn-danger" onclick="confirmDelete('seed2')">刪除</button></div></div></div><div class="word-card animate-in" data-id="seed1" style="animation-delay: 160ms;"><div class="word-header"><div><span class="word-title" onclick="showWordDetail('seed1')">abandon</span> <span class="word-phonetic">/əˈbændən/</span> <span class="word-pos">v.</span><button class="tts-btn" onclick="speakWord('abandon')" title="播放發音">▶</button></div><div><span class="srs-badge due">待複習</span></div></div><div class="word-meaning">放棄；遺棄</div><div class="word-example">He abandoned the plan due to lack of funding.</div><div class="word-example-zh">他因缺乏資金而放棄了那個計劃。</div><div class="word-footer"><div class="word-meta"><span class="badge badge-category">DSE 5**</span><span class="badge badge-level" style="background:rgba(245,158,11,0.12);color:#F59E0B;">進階<span class="badge-level-en">Advanced</span></span><span class="badge badge-reviews">複習 3 次</span></div><div class="word-actions"><button class="btn btn-secondary" onclick="editWord('seed1')">編輯</button><button class="btn btn-secondary" onclick="toggleMastered('seed1')">標記掌握</button><button class="btn btn-danger" onclick="confirmDelete('seed1')">刪除</button></div></div></div></div>
+            <div id="word-list" aria-live="polite"></div>
+            <div class="pagination" id="pagination"></div>
         </section>
 
         <section id="view-discover" role="tabpanel" aria-labelledby="tab-discover">
@@ -5114,6 +5282,7 @@
                 <button class="reel-level-btn" data-level="business">商業</button>
                 <button class="reel-level-btn" data-level="academic">學術</button>
                 <button class="reel-level-btn" data-level="daily">日常</button>
+                <button class="reel-level-btn" data-level="oxford3000">Oxford 3000</button>
             </div>
             <div class="reel-viewport" id="reel-viewport">
                 <div class="reel-track" id="reel-track" style="transform: translateY(0px);"><div class="reel-slide"><div class="reel-slide-num">01 / 10</div><div class="reel-level-tag">BUSINESS</div><div class="reel-word">fluctuate</div><div class="reel-phonetic">/ˈflʌktʃueɪt/</div><div class="reel-pos">v.</div><div class="reel-meaning">波動；起伏</div><div class="reel-example">「Stock prices fluctuate throughout the trading day.」</div><div class="reel-example-zh">股價在交易日內波動。</div><div class="reel-slide-actions"><button class="reel-tts-btn" onclick="speakWord('fluctuate')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button><button class="reel-add-btn" onclick="reelAddWord(0, this)">加入生字本</button></div></div><div class="reel-slide"><div class="reel-slide-num">02 / 10</div><div class="reel-level-tag">IELTS</div><div class="reel-word">spontaneous</div><div class="reel-phonetic">/spɒnˈteɪniəs/</div><div class="reel-pos">adj.</div><div class="reel-meaning">自發的；自然的</div><div class="reel-example">「They made a spontaneous decision to travel.」</div><div class="reel-example-zh">他們自發地決定去旅行。</div><div class="reel-slide-actions"><button class="reel-tts-btn" onclick="speakWord('spontaneous')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button><button class="reel-add-btn" onclick="reelAddWord(1, this)">加入生字本</button></div></div><div class="reel-slide"><div class="reel-slide-num">03 / 10</div><div class="reel-level-tag">IELTS</div><div class="reel-word">diminish</div><div class="reel-phonetic">/dɪˈmɪnɪʃ/</div><div class="reel-pos">v.</div><div class="reel-meaning">減少；縮小</div><div class="reel-example">「The pain will gradually diminish over time.」</div><div class="reel-example-zh">疼痛會隨時間逐漸減輕。</div><div class="reel-slide-actions"><button class="reel-tts-btn" onclick="speakWord('diminish')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button><button class="reel-add-btn" onclick="reelAddWord(2, this)">加入生字本</button></div></div><div class="reel-slide"><div class="reel-slide-num">04 / 10</div><div class="reel-level-tag">ACADEMIC</div><div class="reel-word">fundamentally</div><div class="reel-phonetic">/ˌfʌndəˈmentəli/</div><div class="reel-pos">adv.</div><div class="reel-meaning">根本上；基本上</div><div class="reel-example">「The two approaches are fundamentally different.」</div><div class="reel-example-zh">這兩種方法根本上是不同的。</div><div class="reel-slide-actions"><button class="reel-tts-btn" onclick="speakWord('fundamentally')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button><button class="reel-add-btn" onclick="reelAddWord(3, this)">加入生字本</button></div></div><div class="reel-slide"><div class="reel-slide-num">05 / 10</div><div class="reel-level-tag">BUSINESS</div><div class="reel-word">endorse</div><div class="reel-phonetic">/ɪnˈdɔːs/</div><div class="reel-pos">v.</div><div class="reel-meaning">認可；贊同；代言</div><div class="reel-example">「Several celebrities endorsed the new brand.」</div><div class="reel-example-zh">幾位名人為新品牌代言。</div><div class="reel-slide-actions"><button class="reel-tts-btn" onclick="speakWord('endorse')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button><button class="reel-add-btn" onclick="reelAddWord(4, this)">加入生字本</button></div></div><div class="reel-slide"><div class="reel-slide-num">06 / 10</div><div class="reel-level-tag">TOEFL</div><div class="reel-word">catalyst</div><div class="reel-phonetic">/ˈkætəlɪst/</div><div class="reel-pos">n.</div><div class="reel-meaning">催化劑；促使變化的因素</div><div class="reel-example">「The event was a catalyst for social change.」</div><div class="reel-example-zh">這事件是社會變革的催化劑。</div><div class="reel-slide-actions"><button class="reel-tts-btn" onclick="speakWord('catalyst')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button><button class="reel-add-btn" onclick="reelAddWord(5, this)">加入生字本</button></div></div><div class="reel-slide"><div class="reel-slide-num">07 / 10</div><div class="reel-level-tag">TOEFL</div><div class="reel-word">eloquent</div><div class="reel-phonetic">/ˈeləkwənt/</div><div class="reel-pos">adj.</div><div class="reel-meaning">雄辯的；有說服力的</div><div class="reel-example">「He gave an eloquent speech at the graduation ceremony.」</div><div class="reel-example-zh">他在畢業典禮上發表了雄辯的演講。</div><div class="reel-slide-actions"><button class="reel-tts-btn" onclick="speakWord('eloquent')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button><button class="reel-add-btn" onclick="reelAddWord(6, this)">加入生字本</button></div></div><div class="reel-slide"><div class="reel-slide-num">08 / 10</div><div class="reel-level-tag">ACADEMIC</div><div class="reel-word">advocate</div><div class="reel-phonetic">/ˈædvəkət/</div><div class="reel-pos">v.</div><div class="reel-meaning">提倡；主張</div><div class="reel-example">「She advocates for equal rights in the workplace.」</div><div class="reel-example-zh">她倡導職場中的平權。</div><div class="reel-slide-actions"><button class="reel-tts-btn" onclick="speakWord('advocate')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button><button class="reel-add-btn" onclick="reelAddWord(7, this)">加入生字本</button></div></div><div class="reel-slide"><div class="reel-slide-num">09 / 10</div><div class="reel-level-tag">IELTS</div><div class="reel-word">resilient</div><div class="reel-phonetic">/rɪˈzɪliənt/</div><div class="reel-pos">adj.</div><div class="reel-meaning">有韌性的；適應力強的</div><div class="reel-example">「The economy has proven to be remarkably resilient.」</div><div class="reel-example-zh">經濟已證明具有非凡的韌性。</div><div class="reel-slide-actions"><button class="reel-tts-btn" onclick="speakWord('resilient')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button><button class="reel-add-btn added" onclick="reelAddWord(8, this)" disabled="">已加入</button></div></div><div class="reel-slide"><div class="reel-slide-num">10 / 10</div><div class="reel-level-tag">TOEFL</div><div class="reel-word">mitigate</div><div class="reel-phonetic">/ˈmɪtɪɡeɪt/</div><div class="reel-pos">v.</div><div class="reel-meaning">減輕；緩和</div><div class="reel-example">「We must take steps to mitigate climate change.」</div><div class="reel-example-zh">我們必須採取措施減輕氣候變化的影響。</div><div class="reel-slide-actions"><button class="reel-tts-btn" onclick="speakWord('mitigate')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button><button class="reel-add-btn" onclick="reelAddWord(9, this)">加入生字本</button></div></div></div>
@@ -5145,6 +5314,9 @@
                     <select id="flash-category"><option value="">所有分類</option><option value="DSE 5**">DSE 5**</option><option value="日常">日常</option><option value="旅遊">旅遊</option></select>
                     <label style="display:flex;align-items:center;gap:6px;color:var(--text-secondary);cursor:pointer;">
                         <input type="checkbox" id="flash-unmastered" checked=""> 只顯示未掌握
+                    </label>
+                    <label style="display:flex;align-items:center;gap:6px;color:var(--text-secondary);cursor:pointer;">
+                        <input type="checkbox" id="flash-low-retention"> 保持率 &lt;30%
                     </label>
                     <button class="btn btn-primary" id="btn-start-flash">開始</button>
                 </div>
@@ -5182,7 +5354,7 @@
                 </div>
                 <div class="empty-state" id="flash-empty" style="display:none;">
                     <h3>沒有可複習的生字</h3>
-                    <p>請先加入生字或取消「只顯示未掌握」篩選</p>
+                    <p>請先加入生字或取消「只顯示未掌握」／「保持率 &lt;30%」篩選</p>
                 </div>
             </div>
         </section>
@@ -5231,9 +5403,34 @@
                         <div class="progress-text" id="typing-progress-text">0 / 0</div>
                     </div>
                     <div class="typing-prompt" id="typing-prompt"></div>
-                    <input class="typing-input" id="typing-input" placeholder="輸入英文單字..." autocomplete="off">
+                    <div class="typing-practice-target" id="typing-target-box" style="display:none;">
+                        <div class="typing-practice-target-label">練習單字</div>
+                        <div class="typing-practice-target-word" id="typing-target-word"></div>
+                        <div class="typing-practice-target-meta" id="typing-target-meta"></div>
+                    </div>
+                    <div class="typing-practice-tip" id="typing-tip" style="display:none;">請用上面的單字寫一個完整的英文句子。</div>
+                    <textarea class="typing-input typing-sentence" id="typing-sentence-input" rows="3" placeholder="請在此輸入一個完整的英文句子..." autocomplete="off"></textarea>
+                    <div class="typing-status-line" id="typing-status-line">
+                        <span id="typing-hint-text"></span>
+                        <span id="typing-sentence-count">0 / 120</span>
+                    </div>
+                    <div class="button-group typing-submit-row" id="typing-submit-row">
+                        <button class="btn btn-primary" id="btn-typing-submit">檢查句子</button>
+                    </div>
+                    <div class="typing-feedback" id="typing-feedback" style="display:none;">
+                        <div class="typing-feedback-header" id="typing-feedback-title"></div>
+                        <div class="typing-feedback-sentence" id="typing-feedback-sentence"></div>
+                        <div class="typing-feedback-meta" id="typing-feedback-meta"></div>
+                        <div class="typing-feedback-section" id="typing-feedback-main"></div>
+                        <div class="typing-feedback-section" id="typing-feedback-suggestions" style="display:none;"></div>
+                        <div class="typing-feedback-badges" id="typing-feedback-badges"></div>
+                        <div class="typing-feedback-actions">
+                            <button class="btn btn-secondary" id="btn-typing-retry">重寫句子</button>
+                            <button class="btn btn-primary" id="btn-typing-next" style="display:none;">下一題</button>
+                        </div>
+                    </div>
                     <div class="button-group" id="typing-next-wrap" style="display:none;">
-                        <button class="btn btn-primary" id="btn-typing-next">下一題</button>
+                        <button class="btn btn-primary" id="btn-typing-next-spell">下一題</button>
                     </div>
                 </div>
                 <div id="typing-result" style="display:none;"></div>
@@ -5540,6 +5737,9 @@
     var ANIMATION_DELAY = 300;
     var CONFETTI_DURATION = 5000;
     var SEARCH_DEBOUNCE_MS = 200;
+    var ITEMS_PER_PAGE = 20;
+    var currentPage = 1;
+    var currentSort = 'recent';
 
     var _prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     function haptic(ms) {
@@ -5731,6 +5931,9 @@
         migrateData: function() {
             if (!this.data) return;
             var now = Date.now();
+            if (!this.data.settings) this.data.settings = { dailyGoal: 10, quizCount: 10 };
+            if (typeof this.data.settings.dailyGoal === 'undefined') this.data.settings.dailyGoal = 10;
+            if (typeof this.data.settings.quizCount === 'undefined') this.data.settings.quizCount = 10;
             this.data.words.forEach(function(w) {
                 if (!w.srs) {
                     w.srs = { interval: 1, easeFactor: 2.5, nextReview: w.createdAt || now, repetitions: 0 };
@@ -5848,6 +6051,8 @@
             };
         },
         addWord: function(w) {
+            var exists = this.data.words.some(function(x){ return x.word.toLowerCase() === w.word.toLowerCase(); });
+            if (exists) return null;
             w.id = 'w' + Date.now() + Math.random().toString(36).substr(2,8);
             w.createdAt = Date.now();
             w.stats = { reviews: 0, correct: 0, lastReviewed: null, mastered: false };
@@ -6456,7 +6661,7 @@
 
     var flashState = { cards: [], index: 0, flipped: false };
     var quizState = { questions: [], index: 0, score: 0, results: [], answered: false };
-    var typingState = { queue: [], index: 0, correct: 0, total: 0 };
+    var typingState = { queue: [], index: 0, correct: 0, total: 0, mode: 'spelling' };
     var matchState = { pairs: [], selected: [], matched: 0, total: 0, startTime: 0, timerInterval: null };
 
     var WORD_BANK = [
@@ -6519,7 +6724,49 @@
         return db.data.words.some(function(w){ return w.word.toLowerCase() === word.toLowerCase(); });
     }
 
-    function generateReelDeck() {
+    var OXFORD_3000_URL = 'https://raw.githubusercontent.com/Hufung/ECDICT-Traditional-Chinese/master/api/vocabulary/oxford_3000.json';
+    var oxford3000Cache = null;
+
+    async function loadOxford3000Words() {
+        if (oxford3000Cache) return oxford3000Cache;
+        var res = await fetch(OXFORD_3000_URL);
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        var json = await res.json();
+        oxford3000Cache = (json.words || []).filter(function(w){ return w && String(w).trim(); });
+        return oxford3000Cache;
+    }
+
+    async function generateReelDeck() {
+        if (discoverState.level === 'oxford3000') {
+            var words = await loadOxford3000Words();
+            var pool = words.slice();
+            for (var i = pool.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var tmp = pool[i]; pool[i] = pool[j]; pool[j] = tmp;
+            }
+            var picked = pool.slice(0, 10);
+            return await Promise.all(picked.map(async function(word) {
+                try {
+                    var entries = await lookupECDICTWord(word);
+                    var e = entries && entries[0];
+                    if (e) {
+                        var meaning = String(e.translation || '').split('\n')[0].trim();
+                        var def = String(e.definition || '').split('\n')[0].trim();
+                        return {
+                            word: e.word || word,
+                            phonetic: e.phonetic || '',
+                            pos: e.pos ? mapPos(e.pos) : '',
+                            meaning: meaning || def || '（暫無釋義）',
+                            example: (def && def !== meaning) ? def : '',
+                            exampleZh: '',
+                            level: 'oxford3000',
+                            difficulty: determineWordLevel(word).key
+                        };
+                    }
+                } catch (err) { /* fall through */ }
+                return { word: word, phonetic: '', pos: '', meaning: '（暫無釋義）', example: '', exampleZh: '', level: 'oxford3000', difficulty: determineWordLevel(word).key };
+            }));
+        }
         var pool;
         if (discoverState.level === 'all') {
             pool = WORD_BANK.slice();
@@ -6533,8 +6780,17 @@
         return pool.slice(0, 10);
     }
 
-    function loadReel() {
-        discoverState.deck = generateReelDeck();
+    async function loadReel() {
+        var track = $('reel-track');
+        if (discoverState.level === 'oxford3000' && !oxford3000Cache) {
+            track.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-secondary);font-size:14px;">載入 Oxford 3000 中…</div>';
+        }
+        try {
+            discoverState.deck = await generateReelDeck();
+        } catch (err) {
+            discoverState.deck = [];
+            toast('載入 Oxford 3000 失敗，請檢查網絡連線', 'error');
+        }
         discoverState.currentSlide = 0;
         renderReel();
     }
@@ -6543,7 +6799,7 @@
         var track = $('reel-track');
         var deck = discoverState.deck;
         if (deck.length === 0) { track.innerHTML = ''; return; }
-        var levelLabels = { dse: 'DSE', ielts: 'IELTS', toefl: 'TOEFL', business: 'BUSINESS', academic: 'ACADEMIC', daily: 'DAILY' };
+        var levelLabels = { dse: 'DSE', ielts: 'IELTS', toefl: 'TOEFL', business: 'BUSINESS', academic: 'ACADEMIC', daily: 'DAILY', oxford3000: 'OXFORD 3000' };
         track.innerHTML = deck.map(function(w, i) {
             var alreadyAdded = isWordInVocab(w.word);
             var levelLabel = levelLabels[w.level] || w.level.toUpperCase();
@@ -7011,7 +7267,7 @@
         var words = db.data.words.slice();
         var search = $('search-input').value.trim().toLowerCase();
         var catFilter = $('filter-category').value;
-        var sortBy = $('filter-sort').value;
+        var sortBy = currentSort;
 
         if (search) {
             words = words.filter(function(w) {
@@ -7037,13 +7293,22 @@
 
         var container = $('word-list');
         var countDiv = $('result-count');
+        var paginationDiv = $('pagination');
         if (countDiv) { countDiv.textContent = words.length > 0 ? '共 ' + words.length + ' 個生字' : ''; }
 
         if (words.length === 0) {
             container.innerHTML = renderEmptyState(search || catFilter ? 'noResults' : 'empty');
+            if (paginationDiv) paginationDiv.innerHTML = '';
             return;
         }
-container.innerHTML = words.map(function(w) {
+
+        var totalPages = Math.ceil(words.length / ITEMS_PER_PAGE);
+        if (currentPage > totalPages) currentPage = totalPages;
+        if (currentPage < 1) currentPage = 1;
+        var start = (currentPage - 1) * ITEMS_PER_PAGE;
+        var paged = words.slice(start, start + ITEMS_PER_PAGE);
+
+        container.innerHTML = paged.map(function(w) {
             var levelDisplay = renderWordLevel(w.word);
             var isDue = w.srs && w.srs.nextReview <= Date.now();
             var srsBadge = '';
@@ -7090,6 +7355,26 @@ container.innerHTML = words.map(function(w) {
             card.classList.add('animate-in');
             card.style.animationDelay = (i * 40) + 'ms';
         });
+
+        if (paginationDiv) {
+            if (totalPages <= 1) {
+                paginationDiv.innerHTML = '';
+            } else {
+                var html = '<button class="page-btn" onclick="goToPage(' + (currentPage - 1) + ')"' + (currentPage <= 1 ? ' disabled' : '') + '>&#9664;</button>';
+                for (var p = 1; p <= totalPages; p++) {
+                    html += '<button class="page-btn' + (p === currentPage ? ' active' : '') + '" onclick="goToPage(' + p + ')">' + p + '</button>';
+                }
+                html += '<button class="page-btn" onclick="goToPage(' + (currentPage + 1) + ')"' + (currentPage >= totalPages ? ' disabled' : '') + '>&#9654;</button>';
+                paginationDiv.innerHTML = html;
+            }
+        }
+    }
+
+    function goToPage(n) {
+        currentPage = n;
+        renderWordList();
+        var listSection = $('view-list');
+        if (listSection) listSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     function escHtml(s) {
@@ -7347,6 +7632,10 @@ var data = {
         if (editId) {
             db.updateWord(editId, data);
         } else {
+            if (isWordInVocab(data.word)) {
+                toast('此生字「' + data.word + '」已存在', 'warning');
+                return;
+            }
             data.difficulty = determineWordLevel(data.word).key;
             db.addWord(data);
         }
@@ -7393,9 +7682,11 @@ var data = {
         var words = db.data.words.slice();
         var cat = $('flash-category').value;
         var unmastered = $('flash-unmastered').checked;
+        var lowRetention = $('flash-low-retention').checked;
 
         if (cat) words = words.filter(function(w){ return w.category === cat; });
         if (unmastered) words = words.filter(function(w){ return !w.stats.mastered; });
+        if (lowRetention) words = words.filter(function(w){ return db.calculateRetention(w) < 0.3; });
 
         if (words.length === 0) {
             $('flash-deck').style.display = 'none';
@@ -7836,7 +8127,7 @@ function flashAnswer(correct) {
             var j = Math.floor(Math.random() * (i + 1));
             var tmp = words[i]; words[i] = words[j]; words[j] = tmp;
         }
-        typingState = { queue: words, index: 0, correct: 0, total: words.length };
+        typingState = { queue: words, index: 0, correct: 0, total: words.length, mode: 'sentence' };
         $('typing-play').style.display = 'block';
         $('typing-result').style.display = 'none';
         showTypingQuestion();
@@ -7844,33 +8135,183 @@ function flashAnswer(correct) {
 
     function showTypingQuestion() {
         var w = typingState.queue[typingState.index];
-        var hint = w.word.split('').map(function(c, i) { return i < 2 ? c : (i === w.word.length - 1 ? c : '_'); }).join('');
-        $('typing-prompt').innerHTML =
-            '<div class="tp-label">請輸入對應的英文單字</div>' +
-            '<div class="tp-meaning">' + escHtml(w.meaningZh) + '</div>' +
-            '<div class="tp-pos">' + escHtml(w.pos) + '</div>' +
-            '<div class="tp-hint">提示: ' + hint + '</div>';
-        $('typing-input').value = '';
-        $('typing-input').className = 'typing-input';
-        $('typing-input').disabled = false;
-        $('typing-input').focus();
-        $('typing-next-wrap').style.display = 'none';
+        if (typingState.mode === 'sentence') {
+            $('typing-prompt').innerHTML =
+                '<div class="tp-label">請用這個單字寫一個完整的英文句子</div>' +
+                '<div class="tp-meaning">' + escHtml(w.meaningZh) + '</div>' +
+                '<div class="tp-pos">' + escHtml(w.pos) + '</div>';
+            var targetBox = $('typing-target-box');
+            targetBox.style.display = 'block';
+            $('typing-target-word').textContent = w.word;
+            var targetMeta = [];
+            if (w.phonetic) targetMeta.push(w.phonetic);
+            if (w.meaningZh) targetMeta.push(w.meaningZh);
+            if (w.example) targetMeta.push('例句：' + w.example);
+            $('typing-target-meta').textContent = targetMeta.join(' · ');
+            $('typing-tip').style.display = 'block';
+            $('typing-sentence-input').value = '';
+            $('typing-sentence-input').className = 'typing-input typing-sentence';
+            $('typing-sentence-input').disabled = false;
+            $('typing-sentence-input').focus();
+            $('typing-hint-text').textContent = '包含目標單字才算完成。';
+            $('typing-sentence-count').textContent = '0 / 120';
+            $('typing-submit-row').style.display = 'flex';
+            $('typing-feedback').style.display = 'none';
+            $('typing-feedback-main').textContent = '';
+            $('typing-feedback-suggestions').style.display = 'none';
+            $('typing-feedback-badges').innerHTML = '';
+            $('typing-feedback-title').textContent = '';
+            $('typing-feedback-sentence').textContent = '';
+            $('typing-feedback-meta').innerHTML = '';
+            var retryBtn = $('btn-typing-retry');
+            var feedbackNextBtn = $('btn-typing-next');
+            retryBtn.textContent = '重寫句子';
+            retryBtn.style.display = 'inline-flex';
+            feedbackNextBtn.style.display = 'none';
+            $('typing-next-wrap').style.display = 'none';
+        } else {
+            var hint = w.word.split('').map(function(c, i) { return i < 2 ? c : (i === w.word.length - 1 ? c : '_'); }).join('');
+            $('typing-prompt').innerHTML =
+                '<div class="tp-label">請輸入對應的英文單字</div>' +
+                '<div class="tp-meaning">' + escHtml(w.meaningZh) + '</div>' +
+                '<div class="tp-pos">' + escHtml(w.pos) + '</div>' +
+                '<div class="tp-hint">提示: ' + hint + '</div>';
+            $('typing-target-box').style.display = 'none';
+            $('typing-tip').style.display = 'none';
+            $('typing-sentence-input').value = '';
+            $('typing-sentence-input').className = 'typing-input typing-sentence';
+            $('typing-sentence-input').disabled = false;
+            $('typing-sentence-input').focus();
+            $('typing-hint-text').textContent = '';
+            $('typing-sentence-count').textContent = '';
+            $('typing-submit-row').style.display = 'none';
+            $('typing-feedback').style.display = 'none';
+            $('typing-next-wrap').style.display = 'none';
+        }
         updateTypingProgress();
     }
 
     function updateTypingProgress() {
-        var pct = ((typingState.index) / typingState.total * 100).toFixed(1);
+        var pct = typingState.total > 0 ? Math.round((typingState.index / typingState.total) * 100) : 0;
         $('typing-progress-bar').style.width = pct + '%';
         $('typing-progress-text').textContent = (typingState.index + 1) + ' / ' + typingState.total;
     }
 
+    function getTypingFeedbackRules(sentence, w) {
+        var lower = sentence.toLowerCase();
+        var hasTargetWord = lower.indexOf(w.word.toLowerCase()) !== -1;
+        var trimmed = sentence.replace(/[.!?]+$/, '').trim();
+        var startsCapital = sentence.length > 0 && sentence[0] !== sentence[0].toLowerCase();
+        var endsCorrectly = /[.!?]$/.test(sentence);
+        var wordCount = trimmed.split(/\s+/).filter(Boolean).length;
+        var looksLikeSentence = startsCapital && endsCorrectly && wordCount >= 3;
+        var issues = [];
+        var suggestions = [];
+        var score = looksLikeSentence ? (hasTargetWord ? 2 : 1) : (hasTargetWord ? 1 : 0);
+
+        if (!hasTargetWord) issues.push('句子沒有包含目標單字「' + w.word + '」。');
+        if (!startsCapital) issues.push('句首請以大寫字母開頭。');
+        if (!endsCorrectly) issues.push('句子結尾缺少句號、問號或驚嘆號。');
+        if (wordCount < 3) issues.push('句子太短，建議至少寫 3 個以上的實質單字。');
+        if (/[，。,]{2,}/.test(sentence) || /\s{3,}/.test(sentence)) issues.push('句子內有重複的標點或空格。');
+
+        if (!hasTargetWord && w.example) suggestions.push('可參考例句：' + w.example);
+        if (!endsCorrectly && hasTargetWord) suggestions.push('試著加上句號：' + w.word + '.');
+        if (!startsCapital && sentence.length > 0) suggestions.push('可改為：' + sentence.charAt(0).toUpperCase() + sentence.slice(1));
+        if (issues.length === 0 && !looksLikeSentence) suggestions.push('試著補上句首大寫與結尾標點，讓它更像完整句子。');
+
+        var feedbackType = score >= 2 ? 'good' : (score === 1 ? 'partial' : 'weak');
+        return { hasTargetWord: hasTargetWord, issues: issues, suggestions: suggestions, feedbackType: feedbackType, wordCount: wordCount, score: score };
+    }
+
+    function renderTypingFeedback(sentence, w, feedback) {
+        $('typing-sentence-input').disabled = true;
+        $('typing-submit-row').style.display = 'none';
+        $('typing-feedback').style.display = 'block';
+        $('typing-feedback-sentence').textContent = sentence;
+
+        var titles = { good: '句子結構大致正確', partial: '句子不完整或格式需修正', weak: '建議重新組織句子' };
+        $('typing-feedback-title').textContent = titles[feedback.feedbackType] || '語法檢查看看';
+        $('typing-feedback-title').style.color = feedback.feedbackType === 'good' ? 'var(--success)' : (feedback.feedbackType === 'partial' ? 'var(--warning)' : 'var(--danger)');
+
+        var metaHtml = '<span>字數：' + feedback.wordCount + '</span><span>含目標單字：' + (feedback.hasTargetWord ? '是' : '否') + '</span>';
+        $('typing-feedback-meta').innerHTML = metaHtml;
+
+        if (feedback.issues.length > 0) {
+            $('typing-feedback-main').innerHTML = '<span class="typing-feedback-label">需要修正</span>' + escHtml(feedback.issues.join(' '));
+        } else {
+            $('typing-feedback-main').innerHTML = '<span class="typing-feedback-label">檢測結果</span>沒有發現明顯的格式或句子結構問題。';
+        }
+
+        var sugBox = $('typing-feedback-suggestions');
+        if (feedback.suggestions.length > 0) {
+            sugBox.style.display = 'block';
+            sugBox.innerHTML = '<span class="typing-feedback-label">你可以這樣改</span>' + escHtml(feedback.suggestions.join(' '));
+        } else {
+            sugBox.style.display = 'none';
+        }
+
+        var badges = [];
+        if (feedback.hasTargetWord) badges.push('已包含單字');
+        else badges.push('未包含單字');
+        $('typing-feedback-badges').innerHTML = badges.map(function(b){ return '<span class="typing-feedback-badge">' + escHtml(b) + '</span>'; }).join('');
+
+        if (feedback.feedbackType === 'good') {
+            typingState.correct++;
+            $('btn-typing-retry').style.display = 'none';
+            $('btn-typing-next').style.display = 'inline-flex';
+            var real = db.data.words.find(function(x){ return x.id === w.id; });
+            if (real) {
+                db.applySRS(w.id, 5);
+                real.stats.reviews++;
+                real.stats.correct++;
+                real.stats.lastReviewed = Date.now();
+                db.save();
+                db.logActivity();
+            }
+        } else {
+            $('btn-typing-retry').style.display = 'inline-flex';
+            $('btn-typing-next').style.display = feedback.feedbackType === 'partial' ? 'inline-flex' : 'none';
+            var real2 = db.data.words.find(function(x){ return x.id === w.id; });
+            if (real2) {
+                db.applySRS(w.id, 1);
+                real2.stats.reviews++;
+                real2.stats.lastReviewed = Date.now();
+                db.save();
+                db.logActivity();
+            }
+        }
+    }
+
+    function checkTypingSentence() {
+        var sentence = $('typing-sentence-input').value.replace(/\s+/g, ' ').trim();
+        if (sentence.length < 2) {
+            toast('請先輸入句子', 'warning');
+            return;
+        }
+        if (sentence.length > 120) {
+            toast('句子太長，請控制在 120 字以內', 'warning');
+            return;
+        }
+        var w = typingState.queue[typingState.index];
+        var feedback = getTypingFeedbackRules(sentence, w);
+        renderTypingFeedback(sentence, w, feedback);
+    }
+
+    function retryTypingSentence() {
+        $('typing-sentence-input').disabled = false;
+        $('typing-sentence-input').focus();
+        $('typing-submit-row').style.display = 'flex';
+        $('typing-feedback').style.display = 'none';
+    }
+
     function checkTyping() {
-        var input = $('typing-input').value.trim().toLowerCase();
+        var input = $('typing-sentence-input').value.trim().toLowerCase();
         var w = typingState.queue[typingState.index];
         var correct = input === w.word.toLowerCase();
-        $('typing-input').disabled = true;
+        $('typing-sentence-input').disabled = true;
         if (correct) {
-            $('typing-input').classList.add('correct');
+            $('typing-sentence-input').classList.add('correct');
             typingState.correct++;
             haptic(15);
             var real = db.data.words.find(function(x){ return x.id === w.id; });
@@ -7883,8 +8324,8 @@ function flashAnswer(correct) {
                 db.logActivity();
             }
         } else {
-            $('typing-input').classList.add('wrong');
-            $('typing-input').value = w.word;
+            $('typing-sentence-input').classList.add('wrong');
+            $('typing-sentence-input').value = w.word;
             var real = db.data.words.find(function(x){ return x.id === w.id; });
             if (real) {
                 db.applySRS(w.id, 1);
@@ -8993,6 +9434,11 @@ var meaningsHtml = (entry.meanings || []).map(function(m, mi) {
 
         Promise.resolve(meaningZh)
             .then(function(meaningZh) {
+                if (isWordInVocab(word)) {
+                    toast('此生字「' + word + '」已存在', 'warning');
+                    if (btn) { btn.textContent = '已加入'; btn.disabled = true; }
+                    return;
+                }
                 db.addWord({
                     word: word,
                     pos: mapPos(pos),
@@ -9470,9 +9916,33 @@ document.querySelectorAll('.sidebar-nav-btn').forEach(function(btn) {
             });
         });
 
-        $('search-input').addEventListener('input', debounce(renderWordList, SEARCH_DEBOUNCE_MS));
-        $('filter-category').addEventListener('change', renderWordList);
-        $('filter-sort').addEventListener('change', renderWordList);
+        document.querySelectorAll('.bottom-nav-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                haptic(5);
+                switchTab(btn.dataset.tab);
+                if (btn.dataset.tab === 'progress') renderProgress();
+                if (btn.dataset.tab === 'discover') updateReelPosition();
+                if (btn.dataset.tab === 'dict') renderSearchHistory();
+                var sidebar = $('sidebar');
+                var overlay = $('app-overlay');
+                if (sidebar) sidebar.classList.remove('open');
+                if (overlay) overlay.classList.remove('active');
+            });
+        });
+
+        $('search-input').addEventListener('input', debounce(function(){ currentPage = 1; renderWordList(); }, SEARCH_DEBOUNCE_MS));
+        $('filter-category').addEventListener('change', function(){ currentPage = 1; renderWordList(); });
+
+        var sortBtns = document.querySelectorAll('#sort-bar .sort-btn');
+        sortBtns.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                sortBtns.forEach(function(b){ b.classList.remove('active'); });
+                btn.classList.add('active');
+                currentSort = btn.dataset.sort;
+                currentPage = 1;
+                renderWordList();
+            });
+        });
 
         $('btn-add-word').addEventListener('click', function(){ openModal(null); });
         $('btn-modal-save').addEventListener('click', saveModal);
@@ -9579,13 +10049,21 @@ document.querySelectorAll('.sidebar-nav-btn').forEach(function(btn) {
         }
 
         $('btn-start-typing').addEventListener('click', startTyping);
-        $('typing-input').addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
+        $('typing-sentence-input').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
-                checkTyping();
+                if (typingState.mode === 'sentence') checkTypingSentence();
+                else checkTyping();
             }
         });
+        $('typing-sentence-input').addEventListener('input', function() {
+            var len = $('typing-sentence-input').value.length;
+            $('typing-sentence-count').textContent = len + ' / 120';
+        });
+        $('btn-typing-submit').addEventListener('click', checkTypingSentence);
+        $('btn-typing-retry').addEventListener('click', retryTypingSentence);
         $('btn-typing-next').addEventListener('click', typingNext);
+        $('btn-typing-next-spell').addEventListener('click', typingNext);
 
         $('btn-start-match').addEventListener('click', startMatch);
 
