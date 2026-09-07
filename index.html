@@ -3,12 +3,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5.0">
     <meta name="theme-color" content="#060201">
-    <meta name="description" content="離線英文生字學習工具 — 閃卡、測驗、SRS、進度追蹤">
+    <meta name="description" content="VocabCache 是免費的離線英文生字學習工具，提供 DSE 英文單字、閃卡、測驗、SRS 複習、打字造句與本機 AI 文法回饋。">
+    <meta name="robots" content="index,follow">
+    <meta name="author" content="VocabCache">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="VocabCache｜DSE 英文生字與造句練習">
+    <meta property="og:description" content="使用閃卡、測驗、SRS 複習和本機 AI 文法回饋，建立更有效的英文單字學習習慣。">
+    <meta property="og:image" content="logo.jpeg">
+    <meta property="og:image:alt" content="VocabCache 英文生字學習工具標誌">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="VocabCache｜DSE 英文生字與造句練習">
+    <meta name="twitter:description" content="離線英文生字學習、SRS 複習和本機 AI 文法回饋工具。">
+    <meta name="twitter:image" content="logo.jpeg">
+    <meta name="twitter:image:alt" content="VocabCache 英文生字學習工具標誌">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="VocabCache">
     <link rel="icon" href="logo.jpeg" type="image/jpeg">
-    <title>VocabCache</title>
+    <title>VocabCache｜DSE 英文生字、SRS 與 AI 造句練習</title>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "VocabCache",
+        "description": "離線英文生字學習工具，提供 DSE 英文單字、閃卡、測驗、SRS 複習、打字造句與本機 AI 文法回饋。",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Web browser",
+        "inLanguage": "zh-Hant",
+        "isAccessibleForFree": true,
+        "featureList": ["英文生字管理", "SRS 間隔重複複習", "英文單字閃卡", "英文測驗", "英文造句練習", "本機 AI 文法回饋"]
+    }
+    </script>
     <script>
         window.__pwaManifest = {
             "name": "VocabCache",
@@ -91,6 +116,27 @@
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--text-tertiary); }
+        .seo-intro {
+            margin-bottom: 24px;
+            padding: 20px 22px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: var(--bg-alt);
+        }
+        .seo-intro h2 {
+            margin-bottom: 6px;
+            font-family: var(--font-serif);
+            font-size: 1.35rem;
+        }
+        .seo-intro p {
+            color: var(--text-secondary);
+            max-width: 760px;
+        }
+        .seo-intro a {
+            color: var(--accent);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
         .container {
             flex: 1;
             max-width: 960px;
@@ -5318,6 +5364,10 @@
 
     <div class="container" id="main-content">
         <section id="view-list" class="" role="tabpanel" aria-labelledby="tab-list">
+            <div class="seo-intro">
+                <h2>免費英文生字與 DSE 英文學習工具</h2>
+                <p>VocabCache 協助你整理英文單字、使用閃卡和測驗複習，透過 SRS 間隔重複建立記憶，並在打字練習中用目標單字造句。資料可離線保存在你的瀏覽器；啟用本機 AI 後，還能取得英文文法與用字回饋。</p>
+            </div>
             <div class="filter-row">
                 <div class="search-with-mic">
                     <input type="text" id="search-input" placeholder="搜尋英文或中文...">
