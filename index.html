@@ -16,6 +16,7 @@
     <meta name="twitter:description" content="離線英文生字學習、SRS 複習和本機 AI 文法回饋工具。">
     <meta name="twitter:image" content="logo.jpeg">
     <meta name="twitter:image:alt" content="VocabCache 英文生字學習工具標誌">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="VocabCache">
@@ -39,19 +40,22 @@
             "name": "VocabCache",
             "short_name": "VocabCache",
             "description": "DSE English vocabulary learning tool",
-            "start_url": "./",
+            "id": "./",
+            "start_url": "./index.html",
             "display": "standalone",
             "background_color": "#060201",
             "theme_color": "#060201",
             "lang": "zh-Hant",
             "icons": [{
-                "src": "logo.jpeg",
+                "src": "./logo.jpeg",
                 "sizes": "192x192",
-                "type": "image/jpeg"
+                "type": "image/jpeg",
+                "purpose": "any maskable"
             }, {
-                "src": "logo.jpeg",
+                "src": "./logo.jpeg",
                 "sizes": "512x512",
-                "type": "image/jpeg"
+                "type": "image/jpeg",
+                "purpose": "any maskable"
             }]
         };
         var _manifestBlob = new Blob([JSON.stringify(window.__pwaManifest)], { type: 'application/json' });
@@ -59,7 +63,7 @@
         _manifestLink.rel = 'manifest';
         _manifestLink.href = URL.createObjectURL(_manifestBlob);
         document.head.appendChild(_manifestLink);
-    </script><link rel="manifest" href="blob:file:///2b2e04ca-3691-46a4-ae72-7a869adefa75">
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&amp;family=Noto+Serif+JP:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
