@@ -3045,6 +3045,9 @@
     grid-template-columns: repeat(7, 1fr);
     gap: 4px;
 }
+.nw { cursor: pointer; border-radius: 3px; transition: background 0.15s; }
+.nw:hover { background: var(--accent); opacity: 0.85; }
+.news-reader-body { font-size: 1.02rem; }
 .heatmap-cell {
     aspect-ratio: 1;
     border-radius: 4px;
@@ -5341,6 +5344,10 @@
                     <span class="sidebar-nav-icon">🎧</span>
                     <span class="sidebar-nav-label">聽寫</span>
                 </button>
+                <button class="sidebar-nav-btn" id="tab-news" data-tab="news" role="tab" aria-selected="false" aria-controls="view-news">
+                    <span class="sidebar-nav-icon">📰</span>
+                    <span class="sidebar-nav-label">報章</span>
+                </button>
             </nav>
         </div>
         <div class="sidebar-bottom">
@@ -5656,6 +5663,37 @@
     </div>
 </section>
 
+<section id="view-news" role="tabpanel" aria-labelledby="tab-news">
+            <div class="news-toolbar" style="display:flex;gap:10px;align-items:center;margin-bottom:14px;flex-wrap:wrap;">
+                <select id="news-source" class="form-select" onchange="loadNewsList()" style="min-width:140px;">
+                    <option value="bbc">BBC</option>
+                    <option value="scmp">SCMP</option>
+                </select>
+                <select id="news-cat" class="form-select" onchange="renderNewsList()" style="min-width:140px;">
+                    <option value="">All</option>
+                    <option value="world">World</option>
+                    <option value="technology">Technology</option>
+                    <option value="business">Business</option>
+                    <option value="science">Science</option>
+                    <option value="health">Health</option>
+                    <option value="culture">Culture</option>
+                    <option value="travel">Travel</option>
+                    <option value="art">Art</option>
+                </select>
+                <button class="btn btn-secondary" onclick="loadNewsList()">↻ 重新整理</button>
+                <span id="news-updated" style="font-size:0.78rem;color:var(--text-secondary);"></span>
+            </div>
+            <div id="news-list" class="news-list"><div class="news-empty" style="color:var(--text-secondary);padding:30px;text-align:center;">載入緊新聞…</div></div>
+            <div id="news-reader" style="display:none;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px;flex-wrap:wrap;">
+                    <button class="btn btn-secondary" onclick="closeNewsReader()">← 返回列表</button>
+                    <span id="news-add-mode-hint" style="font-size:0.82rem;color:var(--text-secondary);">揀詞模式：雙擊文章中任一詞 → 自動查字典加入生字本</span>
+                    <label style="font-size:0.85rem;display:flex;align-items:center;gap:6px;"><input type="checkbox" id="news-pick-mode" checked onchange="toggleNewsPickMode()"> 揀詞模式</label>
+                </div>
+                <h2 id="news-reader-title" style="margin:6px 0;font-size:1.25rem;"></h2>
+                <div id="news-reader-body" class="news-reader-body"></div>
+            </div>
+</section>
 <section id="view-progress" role="tabpanel" aria-labelledby="tab-progress">
             <div id="wotd-container"><div class="wotd-card"><div class="wotd-word" onclick="showWordDetail('seed4')">inevitable<button class="tts-btn" onclick="speakWord('inevitable')">▶</button></div><div class="wotd-meaning">不可避免的</div><div class="wotd-example">「Change is inevitable in a growing organisation.」</div><div style="margin-top:12px;"><button class="btn btn-primary" onclick="speakWord('inevitable')">練習發音</button></div></div></div>
             <div class="mastery-ring-container" id="mastery-ring"><svg width="160" height="160"><circle cx="80" cy="80" r="74" fill="none" stroke="var(--bg-secondary)" stroke-width="12"></circle><circle cx="80" cy="80" r="74" fill="none" stroke="var(--success)" stroke-width="12" stroke-dasharray="464.9557127312894" stroke-dashoffset="371.9645701850315" stroke-linecap="round"></circle></svg><div style="text-align:center;margin-top:-100px;position:relative;"><div style="font-size:2rem;font-weight:700;color:var(--success);">20%</div><div style="color:var(--text-secondary);font-size:0.85rem;">掌握率</div></div><div style="height:30px;"></div></div>
@@ -6986,8 +7024,141 @@
         }
     }
 
+    /* ===== NEWS (merged from engP1: browse -> read -> pick words into SRS) ===== */
+    var NEWS_LIST_API = 'https://engp1.vercel.app/api/news';
+    var NEWS_FETCH_PROXY = 'https://r.jina.ai/';   // CORS-readable text fetcher
+    var newsState = { articles: [], current: null, loaded: false };
+
+    function newsProxied(url) { return NEWS_FETCH_PROXY + url; }
+
+    async function loadNewsList() {
+        var box = $('news-list');
+        if (!box) return;
+        var src = $('news-source').value || 'bbc';
+        box.innerHTML = '<div style="color:var(--text-secondary);padding:30px;text-align:center;">載入新聞中…</div>';
+        try {
+            // List: hit engP1 API directly (sends Access-Control-Allow-Origin, max-age=0) — real-time.
+            var bust = '&_=' + Date.now();
+            var resp = await fetchWithTimeout(NEWS_LIST_API + '?source=' + encodeURIComponent(src) + bust, null, 15000);
+            var data = await resp.json();
+            newsState.articles = (data.articles || []).filter(function(a){ return a && a.url; });
+            newsState.loaded = true;
+            newsState.fetchedAt = Date.now();
+            renderNewsList();
+        } catch (e) {
+            box.innerHTML = '<div style="color:var(--danger);padding:30px;text-align:center;">新聞載入失敗（需網路）。<br><button class="btn btn-secondary" onclick="loadNewsList()">重試</button></div>';
+        }
+    }
+
+    function renderNewsList() {
+        var box = $('news-list');
+        if (!newsState.loaded) { loadNewsList(); return; }
+        var cat = ($('news-cat').value || '').toLowerCase();
+        var list = newsState.articles.filter(function(a) {
+            if (!cat) return true;
+            var hay = ((a.title || '') + ' ' + (a.content || '') + ' ' + (a.category || '')).toLowerCase();
+            return hay.indexOf(cat) !== -1;
+        });
+        if (!list.length) { box.innerHTML = '<div style="color:var(--text-secondary);padding:30px;text-align:center;">呢個 category 而家無新聞</div>'; return; }
+        box.innerHTML = list.map(function(a, i) {
+            return '<div class="news-item" onclick="openNewsArticle(' + i + ')" style="padding:12px 10px;border-bottom:1px solid var(--border);cursor:pointer;">'
+                + '<div style="font-weight:600;font-size:0.95rem;">' + escHtml(a.title || '(untitled)') + '</div>'
+                + '<div style="font-size:0.82rem;color:var(--text-secondary);margin-top:4px;">' + escHtml((a.content || '').slice(0, 140)) + '…</div>'
+                + '</div>';
+        }).join('');
+        newsState.shown = list;
+        var up = $('news-updated');
+        if (up && newsState.fetchedAt) {
+            var d = new Date(newsState.fetchedAt);
+            up.textContent = '最後更新 ' + d.toLocaleTimeString('en-GB');
+        }
+    }
+
+    async function openNewsArticle(i) {
+        var a = (newsState.shown || [])[i];
+        if (!a) return;
+        newsState.current = a;
+        $('news-list').style.display = 'none';
+        document.querySelector('.news-toolbar').style.display = 'none';
+        $('news-reader').style.display = '';
+        $('news-reader-title').textContent = a.title || '';
+        $('news-reader-body').innerHTML = '<div style="color:var(--text-secondary);padding:20px;text-align:center;">載入全文中（約 5-10 秒）…</div>';
+        try {
+            var resp = await fetchWithTimeout(newsProxied(a.url + (a.url.indexOf('?') !== -1 ? '&' : '?') + '_v=' + Date.now()), null, 30000);
+            var text = await resp.text();
+            var m = text.split('\n').filter(function(l) { return l.trim().length > 0 && !/^(Title:|URL Source:|Markdown Content:|Published Time:|\[|https?:)/i.test(l.trim()); });
+            var body = m.slice(0, 80).join('\n\n');
+            renderNewsBody(body);
+        } catch (e) {
+            $('news-reader-body').innerHTML = '<div style="color:var(--danger);padding:20px;text-align:center;">全文載入失敗。'
+                + '<button class="btn btn-secondary" onclick="openNewsArticle(' + i + ')">重試</button> <a class="btn btn-secondary" href="' + escHtml(a.url) + '" target="_blank" rel="noopener">原文連結</a></div>';
+        }
+    }
+
+    function renderNewsBody(raw) {
+        var paras = raw.split(/\n{2,}/).slice(0, 40);
+        $('news-reader-body').innerHTML = paras.map(function(p) {
+            var words = escHtml(p.trim()).split(/(\s+)/).map(function(tok) {
+                if (!tok || /^\s+$/.test(tok)) return tok;
+                var clean = tok.toLowerCase().replace(/[^a-z'-]/g, '');
+                if (clean.length < 3 || !/^[a-z]+$/.test(clean.replace(/^['-]|['-]$/g, ''))) return tok;
+                return '<span class="nw" onclick="newsPickWord(this)">' + tok + '</span>';
+            }).join('');
+            return '<p style="line-height:1.75;margin:0 0 14px;">' + words + '</p>';
+        }).join('');
+    }
+
+    function closeNewsReader() {
+        $('news-reader').style.display = 'none';
+        $('news-list').style.display = '';
+        document.querySelector('.news-toolbar').style.display = 'flex';
+    }
+
+    function toggleNewsPickMode() {
+        var on = $('news-pick-mode').checked;
+        $('news-reader-body').style.userSelect = on ? 'none' : 'text';
+        $('news-add-mode-hint').style.color = on ? 'var(--text-secondary)' : 'var(--warning)';
+        $('news-add-mode-hint').textContent = on ? '揀詞模式：雙擊文章中任一詞 → 自動查字典加入生字本' : '已暫停 — 可正常選文字複製';
+    }
+
+    var newsPicking = false;
+    async function newsPickWord(span) {
+        if (!$('news-pick-mode').checked || newsPicking) return;
+        var word = (span.textContent || '').toLowerCase().replace(/[^a-z'-]/g, '').replace(/^['-]+|['-]+$/g, '');
+        if (word.length < 3) return;
+        if (isWordInVocab(word)) { toast('「' + word + '」已喺生字本', 'info'); return; }
+        newsPicking = true;
+        span.style.background = 'var(--accent)';
+        try {
+            var entries = await lookupECDICTWord(word);
+            var e0 = entries && entries[0];
+            if (!e0) { toast('字典無「' + word + '」呢個字（或需網路）', 'warning'); return; }
+            var sent = (span.closest && span.closest('p')) ? span.closest('p').textContent.trim().slice(0, 200) : '';
+            var added = db.addWord({
+                word: word, pos: e0.pos || '', phonetic: e0.phonetic || '',
+                meaningZh: e0.translation || e0.definition || '',
+                example: sent, exampleZh: '',
+                notes: '📰 ' + (newsState.current ? newsState.current.title : '') + '\n' + (newsState.current ? newsState.current.url : ''),
+                category: (db.data.categories.indexOf('News') !== -1) ? 'News' : (db.data.categories[0] || '未分類'),
+                difficulty: determineWordLevel(word).key
+            });
+            if (added) {
+                span.style.background = 'var(--success)';
+                renderWordList(); renderProgress();
+                toast('已加入「' + word + '」' + (e0.translation ? '：' + e0.translation.split('\n')[0].slice(0,30) : ''), 'success');
+                haptic(20);
+            }
+        } finally {
+            setTimeout(function(){ if (span.style.background !== 'var(--success)') span.style.background = ''; }, 900);
+            newsPicking = false;
+        }
+    }
+    /* ===== END NEWS ===== */
+
     function reelGoTo(index) {
         if (discoverState.animating) return;
+
+
         if (index < 0 || index >= discoverState.deck.length) return;
         discoverState.animating = true;
         discoverState.currentSlide = index;
@@ -9689,6 +9860,10 @@ var meaningsHtml = (entry.meanings || []).map(function(m, mi) {
                 setTimeout(function() { b.classList.remove('animating'); }, 250);
             }
         });
+        if (tab === 'news' && !newsState.loaded) loadNewsList();
+        if (tab === 'news' && db.data && db.data.categories && db.data.categories.indexOf('News') === -1) {
+            db.data.categories.push('News');
+        }
         if (typeof haptic === 'function') haptic(10);
     }
 
