@@ -5669,17 +5669,7 @@
                     <option value="bbc">BBC</option>
                     <option value="scmp">SCMP</option>
                 </select>
-                <select id="news-cat" class="form-select" onchange="renderNewsList()" style="min-width:140px;">
-                    <option value="">All</option>
-                    <option value="world">World</option>
-                    <option value="technology">Technology</option>
-                    <option value="business">Business</option>
-                    <option value="science">Science</option>
-                    <option value="health">Health</option>
-                    <option value="culture">Culture</option>
-                    <option value="travel">Travel</option>
-                    <option value="art">Art</option>
-                </select>
+                <select id="news-cat" class="form-select" onchange="renderNewsList()" style="min-width:140px;"><option value="">All</option></select>
                 <button class="btn btn-secondary" onclick="loadNewsList()">↻ 重新整理</button>
                 <span id="news-updated" style="font-size:0.78rem;color:var(--text-secondary);"></span>
             </div>
@@ -7059,16 +7049,55 @@
         renderNewsList();
     }
 
+    var NEWS_KW = {
+        technology: /\b(AI|artificial intelligence|tech|robot|data cent|chip|cyber|software|computer|quantum|digital|online|hack)\b/i,
+        science:    /\b(science|research|scientists?|space|nasa|telescope|physics|biology|climate|fossil|archaeolog|species)\b/i,
+        health:     /\b(health|medical|hospital|disease|cancer|virus|drug|therapy|patient|doctor|mental health|obesity|vaccine|sleep)\b/i,
+        business:   /\b(economy|economic|market|company|companies|business|bank|trade|tariff|stock|profit|revenue|jobs|unemployment|currency|housing)\b/i,
+        world:      /\b(China|America|Trump|Russia|Ukraine|Israel|Gaza|Iran|Britain|Europe|Asia|Japan|Korea|India|war|election|president|government|NATO)\b/i,
+        culture:    /\b(film|movie|music|artist|museum|theatre|culture|heritage|festival|celebrity|writer|design|fashion|book)\b/i,
+        travel:     /\b(travel|tourism|airport|flight|hotel|destination|abroad|holiday|railway)\b/i,
+        sport:      /\b(sport|football|soccer|tennis|basketball|Olympic|athlete|match|coach|rugby|cricket)\b/i
+    };
+    function classifyNews(a) {
+        if (a._cat) return a._cat;
+        var hay = (a.title || '') + ' ' + (a.content || '') + ' ' + (a.url || '');
+        var scores = {};
+        Object.keys(NEWS_KW).forEach(function(c) {
+            var m = hay.match(new RegExp(NEWS_KW[c].source, 'gi'));
+            if (m) scores[c] = m.length;
+        });
+        var best = 'other', bn = 0;
+        Object.keys(scores).forEach(function(c) { if (scores[c] > bn) { best = c; bn = scores[c]; } });
+        a._cat = best;
+        return best;
+    }
+
+    function populateNewsCategories() {
+        var sel = $('news-cat');
+        if (!sel || !newsState.articles.length) return;
+        var counts = {};
+        newsState.articles.forEach(function(a) { var c = classifyNews(a); counts[c] = (counts[c] || 0) + 1; });
+        var keep = sel.value;
+        var order = Object.keys(NEWS_KW).filter(function(c) { return counts[c] >= 2; });
+        if (counts['other'] >= 2) order.push('other');
+        var labels = { technology: 'Technology', science: 'Science', health: 'Health', business: 'Business', world: 'World', culture: 'Culture', travel: 'Travel', sport: 'Sport', other: 'Other' };
+        sel.innerHTML = '<option value="">All</option>' + order.map(function(c) {
+            return '<option value="' + c + '">' + labels[c] + ' (' + counts[c] + ')</option>';
+        }).join('');
+        if (Array.prototype.some.call(sel.options, function(o) { return o.value === keep; })) sel.value = keep;
+    }
+
     function renderNewsList() {
         var box = $('news-list');
         if (!newsState.loaded) { loadNewsList(); return; }
-        var cat = ($('news-cat').value || '').toLowerCase();
+        populateNewsCategories();
+        var cat = ($('news-cat').value || '');
         var srcSel = ($('news-source').value || 'bbc');
         var list = newsState.articles.filter(function(a) {
             if (a.source && a.source !== srcSel) return false;
             if (!cat) return true;
-            var hay = ((a.title || '') + ' ' + (a.content || '') + ' ' + (a.category || '')).toLowerCase();
-            return hay.indexOf(cat) !== -1;
+            return classifyNews(a) === cat;
         });
         if (!list.length) { box.innerHTML = '<div style="color:var(--text-secondary);padding:30px;text-align:center;">呢個 category 而家無新聞</div>'; return; }
         box.innerHTML = list.map(function(a, i) {
