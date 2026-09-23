@@ -3048,11 +3048,15 @@
 .nw { cursor: pointer; border-radius: 3px; transition: background 0.15s; }
 .nw:hover { background: var(--accent); opacity: 0.85; }
 .news-reader-body { font-size: 1.02rem; }
-#news-dict-card { position: sticky; bottom: 12px; margin-top: 14px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; box-shadow: 0 6px 24px rgba(0,0,0,.25); }
+#news-dict-card { position: sticky; bottom: 12px; z-index: 300; margin-top: 14px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; box-shadow: 0 6px 24px rgba(0,0,0,.25); }
 #news-dict-card .nd-word { font-size: 1.2rem; font-weight: 700; }
 #news-dict-card .nd-meta { color: var(--text-secondary); font-size: .85rem; margin: 2px 0 8px; }
 #news-dict-card .nd-meaning { font-size: .95rem; margin-bottom: 8px; white-space: pre-wrap; }
 #news-dict-card .nd-example { font-size: .88rem; font-style: italic; color: var(--text-secondary); margin-bottom: 10px; }
+        @media (max-width: 768px) {
+            #news-dict-card { bottom: calc(72px + env(safe-area-inset-bottom, 0px)); }
+            #news-save-btn { margin-bottom: 4px; }
+        }
 .heatmap-cell {
     aspect-ratio: 1;
     border-radius: 4px;
@@ -7157,8 +7161,7 @@
         }
         $('news-reader-body').innerHTML = '<div style="color:var(--text-secondary);padding:20px;text-align:center;">載入全文中（約 5-10 秒）…</div>';
         try {
-            var resp = await fetchWithTimeout(newsProxied(a.url), null, 30000);  // no buster: article text is static; reuse proxy cache, save quota
-            var text = await resp.text();
+            var text = await fetchNewsText(a.url);
             var m = text.split('\n').filter(function(l) { return l.trim().length > 0 && !/^(Title:|URL Source:|Markdown Content:|Published Time:|\[|https?:)/i.test(l.trim()); });
             var body = m.slice(0, 80).join('\n\n');
             newsState.currentText = body;
@@ -7345,6 +7348,21 @@
     var _origCloseNewsReader = closeNewsReader;
     closeNewsReader = function() { closeNewsCard(); _origCloseNewsReader(); };
 
+    async function fetchNewsText(url) {
+        // 1st hit: plain proxied URL (proxy edge cache likely warm). 2nd: cache-busted retry for transient proxy errors.
+        var attempts = [newsProxied(url), newsProxied(url + (url.indexOf('?') !== -1 ? '&' : '?') + '_r=' + Date.now())];
+        var lastErr = null;
+        for (var k = 0; k < attempts.length; k++) {
+            try {
+                var resp = await fetchWithTimeout(attempts[k], null, 30000);
+                if (!resp.ok) throw new Error('HTTP ' + resp.status);
+                var text = await resp.text();
+                if (text && text.length > 200) return text;
+                throw new Error('empty response');
+            } catch (e) { lastErr = e; }
+        }
+        throw lastErr || new Error('proxy failed');
+    }
     /* ===== END NEWS ===== */
 
     function reelGoTo(index) {
