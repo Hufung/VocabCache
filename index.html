@@ -3048,6 +3048,11 @@
 .nw { cursor: pointer; border-radius: 3px; transition: background 0.15s; }
 .nw:hover { background: var(--accent); opacity: 0.85; }
 .news-reader-body { font-size: 1.02rem; }
+#news-dict-card { position: sticky; bottom: 12px; margin-top: 14px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; box-shadow: 0 6px 24px rgba(0,0,0,.25); }
+#news-dict-card .nd-word { font-size: 1.2rem; font-weight: 700; }
+#news-dict-card .nd-meta { color: var(--text-secondary); font-size: .85rem; margin: 2px 0 8px; }
+#news-dict-card .nd-meaning { font-size: .95rem; margin-bottom: 8px; white-space: pre-wrap; }
+#news-dict-card .nd-example { font-size: .88rem; font-style: italic; color: var(--text-secondary); margin-bottom: 10px; }
 .heatmap-cell {
     aspect-ratio: 1;
     border-radius: 4px;
@@ -5677,11 +5682,12 @@
             <div id="news-reader" style="display:none;">
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px;flex-wrap:wrap;">
                     <button class="btn btn-secondary" onclick="closeNewsReader()">← 返回列表</button>
-                    <span id="news-add-mode-hint" style="font-size:0.82rem;color:var(--text-secondary);">揀詞模式：雙擊文章中任一詞 → 自動查字典加入生字本</span>
+                    <span id="news-add-mode-hint" style="font-size:0.82rem;color:var(--text-secondary);">揀詞模式：撳任一詞 → 睇字典卡 → 確認先入生字本</span>
                     <label style="font-size:0.85rem;display:flex;align-items:center;gap:6px;"><input type="checkbox" id="news-pick-mode" checked onchange="toggleNewsPickMode()"> 揀詞模式</label>
                 </div>
                 <h2 id="news-reader-title" style="margin:6px 0;font-size:1.25rem;"></h2>
                 <div id="news-reader-body" class="news-reader-body"></div>
+                <div id="news-dict-card" style="display:none;"></div>
             </div>
 </section>
 <section id="view-progress" role="tabpanel" aria-labelledby="tab-progress">
@@ -7158,41 +7164,78 @@
         var on = $('news-pick-mode').checked;
         $('news-reader-body').style.userSelect = on ? 'none' : 'text';
         $('news-add-mode-hint').style.color = on ? 'var(--text-secondary)' : 'var(--warning)';
-        $('news-add-mode-hint').textContent = on ? '揀詞模式：雙擊文章中任一詞 → 自動查字典加入生字本' : '已暫停 — 可正常選文字複製';
+        $('news-add-mode-hint').textContent = on ? '揀詞模式：撳任一詞 → 睇字典卡 → 確認先入生字本' : '已暫停 — 可正常選文字複製';
     }
 
     var newsPicking = false;
+    var newsCardData = null;
+
     async function newsPickWord(span) {
         if (!$('news-pick-mode').checked || newsPicking) return;
         var word = (span.textContent || '').toLowerCase().replace(/[^a-z'-]/g, '').replace(/^['-]+|['-]+$/g, '');
         if (word.length < 3) return;
-        if (isWordInVocab(word)) { toast('「' + word + '」已喺生字本', 'info'); return; }
         newsPicking = true;
-        span.style.background = 'var(--accent)';
+        var card = $('news-dict-card');
+        newsCardData = { word: word, span: span };
+        card.style.display = 'block';
+        card.innerHTML = '<div class="nd-word">' + escHtml(word) + '</div><div class="nd-meta">查字典中…</div>';
+        card.scrollIntoView({ block: 'nearest' });
         try {
             var entries = await lookupECDICTWord(word);
             var e0 = entries && entries[0];
-            if (!e0) { toast('字典無「' + word + '」呢個字（或需網路）', 'warning'); return; }
-            var sent = (span.closest && span.closest('p')) ? span.closest('p').textContent.trim().slice(0, 200) : '';
-            var added = db.addWord({
-                word: word, pos: e0.pos || '', phonetic: e0.phonetic || '',
-                meaningZh: e0.translation || e0.definition || '',
-                example: sent, exampleZh: '',
-                notes: '📰 ' + (newsState.current ? newsState.current.title : '') + '\n' + (newsState.current ? newsState.current.url : ''),
-                category: (db.data.categories.indexOf('News') !== -1) ? 'News' : (db.data.categories[0] || '未分類'),
-                difficulty: determineWordLevel(word).key
-            });
-            if (added) {
-                span.style.background = 'var(--success)';
-                renderWordList(); renderProgress();
-                toast('已加入「' + word + '」' + (e0.translation ? '：' + e0.translation.split('\n')[0].slice(0,30) : ''), 'success');
-                haptic(20);
+            if (!e0) {
+                card.innerHTML = '<div class="nd-word">' + escHtml(word) + '</div><div class="nd-meta" style="color:var(--warning);">字典查無此詞（或需網路）</div>'
+                    + '<button class="btn btn-secondary" onclick="closeNewsCard()">關閉</button>';
+                return;
             }
+            var sent = (span.closest && span.closest('p')) ? span.closest('p').textContent.trim().slice(0, 220) : '';
+            newsCardData.entry = e0; newsCardData.example = sent;
+            var added = isWordInVocab(word);
+            var zh = String(e0.translation || e0.definition || '').replace(/\\n/g, '\n');
+            card.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">'
+                + '<div><span class="nd-word">' + escHtml(word) + '</span> <span class="nd-meta">' + escHtml(e0.pos || '') + ' ' + escHtml(e0.phonetic || '') + '</span></div>'
+                + '<button class="btn btn-secondary" style="padding:4px 10px;" onclick="closeNewsCard()">✕</button></div>'
+                + '<div class="nd-meaning">' + escHtml(zh.split('\n')[0]) + '</div>'
+                + (sent ? '<div class="nd-example">「' + escHtml(sent) + '」</div>' : '')
+                + '<button class="btn btn-primary" id="ndc-add" onclick="newsConfirmAdd()"' + (added ? ' disabled' : '') + '>' + (added ? '已收錄 ✓' : '加入生字本') + '</button>';
         } finally {
-            setTimeout(function(){ if (span.style.background !== 'var(--success)') span.style.background = ''; }, 900);
             newsPicking = false;
         }
     }
+
+    function newsConfirmAdd() {
+        if (!newsCardData || !newsCardData.entry) return;
+        var e0 = newsCardData.entry, word = newsCardData.word;
+        var added = db.addWord({
+            word: word, pos: e0.pos || '', phonetic: e0.phonetic || '',
+            meaningZh: e0.translation || e0.definition || '',
+            example: newsCardData.example || '', exampleZh: '',
+            notes: '📰 ' + (newsState.current ? newsState.current.title : '') + '\n' + (newsState.current ? newsState.current.url : ''),
+            category: (db.data.categories.indexOf('News') !== -1) ? 'News' : (db.data.categories[0] || '未分類'),
+            difficulty: determineWordLevel(word).key
+        });
+        var btn = $('ndc-add');
+        if (added) {
+            if (btn) { btn.textContent = '已收錄 ✓'; btn.disabled = true; }
+            if (newsCardData.span) { newsCardData.span.style.background = 'var(--success)'; setTimeout(function() { if (newsCardData && newsCardData.span) newsCardData.span.style.background = ''; }, 1500); }
+            renderWordList(); renderProgress();
+            toast('已加入「' + word + '」', 'success');
+            haptic(20);
+        } else {
+            if (btn) btn.textContent = '已收錄 ✓';
+            toast('「' + word + '」已喺生字本', 'info');
+        }
+    }
+
+    function closeNewsCard() {
+        var card = $('news-dict-card');
+        if (card) { card.style.display = 'none'; card.innerHTML = ''; }
+        newsCardData = null;
+    }
+
+    var _origCloseNewsReader = closeNewsReader;
+    closeNewsReader = function() { closeNewsCard(); _origCloseNewsReader(); };
+
     /* ===== END NEWS ===== */
 
     function reelGoTo(index) {
