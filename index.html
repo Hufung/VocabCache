@@ -3053,6 +3053,9 @@
 #news-dict-card .nd-meta { color: var(--text-secondary); font-size: .85rem; margin: 2px 0 8px; }
 #news-dict-card .nd-meaning { font-size: .95rem; margin-bottom: 8px; white-space: pre-wrap; }
 #news-dict-card .nd-example { font-size: .88rem; font-style: italic; color: var(--text-secondary); margin-bottom: 10px; }
+        .nd-fig { margin: 0 0 14px; }
+        .nd-fig img { width: 100%; border-radius: 10px; display: block; background: var(--bg-secondary); min-height: 60px; }
+        .nd-fig figcaption { font-size: .75rem; color: var(--text-secondary); margin-top: 4px; }
         @media (max-width: 768px) {
             #news-dict-card { bottom: calc(72px + env(safe-area-inset-bottom, 0px)); }
             #news-save-btn { margin-bottom: 4px; }
@@ -7173,16 +7176,34 @@
         }
     }
 
+    var IMG_SKIP = /grey-placeholder|logo|avatar|tracking|pixel|placeholder/i;
+    function extractImages(p) {
+        var out = [];
+        p = p.replace(/!\[([^\]]*)\]\(([^)\s]+)[^)]*\)/g, function(_, alt, url) {
+            if (!/^https?:\/\//i.test(url) || IMG_SKIP.test(url) || out.length >= 6) return '';
+            out.push({ url: url, alt: (alt || '').replace(/^Image \d+:?\s*/i, '').trim() });
+            return '';
+        });
+        return { rest: p, imgs: out };
+    }
+
     function renderNewsBody(raw) {
         var paras = raw.split(/\n{2,}/).slice(0, 40);
         $('news-reader-body').innerHTML = paras.map(function(p) {
-            var words = escHtml(p.trim()).split(/(\s+)/).map(function(tok) {
+            var ex = extractImages(p.trim());
+            var imgsHtml = ex.imgs.map(function(im, ii) {
+                return '<figure class="nd-fig"><img src="' + escHtml(im.url) + '" alt="' + escHtml(im.alt) + '" loading="lazy" referrerpolicy="no-referrer">'
+                    + (im.alt ? '<figcaption>' + escHtml(im.alt.slice(0,120)) + '</figcaption>' : '') + '</figure>';
+            }).join('');
+            var rest = ex.rest.replace(/\[([^\]]*)\]\(([^)]*)\)/g, '$1');  // links -> plain text
+            if (!rest.trim()) return imgsHtml;
+            var words = escHtml(rest.trim()).split(/(\s+)/).map(function(tok) {
                 if (!tok || /^\s+$/.test(tok)) return tok;
                 var clean = tok.toLowerCase().replace(/[^a-z'-]/g, '');
                 if (clean.length < 3 || !/^[a-z]+$/.test(clean.replace(/^['-]|['-]$/g, ''))) return tok;
                 return '<span class="nw" onclick="newsPickWord(this)">' + tok + '</span>';
             }).join('');
-            return '<p style="line-height:1.75;margin:0 0 14px;">' + words + '</p>';
+            return imgsHtml + '<p style="line-height:1.75;margin:0 0 14px;">' + words + '</p>';
         }).join('');
     }
 
