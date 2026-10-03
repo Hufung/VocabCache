@@ -6557,7 +6557,11 @@
         'abbreviation': 'abbr.', 'abbr': 'abbr.', 'abbr.': 'abbr.', 'acronym': 'abbr.',
         'number': 'num.', 'num': 'num.', 'num.': 'num.', 'ordinal': 'num.',
         'determiner': 'det.', 'det': 'det.', 'det.': 'det.',
-        'phrasal verb': 'phr.v.', 'phrasal': 'phr.v.'
+        'phrasal verb': 'phr.v.', 'phrasal': 'phr.v.',
+        'vt': 'v.', 'vt.': 'v.', 'v.t.': 'v.', 'vi': 'v.', 'vi.': 'v.', 'v.i.': 'v.',
+        'aux': 'v.', 'aux.': 'v.', 'auxiliary': 'v.', 'modal': 'v.', 'vbl': 'v.',
+        'int': 'interj.', 'int.': 'interj.', 'part': 'adv.', 'adjs': 'adj.', 'adv.': 'adv.',
+        'pl': 'n.', 'pl.': 'n.', 'sing': 'n.', 's.': 'n.', 'infin': 'v.', 'ppl': 'v.', 'pr': 'v.', 'ca': 'v.'
     };
 
     var POS_LABELS = {
@@ -6580,7 +6584,11 @@
 
     function mapPos(apiPos) {
         var value = String(apiPos || '').trim().toLowerCase();
-        return POS_MAP[value] || 'n.';
+        if (POS_MAP[value]) return POS_MAP[value];
+        // accept already-short tags like 'v.' passed through, else empty (unknown)
+        var m = value.match(/^(n|v|vt|vi|adj|adv|prep|conj|pron|art|int|interj|excl|abbr|num|det|suf|pref|phr\.v)[.]?$/);
+        if (m) { return POS_MAP[m[1]] || (m[1] === 'int' ? 'interj.' : m[1] === 'vt' || m[1] === 'vi' ? 'v.' : m[1] + '.'); }
+        return '';
     }
 
     function normalizeECDICTPos(pos) {
@@ -6613,8 +6621,12 @@
     }
 
     function formatPosLabel(pos) {
-        var normalized = mapPos(pos);
-        return POS_LABELS[normalized] || String(pos || '').trim() || '詞性未標示';
+        var tags = String(pos || '').split('/').map(function(p) { return mapPos(p) || p.trim(); }).filter(Boolean);
+        // dedupe short tags ('v.' from vt+vi), keep order
+        var seen = {}; var uniq = [];
+        tags.forEach(function(t) { if (!seen[t]) { seen[t] = 1; uniq.push(t); } });
+        if (!uniq.length) return String(pos || '').trim() || '詞性未標示';
+        return uniq.map(function(t) { return POS_LABELS[t] || t; }).join(' + ');
     }
 
     var FREE_DICT_CACHE = {};
@@ -6675,20 +6687,24 @@
     function inferECDICTPos(pos, translation, definition) {
         var best = normalizeECDICTPos(pos);
         if (best) return mapPos(best);
-        
-        var leading = extractLeadingTranslationPos(translation);
-        if (leading) return mapPos(leading);
-        
-        var defLeading = extractLeadingTranslationPos(definition);
-        if (defLeading) return mapPos(defLeading);
-        
-        var fallback = String(translation || '').match(/(?:^|\n|；|;|，|,|\])\s*(suf\.|pref\.|abbr\.|num\.|det\.|phr\.v\.|n\.|v\.|a\.|adj\.|adv\.|prep\.|conj\.|pron\.|art\.|interj\.|excl\.)/i);
-        if (fallback) return mapPos(fallback[1]);
-        
-        var defFallback = String(definition || '').match(/(?:^|\n)\s*(suf\.|pref\.|abbr\.|num\.|det\.|phr\.v\.|n\.|v\.|a\.|adj\.|adv\.|prep\.|conj\.|pron\.|art\.|interj\.|excl\.)/i);
-        if (defFallback) return mapPos(defFallback[1]);
-        
-        return 'n.';
+        // ECDICT stores line breaks as the two-character sequence backslash-n — normalize before matching
+        translation = String(translation || '').replace(/\\n/g, '\n').replace(/\\r/g, '');
+        definition  = String(definition || '').replace(/\\n/g, '\n').replace(/\\r/g, '');
+
+        // collect EVERY pos tag at the START of any line (ECDICT format: 'vt. …\nn. …'),
+        // in order of appearance, deduped — a word that is both noun and verb must show both.
+        var LINE_TAG_RE = /^\s*(suf\.|pref\.|abbr\.|num\.|det\.|phr\.v\.|n\.|v\.|vt\.|vi\.|a\.|adj\.|adv\.|prep\.|conj\.|pron\.|art\.|interj\.|excl\.)/im;
+        var found = [];
+        [translation, definition].forEach(function(text) {
+            String(text).split('\n').forEach(function(line) {
+                var m = line.match(LINE_TAG_RE);
+                if (!m) return;
+                var mapped = mapPos(m[1]);
+                if (mapped && found.indexOf(mapped) === -1) found.push(mapped);
+            });
+        });
+        if (found.length) return found.join('/');
+        return '';
     }
 
     var WORD_LEVELS = [
