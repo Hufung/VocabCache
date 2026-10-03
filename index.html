@@ -6658,41 +6658,120 @@
         FREE_DICT_INFLIGHT[target] = p;
         return p;
     }
+    var WIKTIONARY_CACHE = {};
+    var WIKTIONARY_INFLIGHT = {};
+    function cleanWtHtml(h) {
+        // take only the FIRST line (headword gloss) — remainder is nested <ol> sub-definitions that duplicate it
+        var stripped = String(h || '').replace(/<style[\s\S]*?<\/style>/gi, ' ').replace(/<style[^>]*>/gi, ' ').replace(/<\/style>/gi, ' ').replace(/<link[^>]*>/gi, ' ').replace(/<span[^>]*class="usage-label[^>]*>[\s\S]*?<\/span>/gi, ' ');
+        var first = stripped.split('\n')[0];
+        first = first.replace(/<[^>]+>/g, ' ')
+                     .replace(/&#160;|&nbsp;/g, ' ')
+                     .replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+                     .replace(/\.mw-parser-output[^.]*\.\w*\{[^}]*/g, ' ')
+                     .replace(/\s+/g, ' ').trim();
+        return first;
+    }
+    function lookupWiktionary(word) {
+        var target = String(word || '').trim().toLowerCase();
+        if (!target) return Promise.resolve(null);
+        if (WIKTIONARY_CACHE[target] !== undefined) return Promise.resolve(WIKTIONARY_CACHE[target]);
+        if (WIKTIONARY_INFLIGHT[target]) return WIKTIONARY_INFLIGHT[target];
+        var p = fetchWithTimeout('https://en.wiktionary.org/api/rest_v1/page/definition/' + encodeURIComponent(target), { cache: 'no-store' }, 12000)
+            .then(function(res) {
+                if (!res.ok) throw new Error('wt_' + res.status);
+                return res.json();
+            })
+            .then(function(data) {
+                var langs = Object.keys(data || {});
+                if (!langs.length) throw new Error('wt_empty');
+                var list = (data['en'] && data['en'].length) ? data['en'] : data[langs[0]];
+                var out = (list || []).slice(0, 5).map(function(e) {
+                    var defs = (e.definitions || []).slice(0, 3).map(function(d) {
+                        var ex = (d.example && d.example[0]) ? cleanWtHtml(d.example[0]) : '';
+                        return { definition: cleanWtHtml(d.definition), example: ex };
+                    }).filter(function(x) { return x.definition; });
+                    return { partOfSpeech: String(e.partOfSpeech || ''), definitions: defs.slice(0, 2) };
+                }).filter(function(x) { return x.definitions.length && x.partOfSpeech !== 'Symbol'; });
+                if (!out.length) throw new Error('wt_empty');
+                WIKTIONARY_CACHE[target] = out;
+                delete WIKTIONARY_INFLIGHT[target];
+                return out;
+            })
+            .catch(function() { delete WIKTIONARY_INFLIGHT[target]; return null; });   // never cache a failure
+        WIKTIONARY_INFLIGHT[target] = p;
+        return p;
+    }
+    function lookupReferenceDict(word) {
+        var target = String(word || '').trim().toLowerCase();
+        return lookupWiktionary(target).then(function(wt) {
+            // don't block the (now primary) Wiktionary result behind Free Dict's slow retry cycle:
+            // wait at most 5s for its phonetics/audio, then render regardless
+            var fdCapped = Promise.race([
+                lookupFreeDict(target).catch(function() { return null; }),
+                new Promise(function(r) { setTimeout(function() { r(null); }, 5000); })
+            ]);
+            return fdCapped.then(function(fd) {
+                if (!wt && !fd) return null;
+                return { wt: wt, fd: fd };
+            });
+        });
+    }
     function retryFreeDict(word, mountSel) {
         var target = String(word || '').trim().toLowerCase();
         delete FREE_DICT_CACHE[target];
+        delete WIKTIONARY_CACHE[target];
         var host = document.querySelector(mountSel);
         if (!host) return;
         host.innerHTML = '<div class="dict-loading"><div class="spinner"></div><p>正在重試查詢參考來源…</p></div>';
-        lookupFreeDict(target).then(function(entry) {
+        lookupReferenceDict(target).then(function(ref) {
             var h = document.querySelector(mountSel);
             if (!h) return;
             if (mountSel === '.dict-secondary-source') {
-                h.innerHTML = renderReferenceSourceSection('參考來源：Free Dictionary API', entry, target, mountSel);
-                if (entry) h.dataset.loaded = 'true';
+                h.innerHTML = renderReferenceSourceSection('參考來源', ref, target, mountSel);
+                if (ref) h.dataset.loaded = 'true';
             } else {
                 var wrap = document.createElement('div');
                 wrap.id = 'dd-reference-source';
-                wrap.innerHTML = renderReferenceSourceSection('參考來源：Free Dictionary API', entry, target, mountSel);
+                wrap.innerHTML = renderReferenceSourceSection('參考來源', ref, target, mountSel);
                 h.replaceWith(wrap);
             }
         });
     }
 
-    function renderReferenceSourceSection(title, entry, word, mountSel) {
-        if (!entry) {
+    function renderReferenceSourceSection(title, ref, word, mountSel) {
+        var entry = ref && ref.fd ? ref.fd : null;      // Free Dict entry supplies audio + fallback defs
+        var wtBlocks = ref && ref.wt ? ref.wt : null;
+        if (!entry && !wtBlocks) {
             return '<div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);">' +
                 '<div style="color:var(--text-secondary);font-size:0.85rem;margin-bottom:8px;">' + escHtml(title) + '</div>' +
                 '<div style="color:var(--text-tertiary);font-size:0.88rem;">參考來源暫時無回應（服務偶爾會忙碌）' +
                 (word && mountSel ? '　<button class="btn btn-secondary" style="font-size:0.8rem;padding:4px 12px;" onclick="retryFreeDict(&#39;' + escHtml(word) + '&#39;,&#39;' + mountSel + '&#39;)">重試</button>' : '') +
                 '</div></div>';
         }
-        var phonetic = '';
+        var phonetic = (entry && (entry.phonetic || '')) || '';
         var audioUrl = '';
-        (entry.phonetics || []).forEach(function(p) {
+        if (entry && entry.phonetics) entry.phonetics.forEach(function(p) {
             if (!phonetic && p.text) phonetic = p.text;
             if (!audioUrl && p.audio) audioUrl = p.audio;
         });
+        var wtHtml = (wtBlocks || []).map(function(m) {
+            var defsHtml = (m.definitions || []).map(function(d) {
+                var ex = d.example ? '<span class="dict-def-example">「' + escHtml(d.example) + '」</span>' : '';
+                return '<li>' + escHtml(d.definition) + ex + '</li>';
+            }).join('');
+            return '<div class="dict-meaning-block">' +
+                '<div class="dict-pos-label">' + escHtml(formatPosLabel(m.partOfSpeech)) + '</div>' +
+                '<ol class="dict-def-list">' + defsHtml + '</ol></div>';
+        }).join('');
+        if (wtHtml) {
+            return '<div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);">' +
+                '<div style="color:var(--text-secondary);font-size:0.85rem;margin-bottom:8px;">參考來源：Wiktionary' + (entry ? '（＋發音：Free Dictionary API）' : '') +
+                ' <a href="https://en.wiktionary.org/wiki/' + encodeURIComponent(word) + '" target="_blank" style="color:var(--accent);text-decoration:underline;margin-left:4px;font-size:0.75rem;">(查全頁)</a></div>' +
+                '<div class="dict-phonetic-row">' + (phonetic ? '<span>' + escHtml(phonetic) + '</span>' : '') +
+                  (audioUrl ? '<button class="dict-audio-btn" onclick="playDictAudio(\'' + audioUrl.replace(/'/g, "\\'") + '\')" title="播放參考音訊">&#9654;</button>' : '') +
+                  '<button class="dict-audio-btn" onclick="speakWord(\'' + escHtml(word) + '\')" title="使用文字轉語音播放">&#9654;</button></div>' +
+                wtHtml + '</div>';
+        }
         var meaningsHtml = (entry.meanings || []).map(function(m) {
             var defsHtml = (m.definitions || []).slice(0, 5).map(function(d) {
                 var ex = d.example ? '<span class="dict-def-example">「' + escHtml(d.example) + '」</span>' : '';
@@ -6703,7 +6782,7 @@
                 '<ol class="dict-def-list">' + defsHtml + '</ol></div>';
         }).join('');
         var audioBtn = audioUrl ? '<button class="dict-audio-btn" onclick="playDictAudio(\'' + audioUrl.replace(/'/g, "\\'") + '\')" title="播放參考音訊">&#9654;</button>' : '';
-        var ttsBtn = '<button class="dict-audio-btn" onclick="speakWord(\'' + escHtml(entry.word || '') + '\')" title="使用文字轉語音播放">&#9654;</button>';
+        var ttsBtn = '<button class="dict-audio-btn" onclick="speakWord(\'' + escHtml((entry && entry.word) || word || '') + '\')" title="使用文字轉語音播放">&#9654;</button>';
         var headerRow = '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">' +
             '<div style="display:flex;align-items:center;gap:8px;">' +
             (phonetic ? '<span>' + escHtml(phonetic) + '</span>' : '') + audioBtn + ttsBtn +
@@ -9896,9 +9975,9 @@ var meaningsHtml = (entry.meanings || []).map(function(m, mi) {
                 if (value === 'reference' && !secondary.dataset.loaded) {
                     var word = String((window._dictLatestResults && window._dictLatestResults[0] && window._dictLatestResults[0].word) || $('dict-input').value || '').trim().toLowerCase();
                     secondary.innerHTML = '<div class="dict-loading"><div class="spinner"></div><p>正在查詢參考來源…</p></div>';
-                    lookupFreeDict(word).then(function(entry) {
-                        secondary.innerHTML = renderReferenceSourceSection('參考來源：Free Dictionary API', entry, word, '.dict-secondary-source');
-                        if (entry) secondary.dataset.loaded = 'true';   // failure keeps it retryable
+                    lookupReferenceDict(word).then(function(ref) {
+                        secondary.innerHTML = renderReferenceSourceSection('參考來源', ref, word, '.dict-secondary-source');
+                        if (ref) secondary.dataset.loaded = 'true';   // failure keeps it retryable
                     }).catch(function() {
                         secondary.innerHTML = renderReferenceSourceSection('參考來源：Free Dictionary API', null, word, '.dict-secondary-source');
                     });
@@ -10113,9 +10192,9 @@ var meaningsHtml = (entry.meanings || []).map(function(m, mi) {
                 $('dd-meanings').appendChild(secondaryTarget);
                 $('dd-meanings').innerHTML += primaryHtml;
 
-                lookupFreeDict(w.word).then(function(refEntry) {
+                lookupReferenceDict(w.word).then(function(refEntry) {
                     var el0 = document.getElementById('dd-reference-source');
-                    if (el0) el0.innerHTML = renderReferenceSourceSection('參考來源：Free Dictionary API', refEntry, w.word, '#dd-reference-source');
+                    if (el0) el0.innerHTML = renderReferenceSourceSection('參考來源', refEntry, w.word, '#dd-reference-source');
                 });
             })
             .catch(function() {
