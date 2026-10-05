@@ -5406,6 +5406,7 @@
                     <button class="sort-btn" data-sort="alpha">字母排序</button>
                     <button class="sort-btn" data-sort="difficulty">按難度</button>
                     <button class="sort-btn" data-sort="not-mastered">未掌握優先</button>
+                    <button class="sort-btn" data-sort="wrongbook">📕 錯題本</button>
                 </div>
                 <button class="btn btn-primary" id="btn-add-word">新增生字</button>
             </div>
@@ -6117,6 +6118,7 @@
             }
             if (!this.data.searchHistory) this.data.searchHistory = [];
             if (!this.data.wotd) this.data.wotd = { wordId: null, date: null };
+            if (!this.data.wrongBook) this.data.wrongBook = {};
             if (!this.data.ranking) {
                 this.data.ranking = { level: 1, xp: 0, rankName: '初心者' };
                 this.updateRanking();
@@ -7927,6 +7929,12 @@
         var catFilter = $('filter-category').value;
         var sortBy = currentSort;
 
+        if (sortBy === 'wrongbook') {
+            var wb = (db.data.wrongBook) || {};
+            words = words.filter(function(w){ return wb[w.id]; });
+            words.sort(function(a,b){ return (wb[b.id].lastWrong||0) - (wb[a.id].lastWrong||0); });
+        }
+
         if (search) {
             words = words.filter(function(w) {
                 return w.word.toLowerCase().indexOf(search) !== -1 ||
@@ -7955,7 +7963,9 @@
         if (countDiv) { countDiv.textContent = words.length > 0 ? '共 ' + words.length + ' 個生字' : ''; }
 
         if (words.length === 0) {
-            container.innerHTML = renderEmptyState(search || catFilter ? 'noResults' : 'empty');
+            container.innerHTML = (sortBy === 'wrongbook' && !search && !catFilter)
+                ? '<div style="text-align:center;color:var(--text-tertiary);padding:40px 16px;"><p style="font-size:2rem;">📕</p><p>錯題本係空嘅</p><p style="font-size:0.85rem;">做完測驗後撳「存入錯題本」，錯嘅字就會保存喺呢度</p></div>'
+                : renderEmptyState(search || catFilter ? 'noResults' : 'empty');
             if (paginationDiv) paginationDiv.innerHTML = '';
             return;
         }
@@ -7978,6 +7988,9 @@
                 }
             }
             var ttsBtn = '<button class="tts-btn" onclick="speakWord(\'' + escHtml(w.word) + '\')" title="播放發音">&#9654;</button>';
+            var wbEntry = (currentSort === 'wrongbook' && db.data.wrongBook[w.id]) ?
+                '<span class="srs-badge due">📕 ×' + db.data.wrongBook[w.id].count + '</span> ' +
+                '<button class="btn btn-secondary" style="padding:2px 10px;font-size:0.75rem;" onclick="removeWrongBook(\'' + w.id + '\')">移出</button>' : '';
             var notesHtml = w.notes ? '<div class="word-notes">' + escHtml(w.notes) + '</div>' : '';
             return '<div class="word-card' + (w.stats.mastered ? ' mastered' : '') + '" data-id="'+w.id+'">' +
                 '<div class="word-header">' +
@@ -7987,7 +8000,7 @@
                         '<span class="word-pos">' + escHtml(w.pos) + '</span>' +
                         ttsBtn +
                     '</div>' +
-                    '<div>' + srsBadge + '</div>' +
+                    '<div>' + srsBadge + wbEntry + '</div>' +
                     (w.stats.mastered ? '<span class="badge badge-mastered">已掌握</span>' : '') +
                 '</div>' +
                 '<div class="word-meaning">' + escHtml(w.meaningZh) + '</div>' +
@@ -9437,13 +9450,45 @@ $('quiz-result').innerHTML = '<div class="quiz-result">' +
                 wrong.map(function(r) {
                     return '<div class="wrong-item"><strong>' + escHtml(r.word.word) + '</strong> — ' + escHtml(r.word.meaningZh) + '</div>';
                 }).join('') +
-                '</div>' : '<div style="color:var(--success);margin-top:12px;font-weight:600;">全部答對！太厲害了！</div>') +
-            '<div class="button-group"><button class="btn btn-primary" onclick="resetQuiz()">再試一次</button></div>' +
+                '</div>' +
+                '<div class="button-group" style="margin-top:14px;"><button class="btn btn-primary" onclick="saveWrongBook()">📕 存入錯題本 (' + wrong.length + ')</button></div>'
+                : '<div style="color:var(--success);margin-top:12px;font-weight:600;">全部答對！太厲害了！</div>') +
+            '<div class="button-group"><button class="btn btn-secondary" onclick="resetQuiz()">再試一次</button></div>' +
         '</div>';
         if (pct >= 80) triggerConfetti('quiz');
         renderStreak();
         renderWordList();
         renderProgress();
+    }
+
+    function saveWrongBook() {
+        var wrong = quizState.results.filter(function(r){ return !r.correct; });
+        if (!wrong.length) { toast('冇錯題可存入', 'info'); return; }
+        if (!db.data.wrongBook) db.data.wrongBook = {};
+        var now = Date.now();
+        var added = 0;
+        wrong.forEach(function(r) {
+            var id = r.word.id;
+            var hit = db.data.words.find(function(x){ return x.id === id; });
+            if (!hit) return;
+            var e = db.data.wrongBook[id] || { count: 0, lastWrong: 0 };
+            e.count++; e.lastWrong = now;
+            db.data.wrongBook[id] = e;
+            added++;
+        });
+        if (db.save()) {
+            toast('已存入錯題本：' + added + ' 個字', 'success');
+            renderWordList();
+        }
+    }
+
+    function removeWrongBook(id) {
+        if (db.data.wrongBook && db.data.wrongBook[id]) {
+            delete db.data.wrongBook[id];
+            db.save();
+            toast('已由錯題本移除', 'info');
+            renderWordList();
+        }
     }
 
     function resetQuiz() {
